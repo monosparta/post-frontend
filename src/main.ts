@@ -1,5 +1,13 @@
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
+import './styles/main.css'
+import type { UserModule } from './types'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+
+// Load modules
+Object.values(import.meta.glob<{ install: UserModule }>('./modules/*.ts', { eager: true }))
+  .forEach(i => i.install?.(app))
+
+// app.use(router)
+app.mount('#app')
