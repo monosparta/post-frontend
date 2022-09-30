@@ -1,20 +1,49 @@
 {
-  "name": "thingstage",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "packageManager": "pnpm@7.8.0",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "up": "taze major -I"
   },
   "dependencies": {
-    "vue": "^3.2.37"
+    "@vueuse/core": "^9.3.0",
+    "@vueuse/head": "^0.7.12",
+    "axios": "^0.27.2",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.0.22",
+    "vue": "^3.2.40",
+    "vue-demi": "^0.13.11",
+    "vue-i18n": "^9.2.2",
+    "vue-router": "^4.1.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^3.0.0",
-    "typescript": "^4.6.4",
-    "vite": "^3.0.0",
-    "vue-tsc": "^0.38.4"
+    "@antfu/eslint-config": "^0.25.2",
+    "@faker-js/faker": "^7.5.0",
+    "@headlessui/vue": "^1.7.2",
+    "@heroicons/vue": "^1.0.6",
+    "@intlify/vite-plugin-vue-i18n": "^5.0.1",
+    "@tailwindcss/forms": "^0.5.3",
+    "@types/node": "^18.7.23",
+    "@types/nprogress": "^0.2.0",
+    "@vitejs/plugin-basic-ssl": "^0.1.2",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "autoprefixer": "^10.4.12",
+    "eslint": "^8.24.0",
+    "moment": "^2.29.4",
+    "pnpm": "^7.12.2",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8",
+    "taze": "^0.7.6",
+    "typescript": "^4.8.4",
+    "unplugin-auto-import": "^0.10.3",
+    "unplugin-vue-components": "^0.21.2",
+    "vite": "^3.1.4",
+    "vite-plugin-inspect": "^0.6.1",
+    "vite-plugin-pages": "^0.25.0",
+    "vite-plugin-vue-layouts": "^0.7.0",
+    "vue-tsc": "^0.39.5"
   }
 }
