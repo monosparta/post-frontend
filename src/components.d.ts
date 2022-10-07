@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AppHeader: typeof import('./components/AppHeader.vue')['default']
     BaseButton: typeof import('./components/parts/BaseButton.vue')['default']
     Breadcrumbs: typeof import('./components/parts/Breadcrumbs.vue')['default']
     BulletinSectionHeader: typeof import('./components/parts/bulletin/BulletinSectionHeader.vue')['default']
