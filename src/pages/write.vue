@@ -73,7 +73,7 @@ const check = async () => {
         </div>
         <div class="mt-4">
           <textarea rows="4" name="comment" id="comment"
-            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            class="block w-full rounded-md border-gray-300 shadow-sm  focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             style="height:576px" placeholder="Txt write here..." v-model="text_input"></textarea>
         </div>
         <div v-if="titleHeader==='新增文章'" class="relative grid grid-cols-3 gap-4 mt-4">
