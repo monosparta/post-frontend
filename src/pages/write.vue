@@ -4,9 +4,9 @@ const router = useRouter()
 const route = useRoute()
 const modal = useModalStore()
 const bulletinSectionHeader = useBulletinSectionHeaderStore()
-let title_input = ref('')
-let text_input = ref('')
-
+const title_input = ref('')
+const text_input = ref('')
+let modal_type = ref('')
 
 // const props = defineProps({
 //   titleHeader: {
@@ -29,13 +29,29 @@ const back = async () => {
 }
 
 const check = async () => {
-  modal.createNotification({
-    type: 'add',
-    text: '確定新增該篇文章？',
-    dateTime: '',
-  })
-  document.cookie = `title=${title_input.value};`;
-  document.cookie = `text_input=${text_input.value}`;
+  if (title_input.value == '' || text_input.value == '') {
+    console.log('空的！');
+
+    modal_type.value = 'information'
+    modal.createNotification({
+      type: 'warming',
+      text: '標題或內文欄位不可以空白喔！',
+      dateTime: '',
+    })
+  } else {
+    console.log('有資料');
+
+    modal_type.value = 'check'
+    modal.createNotification({
+      type: 'add',
+      text: '確定新增該篇文章？',
+      dateTime: '',
+    })
+    document.cookie = `title=${title_input.value};`;
+    document.cookie = `text_input=${text_input.value}`;
+  }
+
+
 
 }
 
@@ -60,7 +76,7 @@ const check = async () => {
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             style="height:576px" placeholder="Txt write here..." v-model="text_input"></textarea>
         </div>
-        <div v-if="titleHeader==='新增文章'" class="relative grid grid-cols-6 gap-4 mt-4">
+        <div v-if="titleHeader==='新增文章'" class="relative grid grid-cols-3 gap-4 mt-4">
           <!-- <div class="mt-4 flex md:absolute md:left-0 md:mt-4"> -->
           <div class="col-start-1 col-end-3">
             <button type="button"
@@ -69,7 +85,7 @@ const check = async () => {
               捨棄
             </button>
           </div>
-          <div class="col-end-7 col-span-1 absolute inset-y-0 right-0">
+          <div class="col-end-4 col-span-1 absolute inset-y-0 right-0">
             <button type="button"
               class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               @click="check()">
@@ -95,7 +111,9 @@ const check = async () => {
         </div>
       </main>
 
-      <Check v-if="modal.notificationStatus===true" :text="modal.notification.text"
+      <Check v-if="modal_type==='check' && modal.notificationStatus===true" :text="modal.notification.text"
+        :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification" />
+      <Information v-if="modal_type==='information' && modal.notificationStatus===true" :text="modal.notification.text"
         :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification" />
     </div>
   </div>
