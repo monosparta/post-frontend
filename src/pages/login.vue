@@ -27,7 +27,7 @@ const login = async () => {
     router.push({ path: '/dashboard' })
   }
   catch (error: any) {
-    if (error.response.data) {
+    if (error) {
       validation.value = true
       validationMessage.value = 'Email or Password Error!'
     }
