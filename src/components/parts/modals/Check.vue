@@ -1,30 +1,20 @@
 <script setup lang="ts">
 // import { ref } from 'vue'
-import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { defineAsyncComponent } from 'vue'
-import { CheckIcon, PencilAltIcon, TrashIcon } from '@heroicons/vue/outline'
-import LoadingVue from './Loading_modal.vue';
+import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { PencilAltIcon, TrashIcon } from '@heroicons/vue/outline'
 
 
 const props = defineProps({
   type: String,
   text: String,
-  title: String,
-  text_input: String,
-  user_id:String,
+  dateTime: String,
+
 })
 
 const open = ref(true)
 
-const beLoading = ()=>{
+const beLoading = () => {
   open.value = false;
-  const token = document.cookie.replace(
-    // hexToken cookie名稱
-    /(?:(?:^|.*;\s*)title\s*=\s*([^;]*).*$)|^.*$/,
-    "$1"
-  );
-  console.log(token);
-
   // alert(token);
 
 }

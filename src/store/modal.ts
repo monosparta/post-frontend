@@ -5,25 +5,21 @@ export const useModalStore = defineStore('modal', () => {
   const notification = reactive({
     type: '',
     text: '',
-    title: '',
-    text_input:'',
-    user_id:'',
+    dateTime: '',
+
   })
-  const createNotification = (data: { type: string; text: string; title: string; text_input: string; user_id: string }) => {
+  const createNotification = (data: { type: string; text: string; dateTime: string }) => {
     notificationStatus.value = true
     notification.type = data.type
     notification.text = data.text
-    notification.title = data.title
-    notification.text_input = data.text_input
-    notification.user_id = data.user_id
+    notification.dateTime = data.dateTime
   }
   const closeNotification = () => {
     notificationStatus.value = false
     notification.type = ''
     notification.text = ''
-    notification.title = ''
-    notification.text_input = ''
-    notification.user_id =''
+    notification.dateTime = ''
+
   }
 
   return {

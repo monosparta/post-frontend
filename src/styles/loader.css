@@ -1,10 +1,11 @@
 .loader {
-  border: 16px solid #6366f1; /* Light grey */
-  border-top: 16px solid #4f46e5; /* Blue */
+  border: 12px solid #a5b4fc; /* Light grey */
+  border-top: 12px solid #4f46e5; /* Blue */
   border-radius: 50%;
   width: 120px;
   height: 120px;
-  /* margin: 24px; */
+  margin: 8px;
+  /* padding: 1rem; */
   animation: spin 1.3s linear infinite;
 }
 
@@ -15,4 +16,9 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.flex_load{
+  display: flex;
+  justify-content: center;
 }

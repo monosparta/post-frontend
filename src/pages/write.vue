@@ -14,7 +14,7 @@ let text_input = ref('')
 //   }
 // })
 
-const titleHeader ='新增文章'
+const titleHeader = '新增文章'
 
 const titleHeader2 = route.params.titleHeader;
 console.log(titleHeader2)
@@ -32,30 +32,20 @@ const check = async () => {
   modal.createNotification({
     type: 'add',
     text: '確定新增該篇文章？',
-    title: title_input.value,
-    text_input: text_input.value,
-    user_id: '',
+    dateTime: '',
   })
-
   document.cookie = `title=${title_input.value};`;
   document.cookie = `text_input=${text_input.value}`;
-  
-    const token = document.cookie.replace(
-      // hexToken cookie名稱
-      /(?:(?:^|.*;\s*)user_id\s*=\s*([^;]*).*$)|^.*$/,
-      "$1"
-    );
-    console.log(token);
-  
-  // alert(token);
+
 }
+
 
 </script>
 
     <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
   <!-- <div class="px-4 sm:px-6 lg:px-8 mt-4 "> -->
-  <div class="mt-6 ml-16 mr-16">
+  <div class="mt-4 mx-16 mb-4">
     <div class="flex flex-col">
       <BulletinSectionHeader_2 v-if="bulletinSectionHeader.notificationStatus"
         :title="bulletinSectionHeader.notification.title" :type="bulletinSectionHeader.notification.type" />
@@ -70,22 +60,16 @@ const check = async () => {
             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             style="height:576px" placeholder="Txt write here..." v-model="text_input"></textarea>
         </div>
-      </main>
-
-    </div>
-  </div>
-  <div class=" ml-16 mr-16 md-6">
-    <div class="flex flex-col">
-      <div class="relative pb-5 sm:pb-0  ">
-        <div v-if="titleHeader==='新增文章'">
-          <div class="mt-4 flex md:absolute md:left-0 md:mt-4">
+        <div v-if="titleHeader==='新增文章'" class="relative grid grid-cols-6 gap-4 mt-4">
+          <!-- <div class="mt-4 flex md:absolute md:left-0 md:mt-4"> -->
+          <div class="col-start-1 col-end-3">
             <button type="button"
               class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               @click="back()">
               捨棄
             </button>
           </div>
-          <div class="mt-4  flex md:absolute md:right-0 md:mt-4">
+          <div class="col-end-7 col-span-1 absolute inset-y-0 right-0">
             <button type="button"
               class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               @click="check()">
@@ -93,15 +77,15 @@ const check = async () => {
             </button>
           </div>
         </div>
-        <div v-else-if="titleHeader==='編輯文章'">
-          <div class="mt-4 flex md:absolute md:left-0 md:mt-4">
+        <div v-else-if="titleHeader==='編輯文章'" class="relative grid grid-cols-6 gap-4 mt-4">
+          <div class="col-start-1 col-end-3">
             <button type="button"
               class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               @click="back()">
               放棄修改
             </button>
           </div>
-          <div class="mt-4  flex md:absolute md:right-0 md:mt-4">
+          <div class="col-end-7 col-span-1 absolute inset-y-0 right-0">
             <button type="button"
               class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               @click="check()">
@@ -109,13 +93,13 @@ const check = async () => {
             </button>
           </div>
         </div>
-      </div>
+      </main>
+
+      <Check v-if="modal.notificationStatus===true" :text="modal.notification.text"
+        :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification" />
     </div>
-
-    <Check v-if="modal.notificationStatus" :text="modal.notification.text" :title="modal.notification.title"
-      :text_input="modal.notification.text_input" :type="modal.notification.type" @click="modal.closeNotification" />
-
   </div>
+
 
 
 </template>

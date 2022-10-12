@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
-
-const props = defineProps({
-  type: String,
-  text: String,
-})
+const token = document.cookie.replace(
+  /(?:(?:^|.*;\s*)title\s*=\s*([^;]*).*$)|^.*$/,
+  "$1"
+);
+console.log(token);
 const open = ref(true)
 </script>
 
@@ -23,13 +23,12 @@ const open = ref(true)
             enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200"
             leave-from="opacity-100 translate-y-0 sm:scale-100"
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-            <DialogPanel
-              class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-              <div class="flex flex-col">
-                <div class="mt-3 text-center sm:mt-5">
-                  <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">Loading...</DialogTitle>
+            <DialogPanel class="relative transform  rounded-lg bg-white px-36 pt-11 pb-11  shadow-xl ">
+              <div class="flex flex-col ">
+                <DialogTitle as="h3" class="text-lg font-medium text-gray-900">Loading...</DialogTitle>
+                <div class="flex_load mt-2">
+                  <div class="loader"></div>
                 </div>
-                <div class="loader"></div>
               </div>
             </DialogPanel>
           </TransitionChild>
@@ -37,5 +36,6 @@ const open = ref(true)
       </div>
     </Dialog>
   </TransitionRoot>
+
 </template>
 
