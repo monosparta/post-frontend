@@ -1,7 +1,9 @@
 <script setup lang="ts">
 // import { ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import { defineAsyncComponent } from 'vue'
 import { CheckIcon, PencilAltIcon, TrashIcon } from '@heroicons/vue/outline'
+import LoadingVue from './Loading_modal.vue';
 
 
 const props = defineProps({
@@ -11,7 +13,14 @@ const props = defineProps({
   text_input: String,
   user_id:String,
 })
-const open = ref(true)
+
+let open = ref(true)
+
+const beLoading = ()=>{
+
+
+}
+
 </script>
 
 <template>
@@ -51,7 +60,7 @@ const open = ref(true)
               <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                 <button type="button"
                   class="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
-                  @click="open = false">確定</button>
+                  @click="beLoading()">確定</button>
                 <button type="button"
                   class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
                   @click="open = false" ref="cancelButtonRef">取消</button>

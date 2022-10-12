@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import { ChevronDownIcon, TrashIcon } from '@heroicons/vue/solid'
+// import { ChevronDownIcon, TrashIcon } from '@heroicons/vue/solid'
 const bulletinSectionHeader = useBulletinSectionHeaderStore()
-const tabs = [
-  { name: '文章首頁', href: '#', current: true },
-  { name: '我的文章', href: '#', current: false },
-  { name: '後台列表', href: '#', current: false },
-]
 
 bulletinSectionHeader.createNotification({
   type: 'button',

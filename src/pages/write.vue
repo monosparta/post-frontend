@@ -1,18 +1,23 @@
 <script setup lang="ts">
-// import { ChevronDownIcon, TrashIcon } from '@heroicons/vue/solid'
-// import { title_input } from 'process';
-import { title } from 'process';
 import { useRouter } from 'vue-router'
 const router = useRouter()
+const route = useRoute()
 const modal = useModalStore()
 const bulletinSectionHeader = useBulletinSectionHeaderStore()
 let title_input = ref('')
 let text_input = ref('')
 
 
-const props = defineProps({
-  titleHeader: String,
-})
+// const props = defineProps({
+//   titleHeader: {
+//     type: String,
+//   }
+// })
+
+const titleHeader ='新增文章'
+
+const titleHeader2 = route.params.titleHeader;
+console.log(titleHeader2)
 
 bulletinSectionHeader.createNotification({
   type: '',
@@ -31,7 +36,6 @@ const check = async () => {
     text_input: text_input.value,
     user_id: '',
   })
-
 }
 
 </script>
@@ -98,6 +102,7 @@ const check = async () => {
 
     <Check v-if="modal.notificationStatus" :text="modal.notification.text" :title="modal.notification.title"
       :text_input="modal.notification.text_input" :type="modal.notification.type" @click="modal.closeNotification" />
+      <Loading_modal />
   </div>
 
 

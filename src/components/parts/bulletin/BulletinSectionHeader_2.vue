@@ -3,15 +3,21 @@
 import { PlusIcon } from '@heroicons/vue/solid'
 import { useRouter } from 'vue-router'
 const router = useRouter()
+const route = useRoute()
+
 
 const write = async () => {
-  router.push({ 
-    name: 'write', // 即是 /user 
-    params: { 
-      titleHeader:'新增文章'
-     }
-   })
+  router.push({ path: '/write' })
 }
+
+// const write = async (titleHeader) => {
+//   router.push({ 
+//     name: 'write', // 即是 /user 
+//     params: { 
+//       ...route.titleHeader 
+//      }
+//    })
+// }
 
 const props = defineProps({
   type: String,

@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import './styles/main.css'
+import './styles/loader.css'
 import type { UserModule } from './types'
 
 const app = createApp(App)
