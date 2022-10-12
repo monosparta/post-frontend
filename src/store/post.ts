@@ -5,7 +5,7 @@ export const useUserStore = defineStore('user', () => {
   /**
    * Current name of the user.
    */
-  const user = reactive({
+  const post = reactive({
     data: {
       user: {
         id: '',
@@ -99,7 +99,6 @@ export const useUserStore = defineStore('user', () => {
       `${import.meta.env.VITE_APP_API_URL}/api/v1/login`, data,
     )
     user.data = result.data.data
-    console.log(user.data.user.id)
   }
 
   const logout = () => {

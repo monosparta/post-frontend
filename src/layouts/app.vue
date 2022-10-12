@@ -5,6 +5,7 @@ import {
   HomeIcon,
   UsersIcon,
   XIcon,
+  NewspaperIcon,
 } from '@heroicons/vue/outline'
 import AppHeader from '../components/AppHeader.vue'
 
@@ -15,6 +16,7 @@ const navigation = [
   { name: 'Users', label: 'users', href: '/users', icon: UsersIcon, current: false },
   { name: 'Bulletin', label: 'bulletin', href: '/bulletin', icon: AnnotationIcon, current: false },
   { name: 'Devices', label: 'devices', href: '/devices', icon: ChipIcon, current: false },
+  { name: 'Post', label: 'post', href: '/post', icon: NewspaperIcon, current: false },
 ]
 
 const layout = useLayoutStore()
