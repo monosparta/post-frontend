@@ -36,6 +36,18 @@ const check = async () => {
     text_input: text_input.value,
     user_id: '',
   })
+
+  document.cookie = `title=${title_input.value};`;
+  document.cookie = `text_input=${text_input.value}`;
+  
+    const token = document.cookie.replace(
+      // hexToken cookie名稱
+      /(?:(?:^|.*;\s*)user_id\s*=\s*([^;]*).*$)|^.*$/,
+      "$1"
+    );
+    console.log(token);
+  
+  // alert(token);
 }
 
 </script>
@@ -102,7 +114,7 @@ const check = async () => {
 
     <Check v-if="modal.notificationStatus" :text="modal.notification.text" :title="modal.notification.title"
       :text_input="modal.notification.text_input" :type="modal.notification.type" @click="modal.closeNotification" />
-      <Loading_modal />
+
   </div>
 
 

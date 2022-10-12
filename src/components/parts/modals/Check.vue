@@ -14,10 +14,18 @@ const props = defineProps({
   user_id:String,
 })
 
-let open = ref(true)
+const open = ref(true)
 
 const beLoading = ()=>{
+  open.value = false;
+  const token = document.cookie.replace(
+    // hexToken cookie名稱
+    /(?:(?:^|.*;\s*)title\s*=\s*([^;]*).*$)|^.*$/,
+    "$1"
+  );
+  console.log(token);
 
+  // alert(token);
 
 }
 
@@ -41,6 +49,7 @@ const beLoading = ()=>{
             <DialogPanel
               class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
               <div>
+                <!-- <div v-if="props.type === 'add' || 'update'" -->
                 <div v-if="props.type === 'add'"
                   class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100">
                   <PencilAltIcon class="h-6 w-6 text-indigo-600" aria-hidden="true" />
