@@ -9,10 +9,11 @@ export const useShowPostStore = defineStore('showPost', () => {
     title: '',
     content: '',
     userId: '',
+    userName: '',
     dateTime: '',
 
   })
-  const createNotification = (data: { type1: string; type2: string; id: string; title: string; content: string; userId: string; dateTime: string }) => {
+  const createNotification = (data: { type1: string; type2: string; id: string; title: string; content: string; userId: string; userName: string; dateTime: string }) => {
     notificationStatus.value = true
     notification.type1 = data.type1
     notification.type2 = data.type2
@@ -20,6 +21,7 @@ export const useShowPostStore = defineStore('showPost', () => {
     notification.title = data.title
     notification.content = data.content
     notification.userId = data.userId
+    notification.userName = data.userName
     notification.dateTime = data.dateTime
   }
   const closeNotification = () => {
@@ -30,6 +32,7 @@ export const useShowPostStore = defineStore('showPost', () => {
     notification.title = ''
     notification.content = ''
     notification.userId = ''
+    notification.userName = ''
     notification.dateTime = ''
   }
 

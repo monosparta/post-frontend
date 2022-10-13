@@ -13,7 +13,11 @@ const props = defineProps({
 
 const click = async () => {
   open.value = false
-  router.push({ path: '/show' })
+  if (props.type === 'add' || props.type === 'update') {
+    router.push({ path: '/show' })
+  } else if (props.type === 'delete') {
+    router.push({ path: '/post' })
+  }
 }
 
 </script>
