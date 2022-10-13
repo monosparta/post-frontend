@@ -54,7 +54,7 @@ export const useUserStore = defineStore('user', () => {
       else {
         try {
           const result = await axios.get(
-          `${import.meta.env.VITE_APP_API_URL}/api/v1/refresh-token`, {
+            `${import.meta.env.VITE_APP_API_URL}/api/v1/refresh-token`, {
             headers: {
               Authorization: `Bearer ${user.data.token.refresh_token}`,
             },
@@ -99,7 +99,7 @@ export const useUserStore = defineStore('user', () => {
       `${import.meta.env.VITE_APP_API_URL}/api/v1/login`, data,
     )
     user.data = result.data.data
-    document.cookie = `user_id=${user.data.user.id}`;
+    document.cookie = `userId=${user.data.user.id}`;
   }
 
   const logout = () => {
