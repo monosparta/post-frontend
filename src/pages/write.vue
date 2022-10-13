@@ -25,7 +25,7 @@ bulletinSectionHeader.createNotification({
 })
 
 const back = async () => {
-  router.push({ path: '/post' })
+  router.go(-1)
 }
 
 const check = async () => {
@@ -50,20 +50,15 @@ const check = async () => {
     document.cookie = `title=${title_input.value};`;
     document.cookie = `text_input=${text_input.value}`;
   }
-
-
-
 }
 
 
 </script>
 
-    <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <!-- <div class="px-4 sm:px-6 lg:px-8 mt-4 "> -->
   <div class="mt-4 mx-16 mb-4">
     <div class="flex flex-col">
-      <BulletinSectionHeader_2 v-if="bulletinSectionHeader.notificationStatus"
+      <BulletinSectionHeaderForPost v-if="bulletinSectionHeader.notificationStatus"
         :title="bulletinSectionHeader.notification.title" :type="bulletinSectionHeader.notification.type" />
       <main class="auto-cols-min">
         <div class="mt-4 h-10">
@@ -77,7 +72,6 @@ const check = async () => {
             style="height:576px" placeholder="Txt write here..." v-model="text_input"></textarea>
         </div>
         <div v-if="titleHeader==='新增文章'" class="relative grid grid-cols-3 gap-4 mt-4">
-          <!-- <div class="mt-4 flex md:absolute md:left-0 md:mt-4"> -->
           <div class="col-start-1 col-end-3">
             <button type="button"
               class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

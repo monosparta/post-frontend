@@ -16,7 +16,7 @@ bulletinSectionHeader.createNotification({
   <div class="mt-6 ml-16 mr-16">
     <div class="flex flex-col">
       <PostTab />
-      <BulletinSectionHeader_2 v-if="bulletinSectionHeader.notificationStatus"
+      <BulletinSectionHeaderForPost v-if="bulletinSectionHeader.notificationStatus"
         :title="bulletinSectionHeader.notification.title" :type="bulletinSectionHeader.notification.type" />
       <Empty />
     </div>
