@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 const router = useRouter()
 const route = useRoute()
 const modal = useModalStore()
@@ -49,12 +50,33 @@ const check = async () => {
     })
     document.cookie = `title=${title_input.value};`;
     document.cookie = `text_input=${text_input.value}`;
+    const title = title_input.value;
+    const content = text_input.value;
+    const user_id = getCookie("user_id");
+    createPost(
+      {
+        title,
+        content,
+        user_id
+      }
+    )
   }
-
-
-
 }
-
+const createPost = async (data: {
+        'title': string
+        'content': string
+        'user_id':string
+    }) => {
+        const result = await axios.post(
+            `${import.meta.env.VITE_APP_API_URL}/api/post`, data,
+        )
+        console.log(result.data)
+    }
+function getCookie(name:string) {
+      let arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+      if (arr != null) return unescape(arr[2]);
+      return null;
+    }
 
 </script>
 
