@@ -49,6 +49,8 @@ const check = async () => {
     })
     document.cookie = `title=${title_input.value};`;
     document.cookie = `text_input=${text_input.value}`;
+    console.log(document.cookie);
+
   }
 }
 
@@ -104,16 +106,12 @@ const check = async () => {
           </div>
         </div>
       </main>
-
       <Check v-if="modal_type==='check' && modal.notificationStatus===true" :text="modal.notification.text"
         :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification" />
       <Information v-if="modal_type==='information' && modal.notificationStatus===true" :text="modal.notification.text"
         :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification" />
     </div>
   </div>
-
-
-
 </template>
 
 <route lang="yaml">
