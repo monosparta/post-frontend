@@ -6,8 +6,9 @@
   <div class="min-h-full mt-5">
     <div class="mx-auto max-w-max mt-24">
       <main class="auto-cols-min">
-        <div class="grid justify-items-center">
-          <img src="../../assets/mono.svg" alt="" />
+        <div class="grid justify-items-center" style="height: ;">
+          <img src="../../assets/mono_cry.svg" data-lazy-loaded="1" alt="" />
+          <!-- <img src="../../assets/mono.svg" alt="" /> -->
         </div>
         <div class="sm:ml-6 mt-6">
           <div class="grid justify-items-center">
