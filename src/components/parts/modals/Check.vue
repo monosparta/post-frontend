@@ -1,8 +1,7 @@
 <script setup lang="ts">
-// import { ref } from 'vue'
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { PencilAltIcon, TrashIcon } from '@heroicons/vue/outline'
-
+const modal = useModalStore()
 
 const props = defineProps({
   type: String,
@@ -12,11 +11,11 @@ const props = defineProps({
 })
 
 const open = ref(true)
+const loading_open = ref(false)
 
-const beLoading = () => {
-  open.value = false;
-  // alert(token);
-
+const beLoading = async () => {
+  open.value = false
+  loading_open.value = true
 }
 
 </script>
@@ -70,5 +69,6 @@ const beLoading = () => {
       </div>
     </Dialog>
   </TransitionRoot>
+  <Loading_modal v-if="loading_open===true" />
 </template>
 
