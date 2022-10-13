@@ -48,9 +48,7 @@ const check = async () => {
       dateTime: '',
     })
     document.cookie = `title=${title_input.value};`;
-    document.cookie = `text_input=${text_input.value}`;
-    console.log(document.cookie);
-
+    document.cookie = `content=${text_input.value}`;
   }
 }
 
