@@ -3,7 +3,7 @@
 // Read more: https://github.com/vuejs/core/pull/3399
 import '@vue/runtime-core'
 
-export {}
+export { }
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -23,7 +23,7 @@ declare module '@vue/runtime-core' {
     Information: typeof import('./components/parts/modals/Information.vue')['default']
     InputBox: typeof import('./components/parts/InputBox.vue')['default']
     Loading: typeof import('./components/parts/loading.vue')['default']
-    Loading_modal: typeof import('./components/parts/modals/Loading_modal.vue')['default']
+    Loading_modal: typeof import('./components/parts/modals/LoadingModal.vue')['default']
     MemberEmergency: typeof import('./components/parts/member/MemberEmergency.vue')['default']
     MemberInfo: typeof import('./components/parts/member/MemberInfo.vue')['default']
     MemberOrganization: typeof import('./components/parts/member/MemberOrganization.vue')['default']
@@ -37,7 +37,7 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SelectMenus: typeof import('./components/parts/SelectMenus.vue')['default']
-    Tab: typeof import('./components/parts/Tab.vue')['default']
+    Tab: typeof import('./components/parts/PostTab.vue')['default']
     Toast: typeof import('./components/parts/Toast.vue')['default']
     ToastNotification: typeof import('./components/ToastNotification.vue')['default']
     TransitionChild: typeof import('@headlessui/vue')['TransitionChild']
