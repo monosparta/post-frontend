@@ -2,7 +2,7 @@
 // import { ref } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { CheckIcon, ExclamationIcon } from '@heroicons/vue/outline'
-
+const router = useRouter()
 const open = ref(true)
 
 const props = defineProps({
@@ -10,6 +10,11 @@ const props = defineProps({
   text: String,
   dateTime: String,
 })
+
+const click = async () => {
+  open.value = false
+  router.push({ path: '/show' })
+}
 
 </script>
 
@@ -65,7 +70,7 @@ const props = defineProps({
               <div class="mt-6 sm:mt-6">
                 <button type="button"
                   class="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"
-                  @click="open = false">確定</button>
+                  @click="click()">確定</button>
               </div>
             </DialogPanel>
           </TransitionChild>
