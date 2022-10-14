@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { CheckCircleIcon, ExclamationIcon, XCircleIcon } from '@heroicons/vue/outline'
-import { XIcon } from '@heroicons/vue/solid'
+import { CheckCircleIcon, ExclamationTriangleIcon, XCircleIcon } from '@heroicons/vue/24/outline'
+import { XMarkIcon } from '@heroicons/vue/24/solid'
 const props = defineProps({
   title: String,
   type: String,
@@ -35,7 +35,7 @@ onMounted(() => {
             <div class="flex items-start">
               <div class="flex-shrink-0">
                 <CheckCircleIcon v-if="props.type === 'success'" class="h-6 w-6 text-green-400" aria-hidden="true" />
-                <ExclamationIcon v-else-if="props.type === 'warning'" class="h-5 w-5 text-yellow-400" aria-hidden="true" />
+                <ExclamationTriangleIcon v-else-if="props.type === 'warning'" class="h-5 w-5 text-yellow-400" aria-hidden="true" />
                 <XCircleIcon v-else-if="props.type === 'error'" class="h-5 w-5 text-red-400" aria-hidden="true" />
               </div>
               <div class="ml-3 w-0 flex-1 pt-0.5">
@@ -52,7 +52,7 @@ onMounted(() => {
                   @click="clickX"
                 >
                   <span class="sr-only">Close</span>
-                  <XIcon class="h-5 w-5" aria-hidden="true" />
+                  <XMarkIcon class="h-5 w-5" aria-hidden="true" />
                 </button>
               </div>
             </div>

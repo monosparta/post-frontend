@@ -7,9 +7,9 @@ const emptyMember = {
     custom_id: '',
     username: '',
     email: '',
-    country_code: '',
-    country_calling_code: '',
-    phone: '',
+    mobile_country_code: '',
+    mobile_country_calling_code: '',
+    mobile: '',
     full_name: '',
     email_verify: false,
     phone_verify: false,
@@ -25,13 +25,14 @@ const emptyMember = {
     last_name: '',
     middle_name: '',
     job_title: '',
-    country_code: '',
-    country_calling_code: '',
-    telephone: '',
+    phone_country_code: '',
+    phone_country_calling_code: '',
+    phone: '',
     nationality: '',
     identity_code: '',
     address: {
-      address: '',
+      address_line_1: '',
+      address_line_2: '',
       city: '',
       region: '',
       zip_code: '',
@@ -40,12 +41,13 @@ const emptyMember = {
   organization: {
     name: '',
     email: '',
-    country_code: '',
-    country_calling_code: '',
-    telephone: '',
+    phone_country_code: '',
+    phone_country_calling_code: '',
+    phone: '',
     vat: '',
     address: {
-      address: '',
+      address_line_1: '',
+      address_line_2: '',
       city: '',
       region: '',
       zip_code: '',
@@ -53,9 +55,9 @@ const emptyMember = {
   },
   emergency_contact: {
     name: '',
-    country_code: '',
-    country_calling_code: '',
-    phone: '',
+    mobile_country_code: '',
+    mobile_country_calling_code: '',
+    mobile: '',
   },
 }
 
@@ -115,7 +117,6 @@ export const useMemberStore = defineStore('member', () => {
       members.value.meta = meta
     }
     catch (error) {
-      console.log(error)
     }
   }
   const clearMember = () => {
@@ -147,7 +148,6 @@ export const useMemberStore = defineStore('member', () => {
         member.emergency_contact = res.data.emergency_contact
     }
     catch (error) {
-      console.log(error)
     }
   }
   const setPage = async (page: number) => {
@@ -164,9 +164,9 @@ export const useMemberStore = defineStore('member', () => {
     username: string
     full_name: string
     email: string
-    country_code: string
-    country_calling_code: string
-    phone: string
+    mobile_country_code: string
+    mobile_country_calling_code: string
+    mobile: string
     password: string
     confirm_password: string
   }) => {
@@ -187,9 +187,9 @@ export const useMemberStore = defineStore('member', () => {
     username: string
     full_name: string
     email: string
-    phone: string
-    country_code: string
-    country_calling_code: string
+    mobile: string
+    mobile_country_code: string
+    mobile_calling_code: string
   }) => {
     const logged = await user.checkToken()
     if (!logged)
@@ -213,13 +213,14 @@ export const useMemberStore = defineStore('member', () => {
     last_name: string
     middle_name: string
     job_title: string
-    country_code: string
-    country_calling_code: string
-    telephone: string
+    phone_country_code: string
+    phone_country_calling_code: string
+    phone: string
     nationality: string
     identity_code: string
     address: {
-      address: string
+      address_line_1: string
+      address_line_2: string
       city: string
       region: string
       zip_code: string
@@ -242,12 +243,13 @@ export const useMemberStore = defineStore('member', () => {
   const updateMemberOrganization = async (id: string, data: {
     name: string
     email: string
-    country_code: string
-    country_calling_code: string
-    telephone: string
+    phone_country_code: string
+    phone_country_calling_code: string
+    phone: string
     vat: string
     address: {
-      address: string
+      address_line_1: string
+      address_line_2: string
       city: string
       region: string
       zip_code: string
@@ -269,9 +271,9 @@ export const useMemberStore = defineStore('member', () => {
   }
   const updateMemberEmergency = async (id: string, data: {
     name: string
-    phone: string
-    country_code: string
-    country_calling_code: string
+    mobile: string
+    mobile_country_code: string
+    mobile_country_calling_code: string
   }) => {
     const logged = await user.checkToken()
     if (!logged)

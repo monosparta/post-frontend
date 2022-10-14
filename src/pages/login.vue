@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ExclamationCircleIcon } from '@heroicons/vue/solid'
+import { ExclamationCircleIcon } from '@heroicons/vue/24/solid'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
@@ -47,7 +47,7 @@ const login = async () => {
     <div class="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
       <div class="mx-auto w-full max-w-sm lg:w-96">
         <div>
-          <img class="h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow">
+          <img class="h-12 w-auto" src="../assets/vue.svg" alt="Workflow">
           <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
             Sign in to your account
           </h2>

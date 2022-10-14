@@ -11,14 +11,13 @@ export const useUserStore = defineStore('user', () => {
         id: '',
         email: '',
         username: '',
-        phone: null,
+        phone: '',
       },
       token: {
         access_token: '',
         access_token_expires_at: '',
         refresh_token: '',
         refresh_token_expires_at: '',
-
         token_type: 'Bearer',
       },
     },
@@ -80,16 +79,16 @@ export const useUserStore = defineStore('user', () => {
     return true
   }
 
-  const register = async (data: {
-    'email': string
-    'password': string
-    'confirm_password': string
-  }) => {
-    const result = await axios.put(
-      `${import.meta.env.VITE_APP_API_URL}/api/v1/register`, data,
-    )
-    user.data = result.data.data
-  }
+  // const register = async (data: {
+  //   'email': string
+  //   'password': string
+  //   'confirm_password': string
+  // }) => {
+  //   const result = await axios.put(
+  //     `${import.meta.env.VITE_APP_API_URL}/api/v1/register`, data,
+  //   )
+  //   user.data = result.data.data
+  // }
 
   const login = async (data: {
     'email': string
@@ -107,7 +106,7 @@ export const useUserStore = defineStore('user', () => {
         id: '',
         email: '',
         username: '',
-        phone: null,
+        phone: '',
       },
       token: {
         access_token: '',

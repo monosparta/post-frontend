@@ -20,6 +20,12 @@ export const useDropdownStore = defineStore('dropdown', () => {
       {
         id: 1,
         name: '網站會員',
+        title: '網站會員',
+        value: '網站會員',
+        value_alt: '網站會員',
+        value_alt_2: '網站會員',
+        sequence: 1,
+        is_enabled: true,
       },
     ],
   })
@@ -27,6 +33,7 @@ export const useDropdownStore = defineStore('dropdown', () => {
     data: [
       {
         id: 98,
+        name: '台北市',
         title: '台北市',
         value: '台北市',
         value_alt: '100',
@@ -40,6 +47,7 @@ export const useDropdownStore = defineStore('dropdown', () => {
     data: [
       {
         id: 1,
+        name: 'TW 台灣',
         title: '台灣',
         value: 'TW',
         value_alt: 'TWN',
@@ -53,6 +61,7 @@ export const useDropdownStore = defineStore('dropdown', () => {
     data: [
       {
         id: 1,
+        name: '',
         title: '',
         value: '',
         value_alt: '',
@@ -82,7 +91,20 @@ export const useDropdownStore = defineStore('dropdown', () => {
           },
         },
       )
-      categories.data = res.data
+      categories.data = res.data.map((data: {
+        id: number
+        name: string
+      }) => {
+        return {
+          ...data,
+          title: data.name,
+          value: data.name,
+          value_alt: data.name,
+          value_alt_2: data.name,
+          sequence: 1,
+          is_enabled: true,
+        }
+      })
     }
     catch (error) {
     }

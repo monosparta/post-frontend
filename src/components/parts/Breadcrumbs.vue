@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { HomeIcon } from '@heroicons/vue/solid'
+import { HomeIcon } from '@heroicons/vue/24/solid'
 
 const pages = [
   { name: 'Projects', href: '#', current: false },

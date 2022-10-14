@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ExclamationCircleIcon } from '@heroicons/vue/solid'
+import { ExclamationCircleIcon } from '@heroicons/vue/24/solid'
 // const isAccountVerify = ref(false)
 const dropdown = useDropdownStore()
 const layout = useLayoutStore()
@@ -13,15 +13,16 @@ const last_name = ref('')
 const middle_name = ref('')
 const job_title = ref('')
 const country_calling_number = ref(dropdown.countryCallingCode.data[0])
-const telephone = ref('')
+const phone = ref('')
 const nationality = ref(dropdown.countryCode.data[0])
 const identity_code = ref('')
-const address = ref('')
+const address_line_1 = ref('')
+const address_line_2 = ref('')
 const city = ref(dropdown.city.data[0])
 const region = ref(dropdown.region.data[0])
 const refresh = ref(false)
 
-const validation = reactive({
+const validationRaw: { [key: string]: any } = {
   first_name: {
     status: false,
     text: '',
@@ -34,7 +35,7 @@ const validation = reactive({
     status: false,
     text: '',
   },
-  telephone: {
+  phone: {
     status: false,
     text: '',
   },
@@ -46,7 +47,9 @@ const validation = reactive({
     status: false,
     text: '',
   },
-})
+}
+
+const validation = reactive(validationRaw)
 
 watch([first_name], (newValue, oldValue) => {
   validation.first_name = {
@@ -69,8 +72,8 @@ watch([gender], (newValue, oldValue) => {
   }
 })
 
-watch([telephone], (newValue, oldValue) => {
-  validation.telephone = {
+watch([phone], (newValue, oldValue) => {
+  validation.phone = {
     status: false,
     text: '',
   }
@@ -90,13 +93,23 @@ watch([job_title], (newValue, oldValue) => {
   }
 })
 
-const changeCategories = (data: { id: number; name: string }) => {
+const changeCategories = (data: {
+  id: number
+  name: string
+  title: string
+  value: string
+  value_alt: string
+  value_alt_2: string
+  sequence: number
+  is_enabled: boolean
+}) => {
   categories.value = data
 }
 
 const changeNationality = (data: {
   id: number
   title: string
+  name: string
   value: string
   value_alt: string
   value_alt_2: string
@@ -109,6 +122,7 @@ const changeNationality = (data: {
 const changeCity = (data: {
   id: number
   title: string
+  name: string
   value: string
   value_alt: string
   value_alt_2: string
@@ -123,6 +137,7 @@ const changeCity = (data: {
 const changeRegion = (data: {
   id: number
   title: string
+  name: string
   value: string
   value_alt: string
   value_alt_2: string
@@ -149,13 +164,13 @@ const setData = () => {
     middle_name.value = member.profile.middle_name
     job_title.value = member.profile.job_title
     dropdown.countryCallingCode.data.every((data) => {
-      if (data.value_alt === member.profile.country_code) {
+      if (data.value_alt === member.profile.phone_country_code) {
         country_calling_number.value = data
         return false
       }
       return true
     })
-    telephone.value = member.profile.telephone
+    phone.value = member.profile.phone
     dropdown.countryCode.data.every((data) => {
       if (data.title === member.profile.nationality) {
         nationality.value = data
@@ -164,7 +179,8 @@ const setData = () => {
       return true
     })
     identity_code.value = member.profile.identity_code
-    address.value = member.profile.address.address
+    address_line_1.value = member.profile.address.address_line_1
+    address_line_2.value = member.profile.address.address_line_2
     dropdown.city.data.every((data) => {
       if (data.title === member.profile.address.city) {
         city.value = data
@@ -204,13 +220,14 @@ const save = async () => {
     last_name: last_name.value,
     middle_name: middle_name.value,
     job_title: job_title.value,
-    country_code: country_calling_number.value.value_alt,
-    country_calling_code: country_calling_number.value.value,
-    telephone: telephone.value,
+    phone_country_code: country_calling_number.value.value_alt,
+    phone_country_calling_code: country_calling_number.value.value,
+    phone: phone.value,
     nationality: nationality.value.title,
     identity_code: identity_code.value,
     address: {
-      address: address.value,
+      address_line_1: address_line_1.value,
+      address_line_2: address_line_2.value,
       city: city.value.value,
       region: region.value.title,
       zip_code: region.value.value_alt,
@@ -228,7 +245,7 @@ const save = async () => {
   catch (error: any) {
     if (error.response.data) {
       const err = error.response.data.message
-      Object.keys(err).forEach((key: String) => {
+      Object.keys(err).forEach((key: string) => {
         validation[key] = {
           status: true,
           text: err[key][0],
@@ -260,7 +277,7 @@ const save = async () => {
           <div class="col-span-6 sm:col-span-6">
             <label for="class" class="block text-sm font-medium text-gray-500">Class</label>
             <SelectMenus
-              :key="refresh" :default="categories"
+              :key="(refresh) ? 1 : 0" :default="categories"
               name="class" class="mt-1" :data="dropdown.categories.data"
               @select="((value: any) => changeCategories(value))"
             />
@@ -345,10 +362,10 @@ const save = async () => {
           </div>
 
           <div class="col-span-6 sm:col-span-3">
-            <label for="telephone" class="block text-sm font-medium text-gray-700">Telephone</label>
+            <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
             <div class="mt-1 relative rounded-md shadow-sm">
               <div class="absolute inset-y-0 left-0 flex items-center">
-                <!-- <SelectMenus :key="refresh" name="class" class="" :data="countryCallingNumberDrop" @select="((value: any) => changeCountryCallingNumber(value))" /> -->
+                <!-- <SelectMenus :key="(refresh) ? 1 : 0" name="class" class="" :data="countryCallingNumberDrop" @select="((value: any) => changeCountryCallingNumber(value))" /> -->
                 <select
                   id="country_calling_number" v-model="country_calling_number" name="country_calling_number"
                   autocomplete="countryCallingNumber"
@@ -360,9 +377,9 @@ const save = async () => {
                 </select>
               </div>
               <input
-                id="telephone" v-model="telephone" type="text" name="telephone"
+                id="phone" v-model="phone" type="text" name="phone"
                 class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-[7.5rem] sm:text-sm border-gray-300 rounded-md"
-                :class="{ 'border-red-500 pr-10 text-red-900 focus:ring-red-500 focus:border-red-500 placeholder-red-500': validation.telephone.status }"
+                :class="{ 'border-red-500 pr-10 text-red-900 focus:ring-red-500 focus:border-red-500 placeholder-red-500': validation.phone.status }"
                 placeholder="9-1234-5678"
               >
             </div>
@@ -371,7 +388,7 @@ const save = async () => {
             <label for="nationality" class="block text-sm font-medium text-gray-500">Country of
               Citizenship</label>
             <SelectMenus
-              :key="refresh" :default="nationality"
+              :key="(refresh) ? 1 : 0" :default="nationality"
               name="nationality" class="mt-1" :data="dropdown.countryCode.data"
               @select="((value: any) => changeNationality(value))"
             />
@@ -386,17 +403,20 @@ const save = async () => {
           </div>
           <div class="col-span-6 sm:col-span-3">
             <label for="city" class="block text-sm font-medium text-gray-500">City / Country</label>
-            <SelectMenus :key="refresh" :default="city" name="city" class="mt-1" :data="dropdown.city.data" @select="((value: any) => changeCity(value))" />
+            <SelectMenus :key="(refresh) ? 1 : 0" :default="city" name="city" class="mt-1" :data="dropdown.city.data" @select="((value: any) => changeCity(value))" />
           </div>
           <div class="col-span-6 sm:col-span-3">
             <label for="state" class="block text-sm font-medium text-gray-500">District</label>
-            <SelectMenus :key="refresh" :default="region" name="state" class="mt-1" :data="dropdown.filterRegion(city.value)" @select="((value: any) => changeRegion(value))" />
+            <SelectMenus :key="(refresh) ? 1 : 0" :default="region" name="state" class="mt-1" :data="dropdown.filterRegion(city.value)" @select="((value: any) => changeRegion(value))" />
           </div>
           <div class="col-span-6 sm:col-span-6">
             <div class="col-span-6 sm:col-span-3">
               <InputBox
-                id="street" v-model="address" type="text" title="Street Address"
-                placeholder="Street Address"
+                id="address-1" v-model="address_line_1" type="text" title="Street Address"
+                placeholder="Address Line 1"
+              />
+              <InputBox
+                id="address-2" v-model="address_line_2" type="text" placeholder="Address Line 2"
               />
             </div>
           </div>

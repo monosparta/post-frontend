@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { DotsVerticalIcon, SearchIcon } from '@heroicons/vue/solid'
+import { EllipsisVerticalIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 // const { t } = useI18n()
 const layout = useLayoutStore()
 const messageStore = useMessageStore()
@@ -8,7 +8,7 @@ const createWindow = ref(false)
 const username = ref('')
 const message = ref('')
 
-const validation = reactive({
+const validationRaw: { [key: string]: any } = {
   username: {
     status: false,
     text: '',
@@ -17,19 +17,41 @@ const validation = reactive({
     status: false,
     text: '',
   },
-})
+}
+
+const validation = reactive(validationRaw)
 
 const peopleDrop = [
-  { id: 1, name: 'Wade Cooper' },
-  { id: 2, name: 'Arlene Mccoy' },
-  { id: 3, name: 'Devon Webb' },
-  { id: 4, name: 'Tom Cook' },
-  { id: 5, name: 'Tanya Fox' },
-  { id: 6, name: 'Hellen Schmidt' },
-  { id: 7, name: 'Caroline Schultz' },
-  { id: 8, name: 'Mason Heaney' },
-  { id: 9, name: 'Claudie Smitham' },
-  { id: 10, name: 'Emil Schaefer' },
+  {
+    id: 1,
+    name: 'Wade Cooper',
+    title: '',
+    value: '',
+    value_alt: '',
+    value_alt_2: '',
+    sequence: 1,
+    is_enabled: true,
+  },
+  {
+    id: 2,
+    name: 'Arlene Mccoy',
+    title: '',
+    value: '',
+    value_alt: '',
+    value_alt_2: '',
+    sequence: 1,
+    is_enabled: true,
+  },
+  {
+    id: 3,
+    name: 'Devon Webb',
+    title: '',
+    value: '',
+    value_alt: '',
+    value_alt_2: '',
+    sequence: 1,
+    is_enabled: true,
+  },
 ]
 
 watch([username], (newValue, oldValue) => {
@@ -72,7 +94,7 @@ const create = async () => {
   catch (error: any) {
     if (error.response.data) {
       const err = error.response.data.errors
-      Object.keys(err).forEach((key: String) => {
+      Object.keys(err).forEach((key: string) => {
         validation[key] = {
           status: true,
           text: err[key][0],
@@ -111,7 +133,7 @@ const create = async () => {
               class="-my-2 p-2 rounded-full bg-white flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <span class="sr-only">Open options</span>
-              <DotsVerticalIcon class="h-5 w-5" aria-hidden="true" />
+              <EllipsisVerticalIcon class="h-5 w-5" aria-hidden="true" />
             </MenuButton>
           </div>
 
@@ -197,7 +219,7 @@ const create = async () => {
       <label for="search" class="sr-only">Search</label>
       <div class="relative text-sky-100 focus-within:text-gray-400">
         <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-          <SearchIcon class="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
+          <MagnifyingGlassIcon class="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
         </div>
         <input
           id="search" type="text" name="search"

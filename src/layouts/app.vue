@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import {
-  AnnotationIcon,
-  ChipIcon,
+  ChatBubbleBottomCenterIcon,
+  ClipboardDocumentCheckIcon,
+  CpuChipIcon,
   HomeIcon,
+  Squares2X2Icon,
   UsersIcon,
-  XIcon,
-} from '@heroicons/vue/outline'
+  XMarkIcon,
+} from '@heroicons/vue/24/outline'
 import AppHeader from '../components/AppHeader.vue'
 
 import { useSidebar } from '../hooks/useSidebar'
@@ -13,8 +15,6 @@ import { useSidebar } from '../hooks/useSidebar'
 const navigation = [
   { name: 'Dashboard', label: 'dashboard', href: '/dashboard', icon: HomeIcon, current: false },
   { name: 'Users', label: 'users', href: '/users', icon: UsersIcon, current: false },
-  { name: 'Bulletin', label: 'bulletin', href: '/bulletin', icon: AnnotationIcon, current: false },
-  { name: 'Devices', label: 'devices', href: '/devices', icon: ChipIcon, current: false },
 ]
 
 const layout = useLayoutStore()
@@ -59,7 +59,7 @@ const clickItem = (item: any) => {
                     @click="toggleSidebarCollapse()"
                   >
                     <span class="sr-only">Close sidebar</span>
-                    <XIcon class="h-6 w-6 text-white" aria-hidden="true" />
+                    <XMarkIcon class="h-6 w-6 text-white" aria-hidden="true" />
                   </button>
                 </div>
               </TransitionChild>

@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import {
-  CheckIcon,
   QuestionMarkCircleIcon,
-  ThumbUpIcon,
-  UserIcon,
-} from '@heroicons/vue/solid'
+} from '@heroicons/vue/24/solid'
 const dropdown = useDropdownStore()
 const member = useMemberStore()
 
@@ -177,13 +174,13 @@ const tabs = [
     </div>
     <div class="mt-8 w-full grid grid-cols-6 gap-6 sm:px-6">
       <div class="col-span-6 xl:col-span-6">
-        <MemberInfo :key="refresh" />
+        <MemberInfo :key="(refresh) ? 1 : 0" />
 
-        <MemberProfile :key="refresh" />
+        <MemberProfile :key="(refresh) ? 1 : 0" />
 
-        <MemberOrganization :key="refresh" />
+        <MemberOrganization :key="(refresh) ? 1 : 0" />
 
-        <MemberEmergency :key="refresh" />
+        <MemberEmergency :key="(refresh) ? 1 : 0" />
 
         <!-- Action -->
         <section aria-labelledby="action-title" class="pb-4 px-4 sm:px-6 lg:pb-8 lg:px-0 lg:row-start-1 lg:col-start-1">
@@ -382,7 +379,7 @@ const tabs = [
               >
                 <div>
                   <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-red-100">
-                    <ExclamationIcon class="h-12 w-12 text-red-600" aria-hidden="true" />
+                    <ExclamationTriangleIcon class="h-12 w-12 text-red-600" aria-hidden="true" />
                   </div>
                   <div class="mt-3 text-center sm:mt-5">
                     <DialogTitle as="h3" class="text-4xl font-medium leading-6 text-gray-900">

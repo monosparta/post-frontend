@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ExclamationCircleIcon } from '@heroicons/vue/solid'
+import { ExclamationCircleIcon } from '@heroicons/vue/24/solid'
 // const emailVerify = ref(false)
 // const phoneVerify = ref(false)
 const dropdown = useDropdownStore()
@@ -11,9 +11,9 @@ const username = ref('')
 const email = ref('')
 const full_name = ref('')
 const country_calling_number = ref(dropdown.countryCallingCode.data[0])
-const phone = ref('')
+const mobile = ref('')
 
-const validation = reactive({
+const validationRaw: { [key: string]: any } = {
   username: {
     status: false,
     text: '',
@@ -26,11 +26,13 @@ const validation = reactive({
     status: false,
     text: '',
   },
-  phone: {
+  mobile: {
     status: false,
     text: '',
   },
-})
+}
+
+const validation = reactive(validationRaw)
 
 watch([username], (newValue, oldValue) => {
   validation.username = {
@@ -50,8 +52,8 @@ watch([email], (newValue, oldValue) => {
     text: '',
   }
 })
-watch([phone], (newValue, oldValue) => {
-  validation.phone = {
+watch([mobile], (newValue, oldValue) => {
+  validation.mobile = {
     status: false,
     text: '',
   }
@@ -62,7 +64,7 @@ const setData = () => {
   username.value = member.info.username
   email.value = member.info.email
   full_name.value = member.info.full_name
-  phone.value = member.info.phone
+  mobile.value = member.info.mobile
   dropdown.countryCallingCode.data.every((data) => {
     if (data.value_alt === member.info.country_code) {
       country_calling_number.value = data
@@ -84,14 +86,14 @@ const save = async () => {
   validation.username = clear
   validation.full_name = clear
   validation.email = clear
-  validation.phone = clear
+  validation.mobile = clear
   const memberData = {
     username: username.value,
     full_name: full_name.value,
     email: email.value,
-    phone: phone.value,
-    country_code: country_calling_number.value.value_alt,
-    country_calling_code: country_calling_number.value.value,
+    mobile: mobile.value,
+    mobile_country_code: country_calling_number.value.value_alt,
+    mobile_country_calling_code: country_calling_number.value.value,
   }
   try {
     await member.updateMemberInfo(member.member.id, memberData)
@@ -105,7 +107,7 @@ const save = async () => {
   catch (error: any) {
     if (error.response.data) {
       const err = error.response.data.message
-      Object.keys(err).forEach((key: String) => {
+      Object.keys(err).forEach((key: string) => {
         validation[key] = {
           status: true,
           text: err[key][0],
@@ -189,7 +191,7 @@ const save = async () => {
           <div class="sm:col-span-1">
             <div class="col-span-6 sm:col-span-3">
               <div class="flex justify-between">
-                <label for="phone" class="block text-sm font-medium text-gray-500">Phone</label>
+                <label for="mobile" class="block text-sm font-medium text-gray-500">Mobile</label>
                 <span
                   :class="{
                     'inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 select-none': !member.info.phone_verify,
@@ -211,14 +213,14 @@ const save = async () => {
                   </select>
                 </div>
                 <input
-                  id="phone" v-model="phone" type="text" name="phone"
+                  id="mobile" v-model="mobile" type="text" name="mobile"
                   class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-[7.5rem] sm:text-sm border-gray-300 rounded-md"
-                  :class="{ 'border-red-500 pr-10 text-red-900 focus:ring-red-500 focus:border-red-500 placeholder-red-500': validation.phone.status }"
+                  :class="{ 'border-red-500 pr-10 text-red-900 focus:ring-red-500 focus:border-red-500 placeholder-red-500': validation.mobile.status }"
                   placeholder="9-1234-5678"
                 >
               </div>
-              <p v-if="validation.phone.status" class="flex mt-2 text-sm text-red-600">
-                <ExclamationCircleIcon class="h-5 w-5 mr-1 text-red-500" aria-hidden="true" />{{ validation.phone.text
+              <p v-if="validation.mobile.status" class="flex mt-2 text-sm text-red-600">
+                <ExclamationCircleIcon class="h-5 w-5 mr-1 text-red-500" aria-hidden="true" />{{ validation.mobile.text
                 }}
               </p>
             </div>
