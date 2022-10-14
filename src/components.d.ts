@@ -3,7 +3,7 @@
 // Read more: https://github.com/vuejs/core/pull/3399
 import '@vue/runtime-core'
 
-export {}
+export { }
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -38,9 +38,13 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     SelectMenus: typeof import('./components/parts/SelectMenus.vue')['default']
     ShowPost: typeof import('./components/parts/ShowPost.vue')['default']
+    Switch: typeof import('@headlessui/vue')['Switch']
+    SwitchGroup: typeof import('@headlessui/vue')['SwitchGroup']
+    SwitchLabel: typeof import('@headlessui/vue')['SwitchLabel']
     Toast: typeof import('./components/parts/Toast.vue')['default']
     ToastNotification: typeof import('./components/ToastNotification.vue')['default']
     TransitionChild: typeof import('@headlessui/vue')['TransitionChild']
     TransitionRoot: typeof import('@headlessui/vue')['TransitionRoot']
+    WriteButton: typeof import('./components/parts/WriteButton.vue')['default']
   }
 }
