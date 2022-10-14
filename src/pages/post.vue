@@ -14,30 +14,42 @@ const fakeData = [
     id: '1',
     title: 'Lorem ipsum dolor sit amet.',
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce interdum metus id fringilla sodales. Suspendisse vitae nibh cursus, consequat neque sed, rutrum neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin placerat purus a accumsan faucibus. Morbi nec tellus lorem. Quisque ut massa et arcu gravida convallis ut et leo. Proin tincidunt, risus eget pretium elementum, dui elit porta elit, quis varius lacus urna a turpis.',
-    userId: '00000000-0000-0000-0000-000000000000',
-    userName: 'John Doe',
-    dateTime: '2022-10-13 10:34:13',
+    created_at: '2022-10-13 10:34:13',
+    updated_at: '2022-10-13 10:34:13',
+    user: {
+      id: '00000000-0000-0000-0000-000000000000',
+      name: 'John Doe',
+    }
   }, {
     id: '2',
     title: 'Lorem ipsum dolor sit amet.',
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce interdum metus id fringilla sodales. Suspendisse vitae nibh cursus, consequat neque sed, rutrum neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin placerat purus a accumsan faucibus. Morbi nec tellus lorem. Quisque ut massa et arcu gravida convallis ut et leo. Proin tincidunt, risus eget pretium elementum, dui elit porta elit, quis varius lacus urna a turpis.',
-    userId: '00000000-0000-0000-0000-000000000000',
-    userName: 'John Doe',
-    dateTime: '2022-10-13 10:34:13',
+    created_at: '2022-10-13 10:34:13',
+    updated_at: '2022-10-13 10:34:13',
+    user: {
+      id: '00000000-0000-0000-0000-000000000000',
+      name: 'John Doe',
+    }
   }, {
     id: '3',
     title: 'Lorem ipsum dolor sit amet.',
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce interdum metus id fringilla sodales. Suspendisse vitae nibh cursus, consequat neque sed, rutrum neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin placerat purus a accumsan faucibus. Morbi nec tellus lorem. Quisque ut massa et arcu gravida convallis ut et leo. Proin tincidunt, risus eget pretium elementum, dui elit porta elit, quis varius lacus urna a turpis.',
-    userId: '05c1d5e7-49a1-4b62-9e49-b91ac98c6871',
-    userName: 'dFzsk4641',
-    dateTime: '2022-10-13 10:34:13',
+    created_at: '2022-10-13 10:34:13',
+    updated_at: '2022-10-13 10:34:13',
+    user: {
+      id: '05c1d5e7-49a1-4b62-9e49-b91ac98c6871',
+      name: 'dFzsk4641',
+    }
   }, {
     id: '4',
     title: 'Lorem ipsum dolor sit amet.',
     content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce interdum metus id fringilla sodales. Suspendisse vitae nibh cursus, consequat neque sed, rutrum neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin placerat purus a accumsan faucibus. Morbi nec tellus lorem. Quisque ut massa et arcu gravida convallis ut et leo. Proin tincidunt, risus eget pretium elementum, dui elit porta elit, quis varius lacus urna a turpis.',
-    userId: '05c1d5e7-49a1-4b62-9e49-b91ac98c6871',
-    userName: 'dFzsk4641',
-    dateTime: '2022-10-13 10:34:13',
+    created_at: '2022-10-13 10:34:13',
+    updated_at: '2022-10-13 10:34:13',
+    user: {
+      id: '05c1d5e7-49a1-4b62-9e49-b91ac98c6871',
+      name: 'dFzsk4641',
+    }
   }
 ]
 
@@ -60,8 +72,8 @@ bulletinSectionHeader.createNotification({
       </div>
       <div v-else-if="cookieHave().length>2" class="mt-6">
         <div v-for="post in fakeData" :key="post.id">
-          <ShowPost :title="post.title" :content="post.content" :userId="post.userId" :userName="post.userName"
-            :dateTime="post.dateTime" :type1="'frontPage'" :type2="''" />
+          <ShowPost :title="post.title" :content="post.content" :userId="post.user.id" :userName="post.user.name"
+            :dateTime="post.created_at" :type1="'frontPage'" :type2="''" />
         </div>
       </div>
     </div>
