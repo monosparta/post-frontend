@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { DotsVerticalIcon, ExclamationCircleIcon, SearchIcon } from '@heroicons/vue/solid'
+import { EllipsisVerticalIcon, ExclamationCircleIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 const { t } = useI18n()
 const member = useMemberStore()
 const dropdown = useDropdownStore()
@@ -11,7 +11,7 @@ const username = ref('')
 const full_name = ref('')
 const email = ref('')
 const country_calling_number = ref(dropdown.countryCallingCode.data[0])
-const phone = ref('')
+const mobile = ref('')
 const password = ref('')
 const confirm_password = ref('')
 
@@ -24,7 +24,7 @@ const confirm_password = ref('')
 //   confirm_password: '',
 // })
 
-const validation = reactive({
+const validationRaw: { [key: string]: any } = {
   custom_id: {
     status: false,
     text: '',
@@ -41,7 +41,7 @@ const validation = reactive({
     status: false,
     text: '',
   },
-  phone: {
+  mobile: {
     status: false,
     text: '',
   },
@@ -53,19 +53,41 @@ const validation = reactive({
     status: false,
     text: '',
   },
-})
+}
+
+const validation = reactive(validationRaw)
 
 const peopleDrop = [
-  { id: 1, name: 'Wade Cooper' },
-  { id: 2, name: 'Arlene Mccoy' },
-  { id: 3, name: 'Devon Webb' },
-  { id: 4, name: 'Tom Cook' },
-  { id: 5, name: 'Tanya Fox' },
-  { id: 6, name: 'Hellen Schmidt' },
-  { id: 7, name: 'Caroline Schultz' },
-  { id: 8, name: 'Mason Heaney' },
-  { id: 9, name: 'Claudie Smitham' },
-  { id: 10, name: 'Emil Schaefer' },
+  {
+    id: 1,
+    name: 'Wade Cooper',
+    title: '',
+    value: '',
+    value_alt: '',
+    value_alt_2: '',
+    sequence: 1,
+    is_enabled: true,
+  },
+  {
+    id: 2,
+    name: 'Arlene Mccoy',
+    title: '',
+    value: '',
+    value_alt: '',
+    value_alt_2: '',
+    sequence: 1,
+    is_enabled: true,
+  },
+  {
+    id: 3,
+    name: 'Devon Webb',
+    title: '',
+    value: '',
+    value_alt: '',
+    value_alt_2: '',
+    sequence: 1,
+    is_enabled: true,
+  },
 ]
 
 watch([custom_id], (newValue, oldValue) => {
@@ -92,8 +114,8 @@ watch([email], (newValue, oldValue) => {
     text: '',
   }
 })
-watch([phone], (newValue, oldValue) => {
-  validation.phone = {
+watch([mobile], (newValue, oldValue) => {
+  validation.mobile = {
     status: false,
     text: '',
   }
@@ -119,7 +141,7 @@ const closeCreateWindow = () => {
   username.value = ''
   full_name.value = ''
   email.value = ''
-  phone.value = ''
+  mobile.value = ''
   password.value = ''
   country_calling_number.value = dropdown.countryCallingCode.data[0]
   confirm_password.value = ''
@@ -137,9 +159,9 @@ const create = async () => {
     username: username.value,
     full_name: full_name.value,
     email: email.value,
-    country_code: country_calling_number.value.value_alt,
-    country_calling_code: country_calling_number.value.value,
-    phone: phone.value,
+    mobile_country_code: country_calling_number.value.value_alt,
+    mobile_country_calling_code: country_calling_number.value.value,
+    mobile: mobile.value,
     password: password.value,
     confirm_password: confirm_password.value,
   }
@@ -155,7 +177,7 @@ const create = async () => {
   catch (error: any) {
     if (error.response.data) {
       const err = error.response.data.message
-      Object.keys(err).forEach((key: String) => {
+      Object.keys(err).forEach((key: string) => {
         validation[key] = {
           status: true,
           text: err[key][0],
@@ -194,7 +216,7 @@ const create = async () => {
               class="-my-2 p-2 rounded-full bg-white flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               <span class="sr-only">Open options</span>
-              <DotsVerticalIcon class="h-5 w-5" aria-hidden="true" />
+              <EllipsisVerticalIcon class="h-5 w-5" aria-hidden="true" />
             </MenuButton>
           </div>
 
@@ -280,7 +302,7 @@ const create = async () => {
       <label for="search" class="sr-only">Search</label>
       <div class="relative text-sky-100 focus-within:text-gray-400">
         <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-          <SearchIcon class="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
+          <MagnifyingGlassIcon class="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
         </div>
         <input
           id="search" type="text" name="search"
@@ -341,7 +363,7 @@ const create = async () => {
                     <InputBox v-model="full_name" class="px-4 py-2" type="text" title="Full Name" placeholder="Full Name" :error="validation.full_name.status" :error-message="validation.full_name.text" />
                     <InputBox v-model="email" class="px-4 py-2" type="text" title="Email" placeholder="Email" :error="validation.email.status" :error-message="validation.email.text" />
                     <div class="px-4 py-2">
-                      <label for="phone" class="block text-sm font-medium text-gray-500">Phone</label>
+                      <label for="mobile" class="block text-sm font-medium text-gray-500">Mobile</label>
                       <div class="mt-1 relative rounded-md shadow-sm">
                         <div class="absolute inset-y-0 left-0 flex items-center">
                           <!-- <SelectMenus name="class" class="" :data="countryCallingNumberDrop" @select="((value: any) => changeCountryCallingNumber(value))" /> -->
@@ -356,17 +378,17 @@ const create = async () => {
                           </select>
                         </div>
                         <input
-                          id="phone" v-model="phone" type="text" name="phone"
+                          id="mobile" v-model="mobile" type="text" name="mobile"
                           class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-[7.5rem] sm:text-sm border-gray-300 rounded-md"
-                          :class="{ 'border-red-500 pr-10 text-red-900 focus:ring-red-500 focus:border-red-500 placeholder-red-500': validation.phone.status }"
+                          :class="{ 'border-red-500 pr-10 text-red-900 focus:ring-red-500 focus:border-red-500 placeholder-red-500': validation.mobile.status }"
                           placeholder="9-1234-5678"
                         >
                       </div>
-                      <p v-if="validation.phone.status" class="flex mt-2 text-sm text-red-600">
-                        <ExclamationCircleIcon class="h-5 w-5 mr-1 text-red-500" aria-hidden="true" />{{ validation.phone.text
+                      <p v-if="validation.mobile.status" class="flex mt-2 text-sm text-red-600">
+                        <ExclamationCircleIcon class="h-5 w-5 mr-1 text-red-500" aria-hidden="true" />{{ validation.mobile.text
                         }}
                       </p>
-                      <!-- <label for="phone" class="block text-sm font-medium text-gray-500">Phone</label>
+                      <!-- <label for="mobile" class="block text-sm font-medium text-gray-500">Phone</label>
                       <div class="mt-1 relative rounded-md shadow-sm">
                         <div class="absolute inset-y-0 left-0 flex items-center">
                           <SelectMenus name="class" class="" :data="countryCallingNumberDrop" @select="((value: any) => changeCountryCallingNumber(value))" />

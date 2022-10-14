@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/solid'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/solid'
 const props = defineProps({
   totalPages: {
     type: Number,
@@ -40,9 +40,36 @@ const props = defineProps({
 })
 const emit = defineEmits(['clickLeft', 'clickRight', 'clickPage', 'changePaginate'])
 const perPageList = [
-  { id: 10, name: 10 },
-  { id: 25, name: 25 },
-  { id: 100, name: 100 },
+  {
+    id: 1,
+    name: '10',
+    title: '10',
+    value: '10',
+    value_alt: '10',
+    value_alt_2: '10',
+    sequence: 1,
+    is_enabled: true,
+  },
+  {
+    id: 2,
+    name: '25',
+    title: '25',
+    value: '25',
+    value_alt: '25',
+    value_alt_2: '25',
+    sequence: 2,
+    is_enabled: true,
+  },
+  {
+    id: 3,
+    name: '100',
+    title: '100',
+    value: '100',
+    value_alt: '100',
+    value_alt_2: '100',
+    sequence: 3,
+    is_enabled: true,
+  },
 ]
 const clickLeft = () => {
   emit('clickLeft')
@@ -56,7 +83,7 @@ const clickPage = (page: any) => {
   emit('clickPage', page)
 }
 const changePaginate = (paginate: any) => {
-  emit('changePaginate', paginate)
+  emit('changePaginate', { id: parseInt(paginate.name), name: parseInt(paginate.name) })
 }
 const range = (start: number, end: number) => {
   const length = end - start + 1

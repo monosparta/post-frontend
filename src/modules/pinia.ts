@@ -1,8 +1,15 @@
 import { createPinia } from 'pinia'
 import { setupLayouts } from 'virtual:generated-layouts'
 import { createRouter, createWebHistory } from 'vue-router'
+import type { Router } from 'vue-router'
 import generatedRoutes from '~pages'
 import { type UserModule } from '~/types'
+
+declare module 'pinia' {
+  export interface PiniaCustomProperties {
+    router: Router
+  }
+}
 
 // Setup Pinia
 // https://pinia.esm.dev/

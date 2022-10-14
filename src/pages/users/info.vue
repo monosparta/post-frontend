@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {
   CheckIcon,
-  ExclamationIcon,
+  ExclamationTriangleIcon,
   QuestionMarkCircleIcon,
   ThumbUpIcon,
   UserIcon,
-} from '@heroicons/vue/solid'
+} from '@heroicons/vue/24/solid'
 
 const type = 'delete'
 
@@ -741,7 +741,7 @@ const tabs = [
               <DialogPanel class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                 <div>
                   <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-red-100">
-                    <ExclamationIcon class="h-12 w-12 text-red-600" aria-hidden="true" />
+                    <ExclamationTriangleIcon class="h-12 w-12 text-red-600" aria-hidden="true" />
                   </div>
                   <div class="mt-3 text-center sm:mt-5">
                     <DialogTitle as="h3" class="text-4xl font-medium leading-6 text-gray-900">

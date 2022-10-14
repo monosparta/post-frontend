@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import {
   CheckIcon,
-  PaperClipIcon,
   QuestionMarkCircleIcon,
   ThumbUpIcon,
   UserIcon,
-} from '@heroicons/vue/solid'
+} from '@heroicons/vue/24/solid'
 
 const isAccountVerify = ref(true)
 const user = {
@@ -15,10 +14,6 @@ const user = {
     'https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80',
 }
 
-const attachments = [
-  { name: 'resume_front_end_developer.pdf', href: '#' },
-  { name: 'coverletter_front_end_developer.pdf', href: '#' },
-]
 const eventTypes = {
   applied: { icon: UserIcon, bgColorClass: 'bg-gray-400' },
   advanced: { icon: ThumbUpIcon, bgColorClass: 'bg-blue-500' },

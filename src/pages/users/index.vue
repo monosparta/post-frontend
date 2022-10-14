@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ChevronDownIcon, DotsVerticalIcon, PencilIcon } from '@heroicons/vue/solid'
+import { ChevronDownIcon, EllipsisVerticalIcon, PencilIcon } from '@heroicons/vue/24/solid'
 const member = useMemberStore()
 const dropdown = useDropdownStore()
-const selectedPeople = ref([])
+const selected: string[] = []
+const selectedPeople = ref(selected)
 onMounted(async () => {
   await dropdown.getCountryCallingCode()
   await member.getMembers()
@@ -27,7 +28,7 @@ const indeterminate = computed(() => selectedPeople.value.length > 0 && selected
                       class="absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 sm:left-6"
                       :checked="indeterminate || selectedPeople.length === member.list.length"
                       :indeterminate="indeterminate"
-                      @change="selectedPeople = $event.target.checked ? member.list.map((p) => p.email) : []"
+                      @change="selectedPeople = ($event.target as HTMLInputElement).checked ? member.list.map((p) => p.email) : []"
                     >
                   </th>
                   <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
@@ -140,7 +141,7 @@ const indeterminate = computed(() => selectedPeople.value.length > 0 && selected
                       }}</span>
                     </button>
                     <a href="#" class="flex justify-center flex-1 text-indigo-600 hover:text-indigo-900">
-                      <DotsVerticalIcon class="h-5 w-5 mx-2" aria-hidden="true" /><span class="sr-only">, {{
+                      <EllipsisVerticalIcon class="h-5 w-5 mx-2" aria-hidden="true" /><span class="sr-only">, {{
                         person.username
                       }}</span>
                     </a>

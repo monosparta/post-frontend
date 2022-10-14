@@ -26,6 +26,7 @@ export default defineConfig({
     // https://github.com/hannoeru/vite-plugin-pages
     Pages({
       extensions: ['vue'],
+      exclude: ['**/components/*.vue'],
     }),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
@@ -42,11 +43,7 @@ export default defineConfig({
         '@vueuse/core',
       ],
       dts: 'src/auto-imports.d.ts',
-      dirs: [
-        'src/hooks',
-        'src/composables',
-        'src/store',
-      ],
+      dirs: ['src/hooks', 'src/composables', 'src/store'],
       vueTemplate: true,
     }),
 
@@ -57,9 +54,7 @@ export default defineConfig({
       // allow auto import and register components used in markdown
       include: [/\.vue$/, /\.vue\?vue/],
       dts: 'src/components.d.ts',
-      resolvers: [
-        HeadlessUiResolver(),
-      ],
+      resolvers: [HeadlessUiResolver()],
     }),
 
     // https://github.com/intlify/bundle-tools/tree/main/packages/vite-plugin-vue-i18n
@@ -74,12 +69,12 @@ export default defineConfig({
     Inspect(),
 
     // https://github.com/vitejs/vite-plugin-basic-ssl
-    basicSsl(),
+    // basicSsl(),
   ],
   server: {
     host: '0.0.0.0',
     port: 3333,
-    https: true,
+    // https: true,
     open: true,
   },
 })

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BellIcon, MenuAlt2Icon, SearchIcon } from '@heroicons/vue/outline'
+import { Bars3BottomLeftIcon, BellIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 import { useRouter } from 'vue-router'
 const user = useUserStore()
 const router = useRouter()
@@ -24,7 +24,7 @@ const logout = () => {
       class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden" @click="toggleSidebarCollapse()"
     >
       <span class="sr-only">Open sidebar</span>
-      <MenuAlt2Icon class="h-6 w-6" aria-hidden="true" />
+      <Bars3BottomLeftIcon class="h-6 w-6" aria-hidden="true" />
     </button>
     <div class="flex-1 px-4 flex justify-between">
       <div class="flex-1 flex">
@@ -32,7 +32,7 @@ const logout = () => {
           <label for="search-field" class="sr-only">Search</label>
           <div class="relative w-full text-gray-400 focus-within:text-gray-600">
             <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-              <SearchIcon class="h-5 w-5" aria-hidden="true" />
+              <MagnifyingGlassIcon class="h-5 w-5" aria-hidden="true" />
             </div>
             <input
               id="search-field"

@@ -2,17 +2,17 @@
 import moment from 'moment'
 import { faker } from '@faker-js/faker'
 import {
-  ChipIcon,
+  CpuChipIcon,
   ShieldCheckIcon,
   UsersIcon,
-} from '@heroicons/vue/outline'
+} from '@heroicons/vue/24/outline'
 import {
-  CashIcon,
+  BanknotesIcon,
   ChevronRightIcon,
-} from '@heroicons/vue/solid'
+} from '@heroicons/vue/24/solid'
 
 const cards = [
-  { name: 'Devices', href: '#', icon: ChipIcon, amount: faker.finance.amount(10000, 99999, 0, '', true) },
+  { name: 'Devices', href: '#', icon: CpuChipIcon, amount: faker.finance.amount(10000, 99999, 0, '', true) },
   { name: 'Users', href: '#', icon: UsersIcon, amount: faker.finance.amount(1000, 9999, 0, '', true) },
   { name: 'Events', href: '#', icon: ShieldCheckIcon, amount: faker.finance.amount(1000000, 9999999, 0, '', true) },
 ]
@@ -95,7 +95,7 @@ const statusStyles: any = {
                 <a :href="transaction.href" class="block px-4 py-4 bg-white hover:bg-gray-50">
                   <span class="flex items-center space-x-4">
                     <span class="flex-1 flex space-x-2 truncate">
-                      <CashIcon class="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
+                      <BanknotesIcon class="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
                       <span class="flex flex-col text-gray-500 text-sm truncate">
                         <span class="truncate">{{ transaction.name }}</span>
                         <span><span class="text-gray-900 font-medium">{{ transaction.amount
@@ -180,7 +180,7 @@ const statusStyles: any = {
                               :href="transaction.href"
                               class="group inline-flex space-x-2 truncate text-sm"
                             >
-                              <CashIcon
+                              <BanknotesIcon
                                 class="flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                                 aria-hidden="true"
                               />

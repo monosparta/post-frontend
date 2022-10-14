@@ -1,0 +1,9 @@
+#!/bin/sh
+BASE_VERSION="v0.1.0"
+TYPE="release"
+BRANCHES=(
+  'feature/BS-78'
+  'feature/BS-41'
+  'feature/BS-2'
+  'feature/MMS20-39'
+)
