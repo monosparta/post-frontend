@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { TrashIcon, PencilAltIcon } from '@heroicons/vue/solid'
+import VueMarkdown from 'vue-markdown'
 
 const cookieTaken = (sKey: string) => {
   const aKeys = document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$/"), "$1")
@@ -19,7 +20,9 @@ const props = defineProps({
   dateTime: String,
 })
 // const uid = ref('1')
+const takeconent = props.content.replace(/\n/g, '<br/>')
 console.log(props.type1);
+console.log(takeconent);
 
 </script>
 
@@ -34,12 +37,12 @@ console.log(props.type1);
           <div v-if="props.type2==='personal' || props.userId===tokenUserId"
             class="col-end-7 col-span-2 relative flex justify-end whitespace-nowrap  text-right text-sm font-medium">
             <button class="flex justify-center  text-gray-400 hover:text-gray-900" @click="">
-              <TrashIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">, {{ props.id
+              <TrashIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">{{ props.id
               }}</span>
             </button>
             <button class="flex justify-center  text-gray-400 hover:text-gray-900"
-              @click="$router.push(`/write/${id}`)">
-              <PencilAltIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">, {{ props.id
+              @click="$router.push(`/write/${props.id}`)">
+              <PencilAltIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">{{ props.id
               }}</span>
             </button>
           </div>

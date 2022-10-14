@@ -33,10 +33,10 @@ showPost.createNotification({
 <template>
   <div class="mt-6 ml-16 mr-16">
     <div class="flex flex-col">
-      <ShowPost :title="showPost.notification.title" :content="showPost.notification.content"
-        :userId="showPost.notification.userId" :userName="showPost.notification.userName"
-        :dateTime="showPost.notification.dateTime" :type1="showPost.notification.type1"
-        :type2="showPost.notification.type2" />
+      <ShowPost :id="showPost.notification.id" :title="showPost.notification.title"
+        :content="showPost.notification.content" :userId="showPost.notification.userId"
+        :userName="showPost.notification.userName" :dateTime="showPost.notification.dateTime"
+        :type1="showPost.notification.type1" :type2="showPost.notification.type2" />
     </div>
   </div>
 </template>
