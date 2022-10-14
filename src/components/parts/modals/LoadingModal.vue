@@ -10,7 +10,7 @@ onMounted(() => {
     toInformationOpen.value = true
     modal.createNotification({
       type: 'add',
-      text: '發表！',
+      text: '發表',
       dateTime: '2022-10-13 10:34:13',
     })
     document.cookie = 'dateTime=2022-10-13 10:34:13;'

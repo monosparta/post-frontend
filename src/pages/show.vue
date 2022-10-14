@@ -15,8 +15,6 @@ console.log(tokenContent);
 console.log(tokenUserId);
 console.log(tokenDateTime);
 
-const showType2 = ref('')
-
 showPost.createNotification({
   type1: 'content',
   type2: 'personal',
