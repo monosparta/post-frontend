@@ -16,9 +16,9 @@ const showPost = useShowPostStore()
 const tokenId = localStorage.getItem("id")
 const tokenTitle = localStorage.getItem("title")
 const tokenContent = localStorage.getItem("content")
-const tokenCreateAt = localStorage.getItem("createAt")
+const tokenCreateAt = localStorage.getItem("createdAt")
 const tokenUserId = localStorage.getItem("userId")
-const tokenUseName = localStorage.getItem("useName")
+const tokenUseName = localStorage.getItem("userName")
 console.log(tokenId);
 console.log(tokenTitle);
 console.log(tokenContent);
@@ -28,12 +28,12 @@ console.log(tokenUseName);
 showPost.createNotification({
   type1: 'content',
   type2: 'personal',
-  id: '1',
-  title: tokenTitle,
-  content: tokenContent,
-  userId: tokenUserId,
-  userName: 'John Doe',
-  dateTime: tokenDateTime,
+  id: tokenId!!,
+  title: tokenTitle!!,
+  content: tokenContent!!,
+  userId: tokenUserId!!,
+  userName: tokenUseName!!,
+  dateTime: tokenCreateAt!!,
 })
 
 
