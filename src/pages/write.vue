@@ -5,9 +5,9 @@ const router = useRouter()
 const route = useRoute()
 const modal = useModalStore()
 const bulletinSectionHeader = useBulletinSectionHeaderStore()
-const title_input = ref('')
-const text_input = ref('')
-let modal_type = ref('')
+const titleInput = ref('')
+const textInput = ref('')
+let modalType = ref('')
 
 // const props = defineProps({
 //   titleHeader: {
@@ -30,10 +30,10 @@ const back = async () => {
 }
 
 const check = async () => {
-  if (title_input.value == '' || text_input.value == '') {
+  if (titleInput.value == '' || textInput.value == '') {
     console.log('空的！');
 
-    modal_type.value = 'information'
+    modalType.value = 'information'
     modal.createNotification({
       type: 'warming',
       text: '標題或內文欄位不可以空白喔！',
@@ -42,42 +42,76 @@ const check = async () => {
   } else {
     console.log('有資料');
 
-    modal_type.value = 'check'
+    modalType.value = 'check'
     modal.createNotification({
       type: 'add',
       text: '確定新增該篇文章？',
       dateTime: '',
     })
-    document.cookie = `title=${title_input.value};`;
-    document.cookie = `text_input=${text_input.value}`;
-    const title = title_input.value;
-    const content = text_input.value;
-    const user_id = getCookie("user_id");
-    createPost(
-      {
-        title,
-        content,
-        user_id
-      }
-    )
-  }
-}
-const createPost = async (data: {
-        'title': string
-        'content': string
-        'user_id':string
-    }) => {
-        const result = await axios.post(
-            `${import.meta.env.VITE_APP_API_URL}/api/post`, data,
-        )
-        console.log(result.data)
-    }
-function getCookie(name:string) {
+    // document.cookie = `title=${title_input.value};`;
+    // document.cookie = `text_input=${text_input.value}`;
+
+    const getCookie = (name: string) => {
       let arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
       if (arr != null) return unescape(arr[2]);
       return null;
     }
 
+    const cookieHave = () => {
+      const aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+      for (var nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+      // console.log(aKeys);
+
+      return aKeys
+    }
+    console.log(cookieHave().length);
+
+    const title = titleInput.value;
+    const content = textInput.value;
+    let userId = '';
+
+    if (cookieHave().length >= 0) {
+      userId = getCookie("userId")!!;
+    }
+    createPost(
+      {
+        title,
+        content,
+        userId
+      }
+    )
+  }
+}
+
+
+const createPost = async (data: {
+  title: string
+  content: string
+  userId: string
+}) => {
+  const result = await axios.post(
+    `${import.meta.env.VITE_APP_API_URL}/api/post`, data,
+  )
+  console.log(result.data)
+}
+const toInformationOpen = ref(false)
+
+const confirmPost = () => {
+  // alert('test')
+  modalType.value = 'loading'
+  onMounted(() => {
+    setTimeout(async () => {
+      modalType.value = 'information'
+      toInformationOpen.value = true
+      modal.createNotification({
+        type: 'add',
+        text: '發表',
+        dateTime: '2022-10-13 10:34:13',
+      })
+      console.log(document.cookie);
+    }, 3000)
+  })
+}
 </script>
 
 <template>
@@ -89,12 +123,12 @@ function getCookie(name:string) {
         <div class="mt-4 h-10">
           <input id="title" name="title" type="txt" autocomplete="title" placeholder="Title write here..."
             class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            v-model="title_input" />
+            v-model="titleInput" />
         </div>
         <div class="mt-4">
           <textarea rows="4" name="comment" id="comment"
             class="block w-full rounded-md border-gray-300 shadow-sm  focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            style="height:576px" placeholder="Txt write here..." v-model="text_input"></textarea>
+            style="height:576px" placeholder="Txt write here..." v-model="textInput"></textarea>
         </div>
         <div v-if="titleHeader==='新增文章'" class="relative grid grid-cols-3 gap-4 mt-4">
           <div class="col-start-1 col-end-3">
@@ -129,9 +163,11 @@ function getCookie(name:string) {
           </div>
         </div>
       </main>
-      <Check v-if="modal_type==='check' && modal.notificationStatus===true" :text="modal.notification.text"
-        :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification" />
-      <Information v-if="modal_type==='information' && modal.notificationStatus===true" :text="modal.notification.text"
+      <Check v-if="modalType==='check' && modal.notificationStatus===true" :text="modal.notification.text"
+        :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification"
+        @confirm="confirmPost()" />
+      <LoadingModal v-if="modalType === 'loading'" />
+      <Information v-if="modalType==='information' && modal.notificationStatus===true" :text="modal.notification.text"
         :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification" />
     </div>
   </div>

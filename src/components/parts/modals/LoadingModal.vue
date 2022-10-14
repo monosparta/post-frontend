@@ -1,22 +1,8 @@
 <script setup lang="ts">
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-const modal = useModalStore()
 
 const open = ref(true)
-const toInformationOpen = ref(false)
-onMounted(() => {
-  setTimeout(async () => {
-    open.value = false
-    toInformationOpen.value = true
-    modal.createNotification({
-      type: 'add',
-      text: '發表',
-      dateTime: '2022-10-13 10:34:13',
-    })
-    document.cookie = 'dateTime=2022-10-13 10:34:13;'
-    console.log(document.cookie);
-  }, 3000)
-})
+
 </script>
 
 <template>
@@ -46,7 +32,5 @@ onMounted(() => {
       </div>
     </Dialog>
   </TransitionRoot>
-  <Information v-if="toInformationOpen===true && modal.notificationStatus===true" :text="modal.notification.text"
-    :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification" />
 </template>
 
