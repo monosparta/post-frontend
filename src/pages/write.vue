@@ -25,6 +25,21 @@ bulletinSectionHeader.createNotification({
   title: titleHeader,
 })
 
+const getCookie = (name: string) => {
+  let arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+  if (arr != null) return unescape(arr[2]);
+  return null;
+}
+
+const cookieHave = () => {
+  const aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+  for (var nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+  // console.log(aKeys);
+
+  return aKeys
+}
+console.log(cookieHave().length);
+
 const back = async () => {
   router.go(-1)
 }
@@ -48,38 +63,6 @@ const check = async () => {
       text: '確定新增該篇文章？',
       dateTime: '',
     })
-    // document.cookie = `title=${title_input.value};`;
-    // document.cookie = `text_input=${text_input.value}`;
-
-    const getCookie = (name: string) => {
-      let arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
-      if (arr != null) return unescape(arr[2]);
-      return null;
-    }
-
-    const cookieHave = () => {
-      const aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
-      for (var nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
-      // console.log(aKeys);
-
-      return aKeys
-    }
-    console.log(cookieHave().length);
-
-    const title = titleInput.value;
-    const content = textInput.value;
-    let userId = '';
-
-    if (cookieHave().length >= 0) {
-      userId = getCookie("userId")!!;
-    }
-    createPost(
-      {
-        title,
-        content,
-        userId
-      }
-    )
   }
 }
 
@@ -87,30 +70,49 @@ const check = async () => {
 const createPost = async (data: {
   title: string
   content: string
-  userId: string
+  user_id: string
 }) => {
   const result = await axios.post(
     `${import.meta.env.VITE_APP_API_URL}/api/post`, data,
   )
   console.log(result.data)
+  return result.data
 }
+
 const toInformationOpen = ref(false)
 
-const confirmPost = () => {
+const confirmPost = async () => {
   // alert('test')
   modalType.value = 'loading'
-  onMounted(() => {
-    setTimeout(async () => {
-      modalType.value = 'information'
-      toInformationOpen.value = true
-      modal.createNotification({
-        type: 'add',
-        text: '發表',
-        dateTime: '2022-10-13 10:34:13',
-      })
-      console.log(document.cookie);
-    }, 3000)
-  })
+  // const title = '123';
+  // const content = 'textInput.value';
+  // let userId = '00000000-0000-0000-0000-000000000000';
+  const title = titleInput.value;
+  const content = textInput.value;
+  let user_id = '';
+
+  if (cookieHave().length >= 0) {
+    user_id = getCookie("userId")!!;
+  }
+  const getresult = await createPost({ title, content, user_id })
+
+  if (getresult) {
+    localStorage.setItem('id', getresult.id)
+    localStorage.setItem('title', getresult.title)
+    localStorage.setItem('content', getresult.content)
+    localStorage.setItem('createdAt', getresult.created_at.substring(0, 19).replace("T", " "))
+    localStorage.setItem('userId', getresult.user.id)
+    localStorage.setItem('userName', getresult.user.name)
+    modalType.value = ''
+    modalType.value = 'information'
+    toInformationOpen.value = true
+    modal.createNotification({
+      type: 'add',
+      text: '發表',
+      dateTime: getresult.created_at.substring(0, 19).replace("T", " "),
+    })
+
+  }
 }
 </script>
 
