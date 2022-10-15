@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { TrashIcon, PencilAltIcon } from '@heroicons/vue/solid'
-import VueMarkdown from 'vue-markdown'
+import { TrashIcon, PencilAltIcon, ArrowNarrowRightIcon } from '@heroicons/vue/solid'
 
 const cookieTaken = (sKey: string) => {
   const aKeys = document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$/"), "$1")
@@ -19,10 +18,6 @@ const props = defineProps({
   userName: String,
   dateTime: String,
 })
-// const uid = ref('1')
-const takeconent = props.content.replace(/\n/g, '<br/>')
-console.log(props.type1);
-console.log(takeconent);
 
 </script>
 
@@ -30,7 +25,7 @@ console.log(takeconent);
   <section aria-labelledby="action-title" class="pb-6 px-4 sm:px-6 lg:pb-6 lg:px-0 lg:row-start-1 lg:col-start-1">
     <div class="bg-white shadow sm:rounded-lg sm:overflow-hidden">
       <div class="divide-y divide-gray-200">
-        <div class="grid grid-cols-6 gap-4 pl-6 pr-4 py-4 sm:px-6">
+        <div class="grid grid-cols-6 gap-4 px-4 py-4 sm:px-6">
           <h2 id="notes-title" class="col-start-1 col-end-5 text-2xl font-semibold font-Inter text-gray-900">
             {{props.title}}
           </h2>
@@ -55,16 +50,21 @@ console.log(takeconent);
               </div>
             </li>
             <li class="pt-2 pb-4">
-              <div v-if="props.type1==='content'" class="space-x-3 text-xl font-light font-Inter">
+              <div v-if="props.type1==='content'" class="space-x-3 text-xl font-light font-Inter whitespace-pre-line">
                 {{props.content}}
               </div>
               <div v-else-if="props.type1==='frontPage'" class="space-x-3 text-xl font-light font-Inter">
                 <p class="line-clamp-2">{{props.content}}</p>
               </div>
-              <div v-if="props.type1==='frontPage'" class="grid grid-cols-6 gap-4 mt-6">
-                <button class="col-end-7 col-span-1 flex justify-center  text-blue-400 hover:text-blue-800"
-                  @click="$router.push(`/show/${id}`)">
-                  閱讀更多......
+              <div v-if="props.type1==='frontPage'" class="grid grid-cols-5 justify-items-end grep-4">
+                <button
+                  class="col-end-6 col-span-1 mx-0 my-0  text-base font-normal text-indigo-700 hover:text-indigo-400"
+                  @click="$router.push(`/show/${props.id}`)">
+                  <div
+                    class="relative border-b border-indigo-700 hover:text-indigo-400 flex justify-center pb-5 sm:pb-0">
+                    閱讀更多
+                    <ArrowNarrowRightIcon class="ml-2 h-5 w-5 pt-1 leading-6" aria-hidden="true" />
+                  </div>
                 </button>
               </div>
             </li>

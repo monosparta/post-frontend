@@ -1,18 +1,6 @@
 <script setup lang="ts">
 const showPost = useShowPostStore()
 
-// const cookieTaken = (sKey: string) => {
-//   const aKeys = document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$/"), "$1")
-//   return aKeys
-// }
-// const tokenTitle = cookieTaken('title')
-// const tokenContent = cookieTaken('content')
-// const tokenUserId = cookieTaken('userId')
-// const tokenDateTime = cookieTaken('dateTime')
-// console.log(tokenTitle);
-// console.log(tokenContent);
-// console.log(tokenUserId);
-// console.log(tokenDateTime);
 const tokenId = localStorage.getItem("id")
 const tokenTitle = localStorage.getItem("title")
 const tokenContent = localStorage.getItem("content")
@@ -26,8 +14,7 @@ console.log(tokenCreateAt);
 console.log(tokenUserId);
 console.log(tokenUseName);
 showPost.createNotification({
-  type1: 'content',
-  type2: 'personal',
+  type: 'content',
   id: tokenId!!,
   title: tokenTitle!!,
   content: tokenContent!!,
@@ -46,7 +33,7 @@ showPost.createNotification({
       <ShowPost :id="showPost.notification.id" :title="showPost.notification.title"
         :content="showPost.notification.content" :userId="showPost.notification.userId"
         :userName="showPost.notification.userName" :dateTime="showPost.notification.dateTime"
-        :type1="showPost.notification.type1" :type2="showPost.notification.type2" />
+        :type1="showPost.notification.type" />
     </div>
   </div>
 </template>

@@ -3,8 +3,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 export const useShowPostStore = defineStore('showPost', () => {
   const notificationStatus = ref(false)
   const notification = reactive({
-    type1: '',
-    type2: '',
+    type: '',
     id: '',
     title: '',
     content: '',
@@ -13,10 +12,9 @@ export const useShowPostStore = defineStore('showPost', () => {
     dateTime: '',
 
   })
-  const createNotification = (data: { type1: string; type2: string; id: string; title: string; content: string; userId: string; userName: string; dateTime: string }) => {
+  const createNotification = (data: { type: string; id: string; title: string; content: string; userId: string; userName: string; dateTime: string }) => {
     notificationStatus.value = true
-    notification.type1 = data.type1
-    notification.type2 = data.type2
+    notification.type = data.type
     notification.id = data.id
     notification.title = data.title
     notification.content = data.content
@@ -26,8 +24,7 @@ export const useShowPostStore = defineStore('showPost', () => {
   }
   const closeNotification = () => {
     notificationStatus.value = false
-    notification.type1 = ''
-    notification.type2 = ''
+    notification.type = ''
     notification.id = ''
     notification.title = ''
     notification.content = ''
