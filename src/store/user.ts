@@ -99,7 +99,6 @@ export const useUserStore = defineStore('user', () => {
       `${import.meta.env.VITE_APP_API_URL}/api/v1/login`, data,
     )
     user.data = result.data.data
-    document.cookie = `userId=${user.data.user.id}`;
   }
 
   const logout = () => {

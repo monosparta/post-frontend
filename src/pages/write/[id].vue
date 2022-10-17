@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import axios from 'axios'
+const user = useUserStore()
 const modal = useModalStore()
 const titleInput = ref('')
 const textInput = ref('')
@@ -43,10 +44,8 @@ const confirmPost = async () => {
   modalType.value = 'loading'
   const title = titleInput.value;
   const content = textInput.value;
-  const user_id = document.cookie.replace(
-    /(?:(?:^|.*;\s*)userId\s*=\s*([^;]*).*$)|^.*$/,
-    "$1"
-  )!!
+  const user_id = user.userData.id
+
 
   const getResult = await createPost({ title, content, user_id })
 
