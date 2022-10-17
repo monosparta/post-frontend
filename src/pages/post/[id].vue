@@ -1,18 +1,15 @@
 <script setup lang="ts">
 const post = usePostStore()
-const route = useRoute()
+const userId = useUserStore()
 let BulletinSectionHeaderTitle = ref('')
 
+//我的文章顯示
+BulletinSectionHeaderTitle.value = '我的文章';
 
-//初始顯示與文章首頁顯示
-BulletinSectionHeaderTitle.value = '文章首頁'
 onMounted(async () => {
   post.clearPost()
-  console.log(post.list);
-  await post.getPosts()
+  await post.getUserPosts(userId.userData.id)
 })
-console.log(route.params);
-
 
 </script>
 
