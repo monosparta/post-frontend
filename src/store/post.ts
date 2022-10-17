@@ -14,6 +14,12 @@ const emptyPost = {
         },
     },
 }
+
+const emptyPosts = reactive({
+    value: {
+        data: []
+    }
+})
 export const usePostStore = defineStore('post', () => {
     const posts = reactive({
         value: {
@@ -64,8 +70,23 @@ export const usePostStore = defineStore('post', () => {
             console.log(error)
         }
     }
+    const getUserPosts = async (id: string) => {
+        const logged = await user.checkToken()
+        if (!logged)
+            return
+        try {
+            const res = await axios.get(
+                `${import.meta.env.VITE_APP_API_URL}/api/author/posts?authorId=${id}`,
+            )
+            posts.value.data = res.data
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
     const clearPost = () => {
         post.data = emptyPost.data
+        posts.value = emptyPosts.value
     }
     return {
         list,
@@ -73,6 +94,7 @@ export const usePostStore = defineStore('post', () => {
         info,
         getPosts,
         getPost,
+        getUserPosts,
         clearPost,
     }
 })
