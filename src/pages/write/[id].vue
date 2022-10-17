@@ -1,17 +1,9 @@
 <script setup lang="ts">
 import axios from 'axios'
 const modal = useModalStore()
-const bulletinSectionHeader = useBulletinSectionHeaderStore()
 const titleInput = ref('')
 const textInput = ref('')
 let modalType = ref('')
-let titleHeader = '編輯文章'
-
-bulletinSectionHeader.createNotification({
-  type: '',
-  title: titleHeader,
-})
-
 
 const check = async () => {
   if (titleInput.value == '' || textInput.value == '') {
@@ -51,9 +43,7 @@ const confirmPost = async () => {
   modalType.value = 'loading'
   const title = titleInput.value;
   const content = textInput.value;
-  let user_id = '';
-
-  user_id = document.cookie.replace(
+  const user_id = document.cookie.replace(
     /(?:(?:^|.*;\s*)userId\s*=\s*([^;]*).*$)|^.*$/,
     "$1"
   )!!
@@ -61,7 +51,7 @@ const confirmPost = async () => {
   const getResult = await createPost({ title, content, user_id })
 
   if (getResult) {
-    if (getResult.message === 'incorrent format') {
+    if (getResult.message === 'incorrect format') {
       modalType.value = 'information'
       modal.createNotification({
         type: 'warming',
@@ -90,8 +80,7 @@ const confirmPost = async () => {
 <template>
   <div class="mt-4 mx-16 mb-4">
     <div class="flex flex-col">
-      <BulletinSectionHeaderForPost v-if="bulletinSectionHeader.notificationStatus"
-        :title="bulletinSectionHeader.notification.title" :type="bulletinSectionHeader.notification.type" />
+      <BulletinSectionHeaderForPost :title="'編輯文章'" :needButton="false" />
       <main class="auto-cols-min">
         <div class="mt-4 h-10">
           <input id="title" name="title" type="txt" autocomplete="title" placeholder="Title write here..."
