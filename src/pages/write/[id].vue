@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import axios from 'axios'
-const user = useUserStore()
 const modal = useModalStore()
+const route = useRoute()
+const post = usePostStore()
 const titleInput = ref('')
 const textInput = ref('')
 let modalType = ref('')
+const postId = route.params.id as string
 
 const check = async () => {
   if (titleInput.value == '' || textInput.value == '') {
@@ -28,16 +30,27 @@ const check = async () => {
   }
 }
 
-const createPost = async (data: {
+const setData = async () => {
+  await post.getPost(postId)
+  titleInput.value = post.info.title
+  textInput.value = post.info.content
+}
+
+onMounted(async () => {
+  await setData()
+})
+
+
+const updatePost = async (data: {
   title: string
   content: string
   user_id: string
 }) => {
-  const result = await axios.post(
-    `${import.meta.env.VITE_APP_API_URL}/api/post`, data,
-  )
-  console.log(result.data)
-  return result.data
+  // const result = await axios.post(
+  //   `${import.meta.env.VITE_APP_API_URL}/api/post`, data,
+  // )
+  // console.log(result.data)
+  // return result.data
 }
 
 const confirmPost = async () => {
@@ -47,32 +60,32 @@ const confirmPost = async () => {
   const user_id = user.userData.id
 
 
-  const getResult = await createPost({ title, content, user_id })
+  // const getResult = await updatePost({ title, content })
 
-  if (getResult) {
-    if (getResult.message === 'incorrect format') {
-      modalType.value = 'information'
-      modal.createNotification({
-        type: 'warming',
-        text: 'incorrent format',
-        dateTime: '',
-      })
-    } else {
-      localStorage.setItem('id', getResult.id)
-      localStorage.setItem('title', getResult.title)
-      localStorage.setItem('content', getResult.content)
-      localStorage.setItem('createdAt', getResult.created_at.substring(0, 19).replace("T", " "))
-      localStorage.setItem('userId', getResult.user.id)
-      localStorage.setItem('userName', getResult.user.name)
-      modalType.value = ''
-      modalType.value = 'information'
-      modal.createNotification({
-        type: 'update',
-        text: '修改',
-        dateTime: getResult.created_at.substring(0, 19).replace("T", " "),
-      })
-    }
-  }
+  // if (getResult) {
+  //   if (getResult.message === 'incorrect format') {
+  //     modalType.value = 'information'
+  //     modal.createNotification({
+  //       type: 'warming',
+  //       text: 'incorrent format',
+  //       dateTime: '',
+  //     })
+  //   } else {
+  //     localStorage.setItem('id', getResult.id)
+  //     localStorage.setItem('title', getResult.title)
+  //     localStorage.setItem('content', getResult.content)
+  //     localStorage.setItem('createdAt', getResult.created_at.substring(0, 19).replace("T", " "))
+  //     localStorage.setItem('userId', getResult.user.id)
+  //     localStorage.setItem('userName', getResult.user.name)
+  //     modalType.value = ''
+  //     modalType.value = 'information'
+  //     modal.createNotification({
+  //       type: 'update',
+  //       text: '修改',
+  //       dateTime: getResult.created_at.substring(0, 19).replace("T", " "),
+  //     })
+  //   }
+  // }
 }
 </script>
 
