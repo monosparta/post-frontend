@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { TrashIcon, PencilAltIcon, ArrowNarrowRightIcon } from '@heroicons/vue/solid'
 const userId = useUserStore()
-
+const modal = useModalStore()
 const tokenUserId = userId.userData.id
+let modalType = ref('')
 
 const props = defineProps({
   type: String,
@@ -13,6 +14,30 @@ const props = defineProps({
   userName: String,
   dateTime: String,
 })
+
+const deletePost = () => {
+  modalType.value = 'check'
+  modal.createNotification({
+    type: 'delete',
+    text: '確定刪除該篇文章？',
+    dateTime: '',
+  })
+}
+
+const confirmPost = () => {
+  modalType.value = 'loading'
+  setTimeout(async () => {
+    // alert('假裝刪除了！')
+    console.log("Delayed for 1 second.");
+    modalType.value = 'information'
+    modal.createNotification({
+      type: 'delete',
+      text: '刪除',
+      // dateTime: getResult.created_at.substring(0, 19).replace("T", " "),
+      dateTime: '2022-10-10 12:12:12',
+    })
+  }, 1000)
+}
 
 </script>
 
@@ -26,7 +51,7 @@ const props = defineProps({
           </h2>
           <div v-if=" props.userId===tokenUserId"
             class="col-end-7 col-span-2 relative flex justify-end whitespace-nowrap  text-right text-sm font-medium">
-            <button class="flex justify-center  text-gray-400 hover:text-gray-900" @click="">
+            <button class="flex justify-center  text-gray-400 hover:text-gray-900" @click="deletePost()">
               <TrashIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">{{ props.id
               }}</span>
             </button>
@@ -67,5 +92,12 @@ const props = defineProps({
         </div>
       </div>
     </div>
+    <Check v-if="modalType==='check' && modal.notificationStatus===true" :text="modal.notification.text"
+      :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification"
+      @confirm="confirmPost()" />
+    <LoadingModal v-if="modalType === 'loading'" />
+    <Information v-if="modalType==='information' && modal.notificationStatus===true" :text="modal.notification.text"
+      :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification" />
+
   </section>
 </template>
