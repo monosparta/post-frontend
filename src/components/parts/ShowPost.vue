@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { TrashIcon, PencilAltIcon, ArrowNarrowRightIcon } from '@heroicons/vue/solid'
+const userId = useUserStore()
 
-const cookieTaken = (sKey: string) => {
-  const aKeys = document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$/"), "$1")
-  return aKeys
-}
-
-const tokenUserId = cookieTaken('userId')
+const tokenUserId = userId.userData.id
 
 const props = defineProps({
   type: String,

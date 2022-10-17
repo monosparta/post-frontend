@@ -48,11 +48,6 @@ const confirmPost = async () => {
   const title = titleInput.value
   const content = textInput.value
   const user_id = user.userData.id
-  // const user_id = document.cookie.replace(
-  //   /(?:(?:^|.*;\s*)userId\s*=\s*([^;]*).*$)|^.*$/,
-  //   "$1"
-  // )!!
-
 
   const getResult = await createPost({ title, content, user_id })
 
