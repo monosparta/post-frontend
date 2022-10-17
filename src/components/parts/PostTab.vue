@@ -1,6 +1,6 @@
 <script setup lang="ts">
-// const user = useUserStore()
-// const userId = user.userData.id
+const user = useUserStore()
+const userId = user.userData.id
 
 const props = defineProps({
   title: String,
@@ -8,17 +8,13 @@ const props = defineProps({
 
 const tabs = [
   { name: '文章首頁', label: 'post', href: '/post', current: false },
-  { name: '我的文章', label: 'user', href: `/post`, current: false },
+  { name: '我的文章', label: 'user', href: `/post/${userId}`, current: false },
   // { name: '後台列表', label: 'backlist', href: `/`, current: false },
 ]
-
-const emit = defineEmits(['frontPost', 'myPost'])
+const router = useRouter()
+// const emit = defineEmits(['myPost'])
 const clickItem = (item: any) => {
-  if (item.label === 'user') {
-    emit('myPost')
-  } else if (item.label === 'post') {
-    emit('frontPost')
-  }
+  router.push({ path: item.href })
 }
 
 </script>
