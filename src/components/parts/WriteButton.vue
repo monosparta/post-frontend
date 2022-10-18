@@ -33,7 +33,7 @@ const confirmClick = async () => {
             </button>
         </div>
     </div>
-    <div v-else-if="props.titleHeader==='編輯文章'" class="relative grid grid-cols-6 gap-4 mt-4">
+    <div v-if="props.titleHeader==='編輯文章'" class="relative grid grid-cols-6 gap-4 mt-4">
         <div class="col-start-1 col-end-3">
             <button type="button"
                 class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-indigo-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

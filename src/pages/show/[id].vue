@@ -3,13 +3,12 @@ const post = usePostStore()
 const route = useRoute()
 const postId = route.params.id as string
 onMounted(async () => {
-  post.clearPost()
+  post.clearPosts()
   await post.getPost(postId)
 })
 
 </script>
 
-    <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
   <div class="mt-6 ml-16 mr-16">
     <div class="flex flex-col">
@@ -21,6 +20,6 @@ onMounted(async () => {
 <route lang="yaml">
 meta:
   layout: app
-  activeMenu: post
+  activeMenu: posts
 </route>
 

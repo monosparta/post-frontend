@@ -44,48 +44,47 @@ onMounted(async () => {
 const updatePost = async (data: {
   title: string
   content: string
-  user_id: string
+  postId: string
 }) => {
-  // const result = await axios.post(
-  //   `${import.meta.env.VITE_APP_API_URL}/api/post`, data,
-  // )
-  // console.log(result.data)
-  // return result.data
+  const result = await axios.post(
+    `${import.meta.env.VITE_APP_API_URL}/api/post`, data,
+  )
+  console.log(result.data)
+  return result.data
 }
 
 const confirmPost = async () => {
   modalType.value = 'loading'
-  const title = titleInput.value;
+  const title = titleInput.value as string;
   const content = textInput.value;
-  const user_id = user.userData.id
+  // const user_id = user.userData.id
 
+  const getResult = await updatePost({ title, content, postId })
 
-  // const getResult = await updatePost({ title, content })
-
-  // if (getResult) {
-  //   if (getResult.message === 'incorrect format') {
-  //     modalType.value = 'information'
-  //     modal.createNotification({
-  //       type: 'warming',
-  //       text: 'incorrent format',
-  //       dateTime: '',
-  //     })
-  //   } else {
-  //     localStorage.setItem('id', getResult.id)
-  //     localStorage.setItem('title', getResult.title)
-  //     localStorage.setItem('content', getResult.content)
-  //     localStorage.setItem('createdAt', getResult.created_at.substring(0, 19).replace("T", " "))
-  //     localStorage.setItem('userId', getResult.user.id)
-  //     localStorage.setItem('userName', getResult.user.name)
-  //     modalType.value = ''
-  //     modalType.value = 'information'
-  //     modal.createNotification({
-  //       type: 'update',
-  //       text: '修改',
-  //       dateTime: getResult.created_at.substring(0, 19).replace("T", " "),
-  //     })
-  //   }
-  // }
+  if (getResult) {
+    if (getResult.message === 'incorrect format') {
+      modalType.value = 'information'
+      modal.createNotification({
+        type: 'warming',
+        text: 'incorrent format',
+        dateTime: '',
+      })
+    } else {
+      localStorage.setItem('id', getResult.id)
+      localStorage.setItem('title', getResult.title)
+      localStorage.setItem('content', getResult.content)
+      localStorage.setItem('createdAt', getResult.created_at.substring(0, 19).replace("T", " "))
+      localStorage.setItem('userId', getResult.user.id)
+      localStorage.setItem('userName', getResult.user.name)
+      modalType.value = ''
+      modalType.value = 'information'
+      modal.createNotification({
+        type: 'update',
+        text: '修改',
+        dateTime: getResult.created_at.substring(0, 19).replace("T", " "),
+      })
+    }
+  }
 }
 </script>
 
@@ -110,7 +109,7 @@ const confirmPost = async () => {
         :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification"
         @confirm="confirmPost()" />
       <LoadingModal v-if="modalType === 'loading'" />
-      <Information v-if="modalType==='information' && modal.notificationStatus===true" :text="modal.notification.text"
+      <Information v-if="modalType==='information' && modal.notificationStatus===true" :title="modal.notification.text"
         :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification" />
     </div>
   </div>
@@ -119,6 +118,6 @@ const confirmPost = async () => {
 <route lang="yaml">
 meta:
   layout: app
-  activeMenu: post
+  activeMenu: posts
 </route>
 

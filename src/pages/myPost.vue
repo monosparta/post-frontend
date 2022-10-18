@@ -1,18 +1,15 @@
 <script setup lang="ts">
 const post = usePostStore()
-const route = useRoute()
+const userId = useUserStore()
 let BulletinSectionHeaderTitle = ref('')
 
+//我的文章顯示
+BulletinSectionHeaderTitle.value = '我的文章';
 
-//初始顯示與文章首頁顯示
-BulletinSectionHeaderTitle.value = '文章首頁'
 onMounted(async () => {
-  post.clearPost()
-  console.log(post.list);
-  await post.getPosts()
+  post.clearPosts()
+  await post.getUserPosts(userId.userData.id)
 })
-console.log(route.params);
-
 
 </script>
 
@@ -27,7 +24,7 @@ console.log(route.params);
       <div v-else-if="post.list" class="mt-6">
         <div v-for="posts in post.list" :key="posts.id">
           <ShowPost :id="posts.id" :title="posts.title" :content="posts.content" :userId="posts.user.id"
-            :userName="posts.user.name" :dateTime="posts.created_at" :type="'frontPage'" />
+            :userName="posts.user.name" :dateTime="posts.created_at" type="frontPage" />
         </div>
       </div>
     </div>
@@ -37,6 +34,5 @@ console.log(route.params);
 <route lang="yaml">
 meta:
   layout: app
-  activeMenu: post
+  activeMenu: posts
 </route>
-

@@ -1,18 +1,13 @@
 <script setup lang="ts">
-const user = useUserStore()
-const userId = user.userData.id
-
 const props = defineProps({
   title: String,
 })
 
 const tabs = [
-  { name: '文章首頁', label: 'post', href: '/post', current: false },
-  { name: '我的文章', label: 'user', href: `/post/${userId}`, current: false },
-  // { name: '後台列表', label: 'backlist', href: `/`, current: false },
+  { name: '文章首頁', label: 'posts', href: '/posts', current: false },
+  { name: '我的文章', label: 'myPost', href: `/myPost`, current: false },
 ]
 const router = useRouter()
-// const emit = defineEmits(['myPost'])
 const clickItem = (item: any) => {
   router.push({ path: item.href })
 }

@@ -2,6 +2,7 @@
 import { TrashIcon, PencilAltIcon, ArrowNarrowRightIcon } from '@heroicons/vue/solid'
 const userId = useUserStore()
 const modal = useModalStore()
+const post = usePostStore()
 const tokenUserId = userId.userData.id
 let modalType = ref('')
 
@@ -19,24 +20,30 @@ const deletePost = () => {
   modalType.value = 'check'
   modal.createNotification({
     type: 'delete',
-    text: '確定刪除該篇文章？',
-    dateTime: '',
+    text: `確定刪除「${props.title}」該篇文章？`,
+    postId: '',
   })
 }
 
-const confirmPost = () => {
+const confirmPost = async () => {
   modalType.value = 'loading'
-  setTimeout(async () => {
-    // alert('假裝刪除了！')
-    console.log("Delayed for 1 second.");
+  await post.deletePost(props.id!!)
+  if (post.infoCheckStatus === 200) {
     modalType.value = 'information'
     modal.createNotification({
       type: 'delete',
-      text: '刪除',
-      // dateTime: getResult.created_at.substring(0, 19).replace("T", " "),
-      dateTime: '2022-10-10 12:12:12',
+      text: `已刪除「${props.title}該篇文章！`,
+      postId: '',
     })
-  }, 1000)
+  } else {
+    modalType.value = 'information'
+    modal.createNotification({
+      type: 'warning',
+      text: `刪除失敗！失敗狀態為：${post.infoCheckStatus}`,
+      postId: '',
+    })
+  }
+
 }
 
 </script>
@@ -73,7 +80,7 @@ const confirmPost = () => {
               <div v-if="props.type==='content'" class="space-x-3 text-xl font-light font-Inter whitespace-pre-line">
                 {{props.content}}
               </div>
-              <div v-else-if="props.type==='frontPage'" class="space-x-3 text-xl font-light font-Inter">
+              <div v-if="props.type==='frontPage'" class="space-x-3 text-xl font-light font-Inter">
                 <p class="line-clamp-2">{{props.content}}</p>
               </div>
               <div v-if="props.type==='frontPage'" class="grid grid-cols-5 justify-items-end grep-4">
@@ -93,11 +100,10 @@ const confirmPost = () => {
       </div>
     </div>
     <Check v-if="modalType==='check' && modal.notificationStatus===true" :text="modal.notification.text"
-      :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification"
-      @confirm="confirmPost()" />
+      :type="modal.notification.type" @click="modal.closeNotification" @confirm="confirmPost()" />
     <LoadingModal v-if="modalType === 'loading'" />
     <Information v-if="modalType==='information' && modal.notificationStatus===true" :text="modal.notification.text"
-      :dateTime="modal.notification.dateTime" :type="modal.notification.type" @click="modal.closeNotification" />
+      :postId="modal.notification.postId" :type="modal.notification.type" @click="modal.closeNotification" />
 
   </section>
 </template>
