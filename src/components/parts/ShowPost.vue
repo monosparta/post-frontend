@@ -32,7 +32,7 @@ const confirmPost = async () => {
     modalType.value = 'information'
     modal.createNotification({
       type: 'delete',
-      text: `已刪除「${props.title}該篇文章！`,
+      text: `已刪除「${props.title}」該篇文章！`,
       postId: '',
     })
   } else {
