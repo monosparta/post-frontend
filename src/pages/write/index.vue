@@ -34,7 +34,7 @@ const confirmPost = async () => {
   const content = contentInput.value
   await post.createPost({ title, content, user_id: user.userData.id })
 
-  if (post.returnInfo.data.message === 'Successful Created') {
+  if (post.returnInfo.status === 201) {
     modalType.value = 'information'
     modal.createNotification({
       type: 'add',
@@ -50,6 +50,8 @@ const confirmPost = async () => {
     })
   }
 }
+
+
 </script>
 
 <template>

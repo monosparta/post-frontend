@@ -11,6 +11,7 @@ import AppHeader from '../components/AppHeader.vue'
 
 import { useSidebar } from '../hooks/useSidebar'
 
+const refresh = useRefreshStore()
 const navigation = [
   { name: 'Dashboard', label: 'dashboard', href: '/dashboard', icon: HomeIcon, current: false },
   { name: 'Users', label: 'users', href: '/users', icon: UsersIcon, current: false },
@@ -29,9 +30,6 @@ const clickItem = (item: any) => {
   router.push({ path: item.href })
 }
 
-const isReload = useRefreshStore()
-const isRouterAlive = ref(isReload.reloadStatus)
-console.log('初始：' + isRouterAlive.value);
 </script>
 
 <template>
@@ -111,7 +109,7 @@ console.log('初始：' + isRouterAlive.value);
 
     <div class="md:pl-64 flex flex-col flex-1">
       <AppHeader />
-      <router-view :key="isRouterAlive" />
+      <router-view :key="refresh.reloadStatus" />
       <Toast v-if="layout.notificationStatus" :text="layout.notification.text" :title="layout.notification.title"
         :type="layout.notification.type" @click="layout.closeNotification" />
     </div>

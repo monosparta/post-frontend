@@ -5,7 +5,7 @@ const props = defineProps({
 
 const tabs = [
   { name: '文章首頁', label: 'posts', href: '/posts', current: false },
-  { name: '我的文章', label: 'myPost', href: `/myPost`, current: false },
+  { name: '我的文章', label: 'myPosts', href: `/myPosts`, current: false },
 ]
 const router = useRouter()
 const clickItem = (item: any) => {

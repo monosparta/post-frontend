@@ -27,8 +27,11 @@ const deletePost = () => {
 
 const confirmPost = async () => {
   modalType.value = 'loading'
+  await post.clearReturnInfo()
   await post.deletePost(props.id!!)
-  if (post.returnInfo.data.message === 'successful delete') {
+  console.log(post.returnInfo);
+
+  if (post.returnInfo.status === 200) {
     modalType.value = 'information'
     modal.createNotification({
       type: 'delete',
@@ -56,7 +59,7 @@ const confirmPost = async () => {
             {{props.title}}
           </h2>
           <div v-if=" props.userId===tokenUserId"
-            class="col-end-7 col-span-2 relative flex justify-end whitespace-nowrap  text-right text-sm font-medium">
+            class="col-end-7 col-span-2 flex justify-end whitespace-nowrap  text-right text-sm font-medium">
             <button class="flex justify-center  text-gray-400 hover:text-gray-900" @click="deletePost()">
               <TrashIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">{{ props.id
               }}</span>

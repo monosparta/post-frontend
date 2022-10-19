@@ -11,6 +11,7 @@ const props = defineProps({
   postId: String,
 })
 
+const emit = defineEmits(['click'])
 const click = async () => {
   modalOpen.value = false
   switch (props.type) {
@@ -18,12 +19,14 @@ const click = async () => {
       router.push({ path: `/show/${props.postId}` })
       break;
     case 'delete':
-      router.push({ path: '/posts' })
+      router.push({ path: '/myPosts' })
       reload.reload()
       break;
     case 'warning':
+      emit('click')
       break;
     default:
+      emit('click')
       break;
   }
 }

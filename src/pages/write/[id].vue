@@ -47,10 +47,10 @@ const confirmPost = async () => {
 
   if (post.info.user.user_id === user.userData.id) {
     await post.updatePost(postId, { title, content })
-    if (post.returnInfo.data.message === 'successful update') {
+    if (post.returnInfo.status === 200) {
       modalType.value = 'information'
       modal.createNotification({
-        type: 'add',
+        type: 'update',
         text: '已修改該篇文章！',
         postId: post.returnInfo.data.post_id,
       })
@@ -66,7 +66,7 @@ const confirmPost = async () => {
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
-      text: `非${user.userData.username}本人，禁止此篇修改文章！`,
+      text: `非本人，禁止此篇修改文章！`,
       postId: '',
     })
   }
