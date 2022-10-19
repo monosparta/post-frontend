@@ -3,6 +3,7 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
 import { CheckIcon, ExclamationIcon } from '@heroicons/vue/outline'
 const router = useRouter()
 const modalOpen = ref(true)
+const reload = useRefreshStore()
 
 const props = defineProps({
   type: String,
@@ -18,6 +19,7 @@ const click = async () => {
       break;
     case 'delete':
       router.push({ path: '/posts' })
+      reload.reload()
       break;
     case 'warning':
       break;

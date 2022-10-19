@@ -28,6 +28,10 @@ const clickItem = (item: any) => {
   toggleSidebarCollapse()
   router.push({ path: item.href })
 }
+
+const isReload = useRefreshStore()
+const isRouterAlive = ref(isReload.reloadStatus)
+console.log('初始：' + isRouterAlive.value);
 </script>
 
 <template>
@@ -107,7 +111,7 @@ const clickItem = (item: any) => {
 
     <div class="md:pl-64 flex flex-col flex-1">
       <AppHeader />
-      <router-view />
+      <router-view :key="isRouterAlive" />
       <Toast v-if="layout.notificationStatus" :text="layout.notification.text" :title="layout.notification.title"
         :type="layout.notification.type" @click="layout.closeNotification" />
     </div>
