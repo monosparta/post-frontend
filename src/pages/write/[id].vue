@@ -44,25 +44,33 @@ const confirmPost = async () => {
   modalType.value = 'loading'
   const title = titleInput.value
   const content = contentInput.value
-  const user_id = user.userData.id
-  await post.createPost({ title, content, user_id })
-  console.log(post.infoCheckStatus);
 
-  if (post.infoCheckStatus === 200) {
-    modalType.value = 'information'
-    modal.createNotification({
-      type: 'add',
-      text: '已修改該篇文章！',
-      postId: post.info.id,
-    })
+  if (post.info.user.user_id === user.userData.id) {
+    await post.updatePost(postId, { title, content })
+    if (post.returnInfo.data.message === 'successful update') {
+      modalType.value = 'information'
+      modal.createNotification({
+        type: 'add',
+        text: '已修改該篇文章！',
+        postId: post.returnInfo.data.post_id,
+      })
+    } else {
+      modalType.value = 'information'
+      modal.createNotification({
+        type: 'warning',
+        text: `修改失敗！失敗狀態為：${post.returnInfo.status}`,
+        postId: '',
+      })
+    }
   } else {
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
-      text: `修改失敗！ ${post.infoCheckStatus}`,
+      text: `非${user.userData.username}本人，禁止此篇修改文章！`,
       postId: '',
     })
   }
+
 }
 </script>
 

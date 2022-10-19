@@ -12,8 +12,9 @@ onMounted(async () => {
 <template>
   <div class="mt-6 ml-16 mr-16">
     <div class="flex flex-col">
-      <ShowPost :id="post.info.id" :title="post.info.title" :content="post.info.content" :userId="post.info.user.id"
-        :userName="post.info.user.name" :dateTime="post.info.created_at" :type="'content'" />
+      <ShowPost :id="post.info.post_id" :title="post.info.title" :content="post.info.content"
+        :userId="post.info.user.user_id" :userName="post.info.user.name" :dateTime="post.info.created_at"
+        :type="'content'" />
     </div>
   </div>
 </template>

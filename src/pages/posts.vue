@@ -20,8 +20,8 @@ onMounted(async () => {
         <Empty />
       </div>
       <div v-else class="mt-6">
-        <div v-for="post in list" :key="post.id">
-          <ShowPost :id="post.id" :title="post.title" :content="post.content" :userId="post.user.id"
+        <div v-for="post in posts.list" :key="post.post_id">
+          <ShowPost :id="post.post_id" :title="post.title" :content="post.content" :userId="post.user.user_id"
             :userName="post.user.name" :dateTime="post.created_at" type="frontPage" />
         </div>
       </div>

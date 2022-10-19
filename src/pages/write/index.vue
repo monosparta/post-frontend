@@ -32,21 +32,20 @@ const confirmPost = async () => {
   modalType.value = 'loading'
   const title = titleInput.value
   const content = contentInput.value
-  const user_id = user.userData.id
-  await post.createPost({ title, content, user_id })
+  await post.createPost({ title, content, user_id: user.userData.id })
 
-  if (post.infoCheckStatus === 201) {
+  if (post.returnInfo.data.message === 'Successful Created') {
     modalType.value = 'information'
     modal.createNotification({
       type: 'add',
       text: '已發表該篇文章！',
-      postId: post.info.id,
+      postId: post.returnInfo.data.post_id,
     })
   } else {
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
-      text: `新增失敗！ ${post.infoCheckStatus}`,
+      text: `新增失敗！失敗狀態為：${post.returnInfo.status}`,
       postId: '',
     })
   }

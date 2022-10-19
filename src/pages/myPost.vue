@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const post = usePostStore()
+const posts = usePostStore()
 const userId = useUserStore()
 let BulletinSectionHeaderTitle = ref('')
 
@@ -7,8 +7,8 @@ let BulletinSectionHeaderTitle = ref('')
 BulletinSectionHeaderTitle.value = '我的文章';
 
 onMounted(async () => {
-  post.clearPosts()
-  await post.getUserPosts(userId.userData.id)
+  posts.clearPosts()
+  await posts.getUserPosts(userId.userData.id)
 })
 
 </script>
@@ -18,13 +18,13 @@ onMounted(async () => {
     <div class="flex flex-col">
       <PostTab :title="BulletinSectionHeaderTitle" />
       <BulletinSectionHeaderForPost :title="BulletinSectionHeaderTitle" :needButton="true" />
-      <div v-if="!post.list">
+      <div v-if="posts.userPostList.posts.length===0">
         <Empty />
       </div>
-      <div v-else-if="post.list" class="mt-6">
-        <div v-for="posts in post.list" :key="posts.id">
-          <ShowPost :id="posts.id" :title="posts.title" :content="posts.content" :userId="posts.user.id"
-            :userName="posts.user.name" :dateTime="posts.created_at" type="frontPage" />
+      <div v-else-if="posts.list" class="mt-6">
+        <div v-for="post in posts.userPostList.posts" :key="post.post_id">
+          <ShowPost :id="post.post_id" :title="post.title" :content="post.content" :userId="posts.userPostList.user_id"
+            :userName="posts.userPostList.name" :dateTime="post.created_at" type="frontPage" />
         </div>
       </div>
     </div>

@@ -4,13 +4,13 @@ const user = useUserStore()
 const emptyPost = {
     status: -1,
     data: {
-        id: '',
+        post_id: '',
         title: '',
         content: '',
         created_at: '',
         updated_at: '',
         user: {
-            id: '',
+            user_id: '',
             name: '',
         },
     },
@@ -26,7 +26,18 @@ const emptyPosts = reactive({
 const emptyUserPosts = reactive({
     status: -1,
     value: {
-        data: []
+        data: {
+            user_id: '',
+            name: '',
+            posts: [],
+        }
+    }
+})
+const emptyReturnInfo = reactive({
+    status: -1,
+    data: {
+        message: '',
+        post_id: '',
     }
 })
 export const usePostStore = defineStore('post', () => {
@@ -35,13 +46,13 @@ export const usePostStore = defineStore('post', () => {
             status: -1,
             data: [
                 {
-                    id: '',
+                    post_id: '',
                     title: '',
                     content: '',
                     created_at: '',
                     updated_at: '',
                     user: {
-                        id: '',
+                        user_id: '',
                         name: '',
                     },
                 },
@@ -51,19 +62,18 @@ export const usePostStore = defineStore('post', () => {
     const userPosts = reactive({
         value: {
             status: -1,
-            data: [
-                {
-                    id: '',
-                    name: '',
-                    post: {
-                        id: '',
-                        title: '',
-                        content: '',
-                        created_at: '',
-                        updated_at: '',
-                    },
-                },
-            ],
+            data:
+            {
+                user_id: '',
+                name: '',
+                posts: [{
+                    post_id: '',
+                    title: '',
+                    content: '',
+                    created_at: '',
+                    updated_at: '',
+                },],
+            },
         },
     })
     const list = computed(() => { return posts.value.data })
@@ -71,6 +81,7 @@ export const usePostStore = defineStore('post', () => {
     const userPostList = computed(() => { return userPosts.value.data })
     const userPostListCheckStatus = computed(() => { return userPosts.value.status })
     const post = reactive({ ...emptyPost })
+    const returnInfo = reactive({ ...emptyReturnInfo })
     const info = computed(() => { return post.data })
     const infoCheckStatus = computed(() => { return post.status })
     const getPosts = async () => {
@@ -142,31 +153,34 @@ export const usePostStore = defineStore('post', () => {
             const res = await axios.post(
                 `${import.meta.env.VITE_APP_API_URL}/api/post`, data,
             )
-            post.status = res.status
-            post.data = res.data
+            returnInfo.status = res.status
+            returnInfo.data = res.data
         }
         catch (err: any | AxiosError) {
             if (axios.isAxiosError(err)) {
-                console.log(err.response);
+                returnInfo.status = err.response?.status!
             } else {
                 console.log(err);
             }
         }
     }
-    const updatePost = async (id: string) => {
+    const updatePost = async (postId: string, data: {
+        title: string
+        content: string
+    }) => {
         const logged = await user.checkToken()
         if (!logged)
             return
         try {
             const res = await axios.put(
-                `${import.meta.env.VITE_APP_API_URL}/api/post/${id}`,
+                `${import.meta.env.VITE_APP_API_URL}/api/post/${postId}`, data,
             )
-            post.status = res.status
-            post.data = res.data
+            returnInfo.status = res.status
+            returnInfo.data = res.data
         }
         catch (err: any | AxiosError) {
             if (axios.isAxiosError(err)) {
-                console.log(err.response);
+                returnInfo.status = err.response?.status!
             } else {
                 console.log(err);
             }
@@ -180,12 +194,12 @@ export const usePostStore = defineStore('post', () => {
             const res = await axios.delete(
                 `${import.meta.env.VITE_APP_API_URL}/api/post/${postId}`,
             )
-            post.status = res.status
-            post.data = res.data
+            returnInfo.status = res.status
+            returnInfo.data.message = res.data.message
         }
         catch (err: any | AxiosError) {
             if (axios.isAxiosError(err)) {
-                console.log(err.response);
+                returnInfo.status = err.response?.status!
             } else {
                 console.log(err);
             }
@@ -200,9 +214,10 @@ export const usePostStore = defineStore('post', () => {
         list,
         listGetStatus: listCheckStatus,
         userPostList,
-        userPostListGetStatus: userPostListCheckStatus,
+        userPostListCheckStatus,
         post,
         info,
+        returnInfo,
         infoCheckStatus,
         getPosts,
         getPost,

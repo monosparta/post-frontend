@@ -28,7 +28,7 @@ const deletePost = () => {
 const confirmPost = async () => {
   modalType.value = 'loading'
   await post.deletePost(props.id!!)
-  if (post.infoCheckStatus === 200) {
+  if (post.returnInfo.data.message === 'successful delete') {
     modalType.value = 'information'
     modal.createNotification({
       type: 'delete',
@@ -39,11 +39,10 @@ const confirmPost = async () => {
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
-      text: `刪除失敗！失敗狀態為：${post.infoCheckStatus}`,
+      text: `刪除失敗！失敗狀態為：${post.returnInfo.status}`,
       postId: '',
     })
   }
-
 }
 
 </script>
@@ -77,22 +76,26 @@ const confirmPost = async () => {
               </div>
             </li>
             <li class="pt-2 pb-4">
-              <div v-if="props.type==='content'" class="space-x-3 text-xl font-light font-Inter whitespace-pre-line">
-                {{props.content}}
-              </div>
-              <div v-if="props.type==='frontPage'" class="space-x-3 text-xl font-light font-Inter">
-                <p class="line-clamp-2">{{props.content}}</p>
-              </div>
-              <div v-if="props.type==='frontPage'" class="grid grid-cols-5 justify-items-end grep-4">
-                <button
-                  class="col-end-6 col-span-1 mx-0 my-0  text-base font-normal text-indigo-700 hover:text-indigo-400"
-                  @click="$router.push(`/show/${props.id}`)">
-                  <div
-                    class="relative border-b border-indigo-700 hover:text-indigo-400 flex justify-center pb-5 sm:pb-0">
-                    閱讀更多
-                    <ArrowNarrowRightIcon class="ml-2 h-5 w-5 pt-1 leading-6" aria-hidden="true" />
+              <div class="space-x-3 text-xl font-light font-Inter ">
+                <div v-if="props.type==='content'">
+                  <p class="break-words whitespace-pre-line">
+                    {{props.content}}
+                  </p>
+                </div>
+                <div v-if="props.type==='frontPage'">
+                  <p class="line-clamp-2">{{props.content}}</p>
+                  <div class="grid grid-cols-5 justify-items-end grep-4">
+                    <button
+                      class="col-end-6 col-span-1 mx-0 my-0  text-base font-normal text-indigo-700 hover:text-indigo-400"
+                      @click="$router.push(`/show/${props.id}`)">
+                      <div
+                        class="relative border-b border-indigo-700 hover:text-indigo-400 flex justify-center pb-5 sm:pb-0">
+                        閱讀更多
+                        <ArrowNarrowRightIcon class="ml-2 h-5 w-5 pt-1 leading-6" aria-hidden="true" />
+                      </div>
+                    </button>
                   </div>
-                </button>
+                </div>
               </div>
             </li>
           </ul>
