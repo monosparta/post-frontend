@@ -3,6 +3,7 @@ import { TrashIcon, PencilAltIcon, ArrowNarrowRightIcon } from '@heroicons/vue/s
 const userId = useUserStore()
 const modal = useModalStore()
 const post = usePostStore()
+const router = useRouter()
 const tokenUserId = userId.userData.id
 let modalType = ref('')
 
@@ -58,8 +59,8 @@ const confirmPost = async () => {
           <h2 id="notes-title" class="col-start-1 col-end-5 text-2xl font-semibold font-Inter text-gray-900">
             {{props.title}}
           </h2>
-          <div v-if=" props.userId===tokenUserId"
-            class="col-end-7 col-span-2 flex justify-end whitespace-nowrap  text-right text-sm font-medium">
+          <div v-if=" props.userId===tokenUserId && router.currentRoute.value.path !=='/posts'"
+            class="col-end-7 col-span-2  flex justify-end whitespace-nowrap  text-right text-sm font-medium">
             <button class="flex justify-center  text-gray-400 hover:text-gray-900" @click="deletePost()">
               <TrashIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">{{ props.id
               }}</span>
