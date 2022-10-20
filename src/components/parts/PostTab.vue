@@ -1,26 +1,33 @@
 <script setup lang="ts">
 const route = useRoute()
-const select = ref('')
+
+
 const tabs = [
   { name: '文章首頁', label: 'posts', href: '/posts', current: false },
   { name: '我的文章', label: 'myPosts', href: '/myPosts', current: false },
 ]
+const firstSelect = tabs.find(tab => tab.label === route.name)!!
+const selected = ref(firstSelect.name)
 
 const router = useRouter()
 const clickItem = (item: { name: string, label: string, href: string, current: boolean }) => {
   router.push({ path: item.href })
 }
 
+const onChange = (selected: string) => {
+  const found = tabs.find(element => element.name === selected)!!
+  router.push({ path: found.href })
+}
 </script>
 
-// TODO:手機頁面的選單要調整
 <template>
   <div class="border-b border-gray-200 pb-5 sm:pb-0">
     <div>
       <div class="sm:hidden">
         <label for="current-tab" class="sr-only">Select a tab</label>
         <select id="current-tab" name="current-tab"
-          class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+          class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+          v-model="selected" @change="onChange(selected)">
           <option v-for="tab in tabs" :key="tab.name" :selected="route.name === tab.label">{{
           tab.name }}
           </option>
