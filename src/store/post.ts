@@ -217,9 +217,9 @@ export const usePostStore = defineStore('post', () => {
         post.data = emptyPost.data
         posts.value.data = emptyPosts.value.data
         userPosts.value.data = emptyUserPosts.value.data
-        post.status = -1
-        posts.value.status = -1
-        userPosts.value.status = -1
+        emptyPost.status = -1
+        emptyPosts.status = -1
+        emptyUserPosts.status = -1
     }
     const clearReturnInfo = () => {
         returnInfo.status = -1
@@ -227,13 +227,15 @@ export const usePostStore = defineStore('post', () => {
     }
     return {
         list,
-        listGetStatus: listCheckStatus,
+        listCheckStatus,
         userPostList,
         userPostListCheckStatus,
         post,
         info,
         returnInfo,
         infoCheckStatus,
+        emptyPosts,
+        emptyUserPosts,
         clearReturnInfo,
         getPosts,
         getPost,

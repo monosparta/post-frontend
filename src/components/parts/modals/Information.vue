@@ -15,7 +15,10 @@ const emit = defineEmits(['click'])
 const click = async () => {
   modalOpen.value = false
   switch (props.type) {
-    case 'add' || 'update':
+    case 'add':
+      router.push({ path: `/show/${props.postId}` })
+      break;
+    case 'update':
       router.push({ path: `/show/${props.postId}` })
       break;
     case 'delete':
