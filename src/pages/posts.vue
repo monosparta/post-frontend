@@ -1,14 +1,9 @@
 <script setup lang="ts">
 const posts = usePostStore()
 
-// 初始顯示與文章首頁顯示
-
 onMounted(async () => {
   posts.clearPosts()
   await posts.getPosts()
-  if (posts.list.length === 0) {
-    posts.emptyPosts.status = 0
-  }
 })
 
 </script>

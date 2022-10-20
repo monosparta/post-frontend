@@ -12,12 +12,13 @@ import AppHeader from '../components/AppHeader.vue'
 import { useSidebar } from '../hooks/useSidebar'
 
 const refresh = useRefreshStore()
+
 const navigation = [
   { name: 'Dashboard', label: 'dashboard', href: '/dashboard', icon: HomeIcon, current: false },
   { name: 'Users', label: 'users', href: '/users', icon: UsersIcon, current: false },
   { name: 'Bulletin', label: 'bulletin', href: '/bulletin', icon: AnnotationIcon, current: false },
   { name: 'Devices', label: 'devices', href: '/devices', icon: ChipIcon, current: false },
-  { name: 'Post', label: 'posts', href: '/posts', icon: NewspaperIcon, current: false },
+  { name: 'Posts', label: 'posts', href: '/posts', icon: NewspaperIcon, current: false },
 ]
 
 const layout = useLayoutStore()

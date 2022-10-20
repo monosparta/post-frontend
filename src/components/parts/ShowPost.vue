@@ -4,7 +4,8 @@ const userId = useUserStore()
 const modal = useModalStore()
 const post = usePostStore()
 const router = useRouter()
-const tokenUserId = userId.userData.id
+// const tokenUserId = userId.userData.id
+const tokenUserId = localStorage.getItem('id')
 let modalType = ref('')
 
 const props = defineProps({
@@ -16,6 +17,8 @@ const props = defineProps({
   userName: String,
   dateTime: String,
 })
+
+localStorage.setItem('postTitle', props.title!!)
 
 const deletePost = () => {
   modalType.value = 'check'

@@ -1,17 +1,12 @@
 <script setup lang="ts">
 const posts = usePostStore()
-const userId = useUserStore()
-// let BulletinSectionHeaderTitle = ref('')
+// const user = useUserStore()
 
-// //我的文章顯示
-// BulletinSectionHeaderTitle.value = '我的文章';
+const userId = localStorage.getItem('id')!!
 
 onMounted(async () => {
   posts.clearPosts()
-  await posts.getUserPosts(userId.userData.id)
-  if (posts.userPostList.posts.length === 0) {
-    posts.emptyUserPosts.status = 0
-  }
+  await posts.getUserPosts(userId)
 })
 
 </script>
