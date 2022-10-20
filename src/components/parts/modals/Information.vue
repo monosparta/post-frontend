@@ -22,9 +22,6 @@ const click = async () => {
       router.push({ path: '/myPosts' })
       reload.reload()
       break;
-    case 'warning':
-      emit('click')
-      break;
     default:
       emit('click')
       break;

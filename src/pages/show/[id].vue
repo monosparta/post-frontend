@@ -6,7 +6,6 @@ onMounted(async () => {
   post.clearPosts()
   await post.getPost(postId)
 })
-
 </script>
 
 <template>
@@ -14,7 +13,7 @@ onMounted(async () => {
     <div class="flex flex-col">
       <ShowPost :id="post.info.post_id" :title="post.info.title" :content="post.info.content"
         :userId="post.info.user.user_id" :userName="post.info.user.name" :dateTime="post.info.created_at"
-        :type="'content'" />
+        type="content" />
     </div>
   </div>
 </template>

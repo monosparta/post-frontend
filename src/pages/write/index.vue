@@ -8,8 +8,6 @@ let modalType = ref('')
 
 const checkPostEmpty = async () => {
   if (titleInput.value == '' || contentInput.value == '') {
-    console.log('空的！');
-
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
@@ -17,8 +15,6 @@ const checkPostEmpty = async () => {
       postId: '',
     })
   } else {
-    console.log('有資料');
-
     modalType.value = 'check'
     modal.createNotification({
       type: 'add',
@@ -50,7 +46,6 @@ const confirmPost = async () => {
     })
   }
 }
-
 
 </script>
 
