@@ -3,7 +3,7 @@
 // Read more: https://github.com/vuejs/core/pull/3399
 import '@vue/runtime-core'
 
-export { }
+export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -18,7 +18,6 @@ declare module '@vue/runtime-core' {
     DialogPanel: typeof import('@headlessui/vue')['DialogPanel']
     DialogTitle: typeof import('@headlessui/vue')['DialogTitle']
     Empty: typeof import('./components/parts/Empty.vue')['default']
-    PageLoading: typeof import('./components/parts/PageLoading.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     Information: typeof import('./components/parts/modals/Information.vue')['default']
     InputBox: typeof import('./components/parts/InputBox.vue')['default']
@@ -33,6 +32,7 @@ declare module '@vue/runtime-core' {
     MenuButton: typeof import('@headlessui/vue')['MenuButton']
     MenuItem: typeof import('@headlessui/vue')['MenuItem']
     MenuItems: typeof import('@headlessui/vue')['MenuItems']
+    PageLoading: typeof import('./components/parts/PageLoading.vue')['default']
     Pagination: typeof import('./components/Pagination.vue')['default']
     PostTab: typeof import('./components/parts/PostTab.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
