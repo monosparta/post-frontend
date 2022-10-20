@@ -9,6 +9,7 @@ onMounted(async () => {
   await posts.getUserPosts(userId)
 })
 
+
 </script>
 
 <template>

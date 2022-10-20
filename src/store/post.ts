@@ -139,7 +139,7 @@ export const usePostStore = defineStore('post', () => {
             userPosts.value.status = res.status
             userPosts.value.data = res.data
 
-            if (posts.value.data.length === 0) {
+            if (userPosts.value.data.posts.length === 0) {
                 userPosts.value.status = 0
             } else {
                 userPosts.value.status = res.status
