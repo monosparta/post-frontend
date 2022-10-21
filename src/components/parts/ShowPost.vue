@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TrashIcon, PencilAltIcon, ArrowNarrowRightIcon } from '@heroicons/vue/solid'
-const userId = useUserStore()
+// const userId = useUserStore()
 const modal = useModalStore()
 const post = usePostStore()
 const router = useRouter()
@@ -24,7 +24,7 @@ const deletePost = () => {
   modalType.value = 'check'
   modal.createNotification({
     type: 'delete',
-    text: `確定刪除「${props.title}」該篇文章？`,
+    text: `確定刪除「${props.title}」？`,
     postId: '',
   })
 }
@@ -33,13 +33,12 @@ const confirmPost = async () => {
   modalType.value = 'loading'
   await post.clearReturnInfo()
   await post.deletePost(props.id!!)
-  console.log(post.returnInfo);
 
   if (post.returnInfo.status === 200) {
     modalType.value = 'information'
     modal.createNotification({
       type: 'delete',
-      text: `已刪除「${props.title}」該篇文章！`,
+      text: `已刪除「${props.title}」！`,
       postId: '',
     })
   } else {
@@ -51,7 +50,6 @@ const confirmPost = async () => {
     })
   }
 }
-
 </script>
 
 <template>
@@ -114,6 +112,5 @@ const confirmPost = async () => {
     <LoadingModal v-if="modalType === 'loading'" />
     <Information v-if="modalType==='information' && modal.notificationStatus===true" :text="modal.notification.text"
       :postId="modal.notification.postId" :type="modal.notification.type" @click="modal.closeNotification" />
-
   </section>
 </template>

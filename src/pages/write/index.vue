@@ -47,7 +47,6 @@ const confirmPost = async () => {
     })
   }
 }
-
 </script>
 
 <template>

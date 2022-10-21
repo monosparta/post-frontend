@@ -7,7 +7,6 @@ const props = defineProps({
   text: String,
 })
 const emit = defineEmits(['confirm', 'click'])
-
 </script>
 
 <template>

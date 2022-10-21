@@ -5,7 +5,6 @@ export const useRefreshStore = defineStore('refresh', () => {
 
   const reload = () => {
     reloadStatus.value = new Date().getTime()
-    console.log(reloadStatus.value);
   }
   return {
     reloadStatus,

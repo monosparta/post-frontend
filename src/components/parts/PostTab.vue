@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const route = useRoute()
 
-
 const tabs = [
   { name: '文章首頁', label: 'posts', href: '/posts', current: false },
   { name: '我的文章', label: 'myPosts', href: '/myPosts', current: false },

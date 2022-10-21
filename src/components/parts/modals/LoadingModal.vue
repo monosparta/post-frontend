@@ -2,7 +2,6 @@
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 
 const modalOpen = ref(true)
-
 </script>
 
 <template>

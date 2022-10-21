@@ -16,8 +16,6 @@ const click = async () => {
   modalOpen.value = false
   switch (props.type) {
     case 'add':
-      router.replace({ path: `/show/${props.postId}` })
-      break;
     case 'update':
       router.replace({ path: `/show/${props.postId}` })
       break;
@@ -30,7 +28,6 @@ const click = async () => {
       break;
   }
 }
-
 </script>
 
 <template>

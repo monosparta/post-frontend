@@ -5,7 +5,6 @@ onMounted(async () => {
   posts.clearPosts()
   await posts.getPosts()
 })
-
 </script>
 
 <template>

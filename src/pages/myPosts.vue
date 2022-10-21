@@ -8,8 +8,6 @@ onMounted(async () => {
   posts.clearPosts()
   await posts.getUserPosts(userId)
 })
-
-
 </script>
 
 <template>

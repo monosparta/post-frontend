@@ -33,6 +33,7 @@ const emptyUserPosts = reactive({
         }
     }
 })
+
 const emptyReturnInfo = reactive({
     status: -1,
     data: {
@@ -40,6 +41,7 @@ const emptyReturnInfo = reactive({
         post_id: '',
     }
 })
+
 export const usePostStore = defineStore('post', () => {
     const posts = reactive({
         value: {
@@ -211,8 +213,6 @@ export const usePostStore = defineStore('post', () => {
             )
             returnInfo.status = res.status
             returnInfo.data.message = res.data.message
-            console.log(res.status);
-
         }
         catch (err: any | AxiosError) {
             if (err instanceof AxiosError) {
