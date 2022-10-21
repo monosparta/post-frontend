@@ -37,4 +37,6 @@ onMounted(async () => {
 meta:
   layout: app
   activeMenu: posts
+  activeMenuName: '文章首頁'
+  title: '我的文章'
 </route>

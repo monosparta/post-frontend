@@ -21,5 +21,7 @@ onMounted(async () => {
 meta:
   layout: app
   activeMenu: posts
+  activeMenuName: '文章首頁'
+  title: '內文顯示'
 </route>
 

@@ -93,5 +93,7 @@ const confirmPost = async () => {
 meta:
   layout: app
   activeMenu: posts
+  activeMenuName: '文章首頁'
+  title: '編輯文章'
 </route>
 

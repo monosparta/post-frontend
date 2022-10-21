@@ -16,10 +16,10 @@ const click = async () => {
   modalOpen.value = false
   switch (props.type) {
     case 'add':
-      router.push({ path: `/show/${props.postId}` })
+      router.replace({ path: `/show/${props.postId}` })
       break;
     case 'update':
-      router.push({ path: `/show/${props.postId}` })
+      router.replace({ path: `/show/${props.postId}` })
       break;
     case 'delete':
       router.push({ path: '/myPosts' })
