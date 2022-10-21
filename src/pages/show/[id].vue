@@ -22,6 +22,6 @@ meta:
   layout: app
   activeMenu: posts
   activeMenuName: '文章首頁'
-  title: '內文顯示'
+  title: '文章內容'
 </route>
 

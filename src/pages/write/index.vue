@@ -1,11 +1,12 @@
 <script setup lang="ts">
-const user = useUserStore()
+// const user = useUserStore()
 const post = usePostStore()
+
 const modal = useModalStore()
 const titleInput = ref('')
 const contentInput = ref('')
 let modalType = ref('')
-
+const userId = localStorage.getItem('id')!
 const checkPostEmpty = async () => {
   if (titleInput.value == '' || contentInput.value == '') {
     modalType.value = 'information'
@@ -28,7 +29,7 @@ const confirmPost = async () => {
   modalType.value = 'loading'
   const title = titleInput.value
   const content = contentInput.value
-  await post.createPost({ title, content, user_id: user.userData.id })
+  await post.createPost({ title, content, user_id: userId })
 
   if (post.returnInfo.status === 201) {
     modalType.value = 'information'
