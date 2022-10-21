@@ -3,6 +3,7 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
 import { CheckIcon, ExclamationIcon } from '@heroicons/vue/outline'
 const router = useRouter()
 const modalOpen = ref(true)
+const reload = useRefreshStore()
 
 const props = defineProps({
   type: String,
@@ -10,22 +11,23 @@ const props = defineProps({
   postId: String,
 })
 
+const emit = defineEmits(['click'])
 const click = async () => {
   modalOpen.value = false
   switch (props.type) {
-    case 'add' || 'update':
-      router.push({ path: `/show/${props.postId}` })
+    case 'add':
+    case 'update':
+      router.replace({ path: `/show/${props.postId}` })
       break;
     case 'delete':
-      router.push({ path: '/posts' })
-      break;
-    case 'warning':
+      router.push({ path: '/myPosts' })
+      reload.reload()
       break;
     default:
+      emit('click')
       break;
   }
 }
-
 </script>
 
 <template>

@@ -11,12 +11,14 @@ import AppHeader from '../components/AppHeader.vue'
 
 import { useSidebar } from '../hooks/useSidebar'
 
+const refresh = useRefreshStore()
+
 const navigation = [
   { name: 'Dashboard', label: 'dashboard', href: '/dashboard', icon: HomeIcon, current: false },
   { name: 'Users', label: 'users', href: '/users', icon: UsersIcon, current: false },
   { name: 'Bulletin', label: 'bulletin', href: '/bulletin', icon: AnnotationIcon, current: false },
   { name: 'Devices', label: 'devices', href: '/devices', icon: ChipIcon, current: false },
-  { name: 'Post', label: 'posts', href: '/posts', icon: NewspaperIcon, current: false },
+  { name: 'Posts', label: 'posts', href: '/posts', icon: NewspaperIcon, current: false },
 ]
 
 const layout = useLayoutStore()
@@ -28,6 +30,7 @@ const clickItem = (item: any) => {
   toggleSidebarCollapse()
   router.push({ path: item.href })
 }
+
 </script>
 
 <template>
@@ -107,7 +110,7 @@ const clickItem = (item: any) => {
 
     <div class="md:pl-64 flex flex-col flex-1">
       <AppHeader />
-      <router-view />
+      <router-view :key="refresh.reloadStatus" />
       <Toast v-if="layout.notificationStatus" :text="layout.notification.text" :title="layout.notification.title"
         :type="layout.notification.type" @click="layout.closeNotification" />
     </div>

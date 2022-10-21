@@ -11,7 +11,6 @@ const props = defineProps({
   needButton: Boolean,
   title: String,
 })
-
 </script>
 
 <template>
@@ -28,5 +27,4 @@ const props = defineProps({
       </div>
     </div>
   </div>
-
 </template>

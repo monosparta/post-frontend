@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { TrashIcon, PencilAltIcon, ArrowNarrowRightIcon } from '@heroicons/vue/solid'
-const userId = useUserStore()
+// const userId = useUserStore()
 const modal = useModalStore()
 const post = usePostStore()
-const tokenUserId = userId.userData.id
+const router = useRouter()
+// const tokenUserId = userId.userData.id
+const tokenUserId = localStorage.getItem('id')
 let modalType = ref('')
 
 const props = defineProps({
@@ -16,23 +18,27 @@ const props = defineProps({
   dateTime: String,
 })
 
+localStorage.setItem('postTitle', props.title!!)
+
 const deletePost = () => {
   modalType.value = 'check'
   modal.createNotification({
     type: 'delete',
-    text: `確定刪除「${props.title}」該篇文章？`,
+    text: `確定刪除「${props.title}」？`,
     postId: '',
   })
 }
 
 const confirmPost = async () => {
   modalType.value = 'loading'
+  await post.clearReturnInfo()
   await post.deletePost(props.id!!)
-  if (post.returnInfo.data.message === 'successful delete') {
+
+  if (post.returnInfo.status === 200) {
     modalType.value = 'information'
     modal.createNotification({
       type: 'delete',
-      text: `已刪除「${props.title}」該篇文章！`,
+      text: `已刪除「${props.title}」！`,
       postId: '',
     })
   } else {
@@ -44,7 +50,6 @@ const confirmPost = async () => {
     })
   }
 }
-
 </script>
 
 <template>
@@ -55,8 +60,8 @@ const confirmPost = async () => {
           <h2 id="notes-title" class="col-start-1 col-end-5 text-2xl font-semibold font-Inter text-gray-900">
             {{props.title}}
           </h2>
-          <div v-if=" props.userId===tokenUserId"
-            class="col-end-7 col-span-2 relative flex justify-end whitespace-nowrap  text-right text-sm font-medium">
+          <div v-if=" props.userId===tokenUserId && router.currentRoute.value.path !=='/posts'"
+            class="col-end-7 col-span-2  flex justify-end whitespace-nowrap  text-right text-sm font-medium">
             <button class="flex justify-center  text-gray-400 hover:text-gray-900" @click="deletePost()">
               <TrashIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">{{ props.id
               }}</span>
@@ -107,6 +112,5 @@ const confirmPost = async () => {
     <LoadingModal v-if="modalType === 'loading'" />
     <Information v-if="modalType==='information' && modal.notificationStatus===true" :text="modal.notification.text"
       :postId="modal.notification.postId" :type="modal.notification.type" @click="modal.closeNotification" />
-
   </section>
 </template>

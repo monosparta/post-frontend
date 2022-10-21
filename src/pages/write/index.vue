@@ -1,15 +1,14 @@
 <script setup lang="ts">
-const user = useUserStore()
+// const user = useUserStore()
 const post = usePostStore()
+
 const modal = useModalStore()
 const titleInput = ref('')
 const contentInput = ref('')
 let modalType = ref('')
-
+const userId = localStorage.getItem('id')!
 const checkPostEmpty = async () => {
   if (titleInput.value == '' || contentInput.value == '') {
-    console.log('空的！');
-
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
@@ -17,8 +16,6 @@ const checkPostEmpty = async () => {
       postId: '',
     })
   } else {
-    console.log('有資料');
-
     modalType.value = 'check'
     modal.createNotification({
       type: 'add',
@@ -32,9 +29,9 @@ const confirmPost = async () => {
   modalType.value = 'loading'
   const title = titleInput.value
   const content = contentInput.value
-  await post.createPost({ title, content, user_id: user.userData.id })
+  await post.createPost({ title, content, user_id: userId })
 
-  if (post.returnInfo.data.message === 'Successful Created') {
+  if (post.returnInfo.status === 201) {
     modalType.value = 'information'
     modal.createNotification({
       type: 'add',
@@ -82,5 +79,7 @@ const confirmPost = async () => {
 meta:
   layout: app
   activeMenu: posts
+  activeMenuName: '文章首頁'
+  title: '新增文章'
 </route>
 

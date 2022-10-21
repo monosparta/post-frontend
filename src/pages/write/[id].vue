@@ -10,8 +10,6 @@ const postId = route.params.id as string
 
 const checkPostEmpty = async () => {
   if (titleInput.value == '' || contentInput.value == '') {
-    console.log('空的！');
-
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
@@ -19,8 +17,6 @@ const checkPostEmpty = async () => {
       postId: '',
     })
   } else {
-    console.log('有資料');
-
     modalType.value = 'check'
     modal.createNotification({
       type: 'add',
@@ -38,6 +34,9 @@ const setData = async () => {
 
 onMounted(async () => {
   await setData()
+  if (post.info.user.user_id !== user.userData.id) {
+    user.logout()
+  }
 })
 
 const confirmPost = async () => {
@@ -45,32 +44,22 @@ const confirmPost = async () => {
   const title = titleInput.value
   const content = contentInput.value
 
-  if (post.info.user.user_id === user.userData.id) {
-    await post.updatePost(postId, { title, content })
-    if (post.returnInfo.data.message === 'successful update') {
-      modalType.value = 'information'
-      modal.createNotification({
-        type: 'add',
-        text: '已修改該篇文章！',
-        postId: post.returnInfo.data.post_id,
-      })
-    } else {
-      modalType.value = 'information'
-      modal.createNotification({
-        type: 'warning',
-        text: `修改失敗！失敗狀態為：${post.returnInfo.status}`,
-        postId: '',
-      })
-    }
+  await post.updatePost(postId, { title, content })
+  if (post.returnInfo.status === 200) {
+    modalType.value = 'information'
+    modal.createNotification({
+      type: 'update',
+      text: '已修改該篇文章！',
+      postId: post.returnInfo.data.post_id,
+    })
   } else {
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
-      text: `非${user.userData.username}本人，禁止此篇修改文章！`,
+      text: `修改失敗！失敗狀態為：${post.returnInfo.status}`,
       postId: '',
     })
   }
-
 }
 </script>
 
@@ -104,5 +93,7 @@ const confirmPost = async () => {
 meta:
   layout: app
   activeMenu: posts
+  activeMenuName: '文章首頁'
+  title: '編輯文章'
 </route>
 
