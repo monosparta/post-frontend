@@ -7,7 +7,7 @@ const titleInput = ref('')
 const contentInput = ref('')
 const modalType = ref('')
 const userId = localStorage.getItem('id')!
-const checkPostEmpty = async () => {
+const checkPostEmpty = () => {
   if (titleInput.value === '' || contentInput.value === '') {
     modalType.value = 'information'
     modal.createNotification({

@@ -8,7 +8,7 @@ const contentInput = ref('')
 const modalType = ref('')
 const postId = route.params.id as string
 
-const checkPostEmpty = async () => {
+const checkPostEmpty = () => {
   if (titleInput.value === '' || contentInput.value === '') {
     modalType.value = 'information'
     modal.createNotification({

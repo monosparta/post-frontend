@@ -4,7 +4,7 @@ const route = useRoute()
 const breadcrumbList = reactive([{
   href: '',
   name: '',
-},])
+}])
 
 const getBreadcrumbs = () => {
   let newBreadCrumb = { href: '', name: '' }
@@ -13,20 +13,19 @@ const getBreadcrumbs = () => {
     if (index === 0) {
       newBreadCrumb = { href: `/${route.meta.activeMenu}`, name: route.meta.activeMenuName as string }
       breadcrumbList.splice(0, 1, newBreadCrumb)
-    } else {
+    }
+    else {
       if (route.name !== route.meta.activeMenu) {
         newBreadCrumb = { href: route.path, name: route.meta.title as string }
         breadcrumbList.push(newBreadCrumb)
       }
     }
   }
-
 }
 
-onMounted(async () => {
-  await getBreadcrumbs()
+onMounted(() => {
+  getBreadcrumbs()
 })
-
 </script>
 
 <template>
@@ -42,12 +41,16 @@ onMounted(async () => {
       </li>
       <li v-for="(item, i) in breadcrumbList" :key="i" class="flex">
         <div class="flex items-center">
-          <svg class="flex-shrink-0 w-6 h-full text-gray-200" viewBox="0 0 24 44" preserveAspectRatio="none"
-            fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg
+            class="flex-shrink-0 w-6 h-full text-gray-200" viewBox="0 0 24 44" preserveAspectRatio="none"
+            fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+          >
             <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
           </svg>
-          <a :href="item.href"
-            :class="[item.href===route.path ? 'text-indigo-900 hover:text-gray-700' :'text-gray-400 hover:text-gray-500','ml-4 text-sm font-medium']">{{
+          <a
+            :href="item.href"
+            class="ml-4 text-sm font-medium" :class="[item.href === route.path ? 'text-indigo-900 hover:text-gray-700' : 'text-gray-400 hover:text-gray-500']"
+          >{{
             item.name }}</a>
         </div>
       </li>

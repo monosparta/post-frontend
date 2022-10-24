@@ -11,7 +11,7 @@ const router = useRouter()
 const modalOpen = ref(true)
 const reload = useRefreshStore()
 
-const click = async () => {
+const click = () => {
   modalOpen.value = false
   switch (props.type) {
     case 'add':
