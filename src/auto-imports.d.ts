@@ -120,7 +120,6 @@ declare global {
   const useBreakpoints: typeof import('@vueuse/core')['useBreakpoints']
   const useBroadcastChannel: typeof import('@vueuse/core')['useBroadcastChannel']
   const useBrowserLocation: typeof import('@vueuse/core')['useBrowserLocation']
-  const useBulletinSectionHeaderStore: typeof import('./store/bulletinSectionHeaderForPost')['useBulletinSectionHeaderStore']
   const useCached: typeof import('@vueuse/core')['useCached']
   const useClipboard: typeof import('@vueuse/core')['useClipboard']
   const useCloned: typeof import('@vueuse/core')['useCloned']
@@ -203,6 +202,7 @@ declare global {
   const usePermission: typeof import('@vueuse/core')['usePermission']
   const usePointer: typeof import('@vueuse/core')['usePointer']
   const usePointerSwipe: typeof import('@vueuse/core')['usePointerSwipe']
+  const usePostStore: typeof import('./store/post')['usePostStore']
   const usePreferredColorScheme: typeof import('@vueuse/core')['usePreferredColorScheme']
   const usePreferredContrast: typeof import('@vueuse/core')['usePreferredContrast']
   const usePreferredDark: typeof import('@vueuse/core')['usePreferredDark']
@@ -210,6 +210,7 @@ declare global {
   const usePreferredReducedMotion: typeof import('@vueuse/core')['usePreferredReducedMotion']
   const useRafFn: typeof import('@vueuse/core')['useRafFn']
   const useRefHistory: typeof import('@vueuse/core')['useRefHistory']
+  const useRefreshStore: typeof import('./store/refresh')['useRefreshStore']
   const useResizeObserver: typeof import('@vueuse/core')['useResizeObserver']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']
@@ -220,7 +221,6 @@ declare global {
   const useScrollLock: typeof import('@vueuse/core')['useScrollLock']
   const useSessionStorage: typeof import('@vueuse/core')['useSessionStorage']
   const useShare: typeof import('@vueuse/core')['useShare']
-  const useShowPostStore: typeof import('./store/showPost')['useShowPostStore']
   const useSidebar: typeof import('./hooks/useSidebar')['useSidebar']
   const useSlots: typeof import('vue')['useSlots']
   const useSpeechRecognition: typeof import('@vueuse/core')['useSpeechRecognition']
@@ -401,7 +401,6 @@ declare module '@vue/runtime-core' {
     readonly useBreakpoints: UnwrapRef<typeof import('@vueuse/core')['useBreakpoints']>
     readonly useBroadcastChannel: UnwrapRef<typeof import('@vueuse/core')['useBroadcastChannel']>
     readonly useBrowserLocation: UnwrapRef<typeof import('@vueuse/core')['useBrowserLocation']>
-    readonly useBulletinSectionHeaderStore: UnwrapRef<typeof import('./store/bulletinSectionHeaderForPost')['useBulletinSectionHeaderStore']>
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
@@ -484,6 +483,7 @@ declare module '@vue/runtime-core' {
     readonly usePermission: UnwrapRef<typeof import('@vueuse/core')['usePermission']>
     readonly usePointer: UnwrapRef<typeof import('@vueuse/core')['usePointer']>
     readonly usePointerSwipe: UnwrapRef<typeof import('@vueuse/core')['usePointerSwipe']>
+    readonly usePostStore: UnwrapRef<typeof import('./store/post')['usePostStore']>
     readonly usePreferredColorScheme: UnwrapRef<typeof import('@vueuse/core')['usePreferredColorScheme']>
     readonly usePreferredContrast: UnwrapRef<typeof import('@vueuse/core')['usePreferredContrast']>
     readonly usePreferredDark: UnwrapRef<typeof import('@vueuse/core')['usePreferredDark']>
@@ -491,6 +491,7 @@ declare module '@vue/runtime-core' {
     readonly usePreferredReducedMotion: UnwrapRef<typeof import('@vueuse/core')['usePreferredReducedMotion']>
     readonly useRafFn: UnwrapRef<typeof import('@vueuse/core')['useRafFn']>
     readonly useRefHistory: UnwrapRef<typeof import('@vueuse/core')['useRefHistory']>
+    readonly useRefreshStore: UnwrapRef<typeof import('./store/refresh')['useRefreshStore']>
     readonly useResizeObserver: UnwrapRef<typeof import('@vueuse/core')['useResizeObserver']>
     readonly useRoute: UnwrapRef<typeof import('vue-router')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('vue-router')['useRouter']>
@@ -501,7 +502,6 @@ declare module '@vue/runtime-core' {
     readonly useScrollLock: UnwrapRef<typeof import('@vueuse/core')['useScrollLock']>
     readonly useSessionStorage: UnwrapRef<typeof import('@vueuse/core')['useSessionStorage']>
     readonly useShare: UnwrapRef<typeof import('@vueuse/core')['useShare']>
-    readonly useShowPostStore: UnwrapRef<typeof import('./store/showPost')['useShowPostStore']>
     readonly useSidebar: UnwrapRef<typeof import('./hooks/useSidebar')['useSidebar']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useSpeechRecognition: UnwrapRef<typeof import('@vueuse/core')['useSpeechRecognition']>

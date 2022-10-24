@@ -3,7 +3,7 @@
 // Read more: https://github.com/vuejs/core/pull/3399
 import '@vue/runtime-core'
 
-export { }
+export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
@@ -32,6 +32,7 @@ declare module '@vue/runtime-core' {
     MenuButton: typeof import('@headlessui/vue')['MenuButton']
     MenuItem: typeof import('@headlessui/vue')['MenuItem']
     MenuItems: typeof import('@headlessui/vue')['MenuItems']
+    PageLoading: typeof import('./components/parts/PageLoading.vue')['default']
     Pagination: typeof import('./components/Pagination.vue')['default']
     PostTab: typeof import('./components/parts/PostTab.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
