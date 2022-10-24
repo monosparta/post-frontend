@@ -5,21 +5,22 @@ const post = usePostStore()
 const modal = useModalStore()
 const titleInput = ref('')
 const contentInput = ref('')
-let modalType = ref('')
+const modalType = ref('')
 const userId = localStorage.getItem('id')!
 const checkPostEmpty = async () => {
-  if (titleInput.value == '' || contentInput.value == '') {
+  if (titleInput.value === '' || contentInput.value === '') {
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
       text: '標題或內文欄位不可以空白喔！',
       postId: '',
     })
-  } else {
+  }
+  else {
     modalType.value = 'check'
     modal.createNotification({
       type: 'add',
-      text: '確定新增該篇文章？',
+      text: '確定新增文章？',
       postId: '',
     })
   }
@@ -35,10 +36,11 @@ const confirmPost = async () => {
     modalType.value = 'information'
     modal.createNotification({
       type: 'add',
-      text: '已發表該篇文章！',
+      text: '已發表文章！',
       postId: post.returnInfo.data.post_id,
     })
-  } else {
+  }
+  else {
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
@@ -52,25 +54,33 @@ const confirmPost = async () => {
 <template>
   <div class="mt-4 mx-16 mb-4">
     <div class="flex flex-col">
-      <BulletinSectionHeaderForPost title="新增文章" :needButton="false" />
+      <BulletinSectionHeaderForPost title="新增文章" :need-button="false" />
       <main class="auto-cols-min">
         <div class="mt-4 h-10">
-          <input id="title" name="title" type="txt" autocomplete="title" placeholder="請輸入文章標題"
-            class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            v-model="titleInput" />
+          <input
+            id="title" v-model="titleInput" name="title" type="txt" autocomplete="title"
+            placeholder="請輸入文章標題"
+            class="block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter"
+          >
         </div>
         <div class="mt-4">
-          <textarea rows="4" name="comment" id="comment"
-            class="h-[576px] block w-full rounded-md border-gray-300 shadow-sm  focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-            placeholder="請輸入文章內容" v-model="contentInput"></textarea>
+          <textarea
+            id="comment" v-model="contentInput" rows="4"
+            name="comment"
+            class="h-[576px] block w-full rounded-md border-gray-300 shadow-sm  focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter" placeholder="請輸入文章內容"
+          />
         </div>
-        <WriteButton buttonShow="新增文章" @click="checkPostEmpty()" />
+        <WriteButton button-show="新增文章" @click="checkPostEmpty()" />
       </main>
-      <Check v-if="modalType==='check' && modal.notificationStatus===true" :text="modal.notification.text"
-        :type="modal.notification.type" @click="modal.closeNotification" @confirm="confirmPost()" />
+      <Check
+        v-if="modalType === 'check' && modal.notificationStatus === true" :text="modal.notification.text"
+        :type="modal.notification.type" @click="modal.closeNotification" @confirm="confirmPost()"
+      />
       <LoadingModal v-if="modalType === 'loading'" />
-      <Information v-if="modalType==='information' && modal.notificationStatus===true" :text="modal.notification.text"
-        :postId="modal.notification.postId" :type="modal.notification.type" @click="modal.closeNotification" />
+      <Information
+        v-if="modalType === 'information' && modal.notificationStatus === true" :text="modal.notification.text"
+        :post-id="modal.notification.postId" :type="modal.notification.type" @click="modal.closeNotification"
+      />
     </div>
   </div>
 </template>
@@ -79,7 +89,7 @@ const confirmPost = async () => {
 meta:
   layout: app
   activeMenu: posts
-  activeMenuName: '文章首頁'
-  title: '新增文章'
+  activeMenuName: 文章首頁
+  title: 新增文章
 </route>
 

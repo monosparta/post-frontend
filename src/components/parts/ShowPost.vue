@@ -28,10 +28,10 @@ const deletePost = () => {
   })
 }
 
-const confirmPost = () => {
+const confirmPost = async () => {
   modalType.value = 'loading'
   post.clearReturnInfo()
-  post.deletePost(props.id!)
+  await post.deletePost(props.id!)
 
   if (post.returnInfo.status === 200) {
     modalType.value = 'information'
@@ -95,7 +95,7 @@ const confirmPost = () => {
                   <p class="line-clamp-2">
                     {{ props.content }}
                   </p>
-                  <div class="grid grid-cols-5 justify-items-end grep-4">
+                  <div class="grid grid-cols-5 justify-items-end grep-4 mt-2">
                     <button
                       class="col-end-6 col-span-1 mx-0 my-0  text-base font-normal text-indigo-700 hover:text-indigo-400"
                       @click="$router.push(`/show/${props.id}`)"
