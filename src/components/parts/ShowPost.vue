@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import { TrashIcon, PencilAltIcon, ArrowNarrowRightIcon } from '@heroicons/vue/solid'
-
-const cookieTaken = (sKey: string) => {
-  const aKeys = document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[-.+*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$/"), "$1")
-  return aKeys
-}
-
-const tokenUserId = cookieTaken('userId')
-
+import { ArrowNarrowRightIcon, PencilAltIcon, TrashIcon } from '@heroicons/vue/solid'
 const props = defineProps({
   type: String,
   id: String,
@@ -17,7 +9,47 @@ const props = defineProps({
   userName: String,
   dateTime: String,
 })
+// const userId = useUserStore()
+const modal = useModalStore()
+const post = usePostStore()
+const router = useRouter()
+// const tokenUserId = userId.userData.id
+const tokenUserId = localStorage.getItem('id')
+const modalType = ref('')
 
+localStorage.setItem('postTitle', props.title!)
+
+const deletePost = () => {
+  modalType.value = 'check'
+  modal.createNotification({
+    type: 'delete',
+    text: `確定刪除「${props.title}」？`,
+    postId: '',
+  })
+}
+
+const confirmPost = async () => {
+  modalType.value = 'loading'
+  post.clearReturnInfo()
+  await post.deletePost(props.id!)
+
+  if (post.returnInfo.status === 200) {
+    modalType.value = 'information'
+    modal.createNotification({
+      type: 'delete',
+      text: `已刪除「${props.title}」！`,
+      postId: '',
+    })
+  }
+  else {
+    modalType.value = 'information'
+    modal.createNotification({
+      type: 'warning',
+      text: `刪除失敗！失敗狀態為：${post.returnInfo.status}`,
+      postId: '',
+    })
+  }
+}
 </script>
 
 <template>
@@ -26,16 +58,20 @@ const props = defineProps({
       <div class="divide-y divide-gray-200">
         <div class="grid grid-cols-6 gap-4 px-4 py-4 sm:px-6">
           <h2 id="notes-title" class="col-start-1 col-end-5 text-2xl font-semibold font-Inter text-gray-900">
-            {{props.title}}
+            {{ props.title }}
           </h2>
-          <div v-if=" props.userId===tokenUserId"
-            class="col-end-7 col-span-2 relative flex justify-end whitespace-nowrap  text-right text-sm font-medium">
-            <button class="flex justify-center  text-gray-400 hover:text-gray-900" @click="">
+          <div
+            v-if=" props.userId === tokenUserId && router.currentRoute.value.path !== '/posts'"
+            class="col-end-7 col-span-2  flex justify-end whitespace-nowrap  text-right text-sm font-medium"
+          >
+            <button class="flex justify-center  text-gray-400 hover:text-gray-900" @click="deletePost()">
               <TrashIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">{{ props.id
               }}</span>
             </button>
-            <button class="flex justify-center  text-gray-400 hover:text-gray-900"
-              @click="$router.push(`/write/${props.id}`)">
+            <button
+              class="flex justify-center  text-gray-400 hover:text-gray-900"
+              @click="$router.push(`/write/${props.id}`)"
+            >
               <PencilAltIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">{{ props.id
               }}</span>
             </button>
@@ -45,31 +81,48 @@ const props = defineProps({
           <ul role="list">
             <li>
               <div class="text-base font-normal font-Inter text-gray-400">
-                {{props.userName}} - {{props.dateTime}}
+                {{ props.userName }} - {{ props.dateTime }}
               </div>
             </li>
             <li class="pt-2 pb-4">
-              <div v-if="props.type==='content'" class="space-x-3 text-xl font-light font-Inter whitespace-pre-line">
-                {{props.content}}
-              </div>
-              <div v-else-if="props.type==='frontPage'" class="space-x-3 text-xl font-light font-Inter">
-                <p class="line-clamp-2">{{props.content}}</p>
-              </div>
-              <div v-if="props.type==='frontPage'" class="grid grid-cols-5 justify-items-end grep-4">
-                <button
-                  class="col-end-6 col-span-1 mx-0 my-0  text-base font-normal text-indigo-700 hover:text-indigo-400"
-                  @click="$router.push(`/show/${props.id}`)">
-                  <div
-                    class="relative border-b border-indigo-700 hover:text-indigo-400 flex justify-center pb-5 sm:pb-0">
-                    閱讀更多
-                    <ArrowNarrowRightIcon class="ml-2 h-5 w-5 pt-1 leading-6" aria-hidden="true" />
+              <div class="space-x-3 text-xl font-light font-Inter ">
+                <div v-if="props.type === 'content'">
+                  <p class="break-words whitespace-pre-line">
+                    {{ props.content }}
+                  </p>
+                </div>
+                <div v-if="props.type === 'frontPage'">
+                  <p class="line-clamp-2">
+                    {{ props.content }}
+                  </p>
+                  <div class="grid grid-cols-5 justify-items-end grep-4 mt-2">
+                    <button
+                      class="col-end-6 col-span-1 mx-0 my-0  text-base font-normal text-indigo-700 hover:text-indigo-400"
+                      @click="$router.push(`/show/${props.id}`)"
+                    >
+                      <div
+                        class="relative border-b border-indigo-700 hover:text-indigo-400 flex justify-center pb-5 sm:pb-0"
+                      >
+                        閱讀更多
+                        <ArrowNarrowRightIcon class="ml-2 h-5 w-5 pt-1 leading-6" aria-hidden="true" />
+                      </div>
+                    </button>
                   </div>
-                </button>
+                </div>
               </div>
             </li>
           </ul>
         </div>
       </div>
     </div>
+    <Check
+      v-if="modalType === 'check' && modal.notificationStatus === true" :text="modal.notification.text"
+      :type="modal.notification.type" @click="modal.closeNotification" @confirm="confirmPost()"
+    />
+    <LoadingModal v-if="modalType === 'loading'" />
+    <Information
+      v-if="modalType === 'information' && modal.notificationStatus === true" :text="modal.notification.text"
+      :post-id="modal.notification.postId" :type="modal.notification.type" @click="modal.closeNotification"
+    />
   </section>
 </template>
