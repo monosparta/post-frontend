@@ -52,14 +52,13 @@ const click = () => {
               class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6"
             >
               <div
-                class="mx-auto flex h-12 w-12 items-center justify-center rounded-full" :class="[props.type === 'add' || props.type === 'update' ? 'bg-green-100' : props.type === 'delete' ? 'bg-red-100' : 'bg-yellow-100']"
+                class="mx-auto flex h-12 w-12 items-center justify-center rounded-full" :class="[props.type === 'warning' ? 'bg-yellow-100' : 'bg-green-100']"
               >
+                <ExclamationIcon v-if="props.type === 'warning'" class="h-6 w-6 text-yellow-600" aria-hidden="true" />
                 <CheckIcon
-                  v-if="props.type === 'add' || props.type === 'update'" class="h-6 w-6 text-green-600"
+                  v-else class="h-6 w-6 text-green-600"
                   aria-hidden="true"
                 />
-                <CheckIcon v-if="props.type === 'delete'" class="h-6 w-6 text-red-600" aria-hidden="true" />
-                <ExclamationIcon v-if="props.type === 'warning'" class="h-6 w-6 text-yellow-600" aria-hidden="true" />
               </div>
               <div class="mt-6 text-center sm:mt-6">
                 <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
