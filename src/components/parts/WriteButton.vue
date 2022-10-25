@@ -7,7 +7,7 @@ const router = useRouter()
 </script>
 
 <template>
-  <div class="relative grid grid-cols-6 gap-4 mt-4">
+  <div class="relative grid grid-cols-6 gap-4">
     <div class="col-start-1 col-end-3">
       <button
         type="button"

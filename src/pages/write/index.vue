@@ -53,18 +53,21 @@ const confirmPost = async () => {
 
 <template>
   <div class="mt-4 mx-16 mb-4">
-    <div class="flex flex-col">
+    <div class="flex flex-col gap-4">
       <BulletinSectionHeaderForPost title="新增文章" :need-button="false" />
-      <main class="auto-cols-min">
+      <main class="auto-cols-min flex flex-col gap-4">
+        <div class="text-sm font-Inter font-normal">
+          <span class="text-base text-indigo-700">提醒：</span>標題字數限制100字元，剩餘 <span :class="[100 - titleInput.length >= 30 ? 'text-indigo-700' : 'text-red-700']">{{ 100 - titleInput.length }}</span> 字元，文章字數限制為1萬字元，剩餘 <span :class="[10000 - contentInput.length >= 500 ? 'text-indigo-700' : 'text-red-700']"> {{ 10000 - contentInput.length }}</span> 字元。
+        </div>
         <input
           id="title" v-model="titleInput" name="title" type="txt" autocomplete="title"
           placeholder="請輸入文章標題"
-          class="mt-4 h-10 block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter"
+          class="h-10 block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter"
         >
         <textarea
           id="comment" v-model="contentInput" rows="4"
           name="comment"
-          class="h-[576px] mt-4 block w-full rounded-md border-gray-300 shadow-sm  focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter" placeholder="請輸入文章內容"
+          class="h-[576px] block w-full rounded-md border-gray-300 shadow-sm  focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter" placeholder="請輸入文章內容"
         />
         <WriteButton button-show="新增文章" @click="checkPostEmpty()" />
       </main>
