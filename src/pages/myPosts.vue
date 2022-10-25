@@ -2,7 +2,7 @@
 const posts = usePostStore()
 // const user = useUserStore()
 
-const userId = localStorage.getItem('id')!!
+const userId = localStorage.getItem('id')!
 
 onMounted(async () => {
   posts.clearPosts()
@@ -11,21 +11,21 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="mt-6 ml-16 mr-16">
-    <div class="flex flex-col">
-      <PostTab />
-      <BulletinSectionHeaderForPost title="我的文章" :needButton="true" />
-      <div v-if="posts.userPostListCheckStatus===-1">
-        <PageLoading />
-      </div>
-      <div v-if="posts.userPostListCheckStatus===0">
-        <Empty />
-      </div>
-      <div v-else-if="posts.userPostListCheckStatus===200" class="mt-6">
-        <div v-for="post in posts.userPostList.posts" :key="post.post_id">
-          <ShowPost :id="post.post_id" :title="post.title" :content="post.content" :userId="posts.userPostList.user_id"
-            :userName="posts.userPostList.name" :dateTime="post.created_at" type="frontPage" />
-        </div>
+  <div class="my-6 mx-16 flex flex-col gap-6">
+    <PostTab />
+    <BulletinSectionHeaderForPost title="我的文章" :need-button="true" />
+    <div v-if="posts.userPostListCheckStatus === -1">
+      <PageLoading />
+    </div>
+    <div v-if="posts.userPostListCheckStatus === 0">
+      <Empty />
+    </div>
+    <div v-else-if="posts.userPostListCheckStatus === 200" class="flex flex-col gap-6">
+      <div v-for="post in posts.userPostList.posts" :key="post.post_id">
+        <ShowPost
+          :id="post.post_id" :title="post.title" :content="post.content" :user-id="posts.userPostList.user_id"
+          :user-name="posts.userPostList.name" :date-time="post.created_at" type="frontPage"
+        />
       </div>
     </div>
   </div>
@@ -35,6 +35,6 @@ onMounted(async () => {
 meta:
   layout: app
   activeMenu: posts
-  activeMenuName: '文章首頁'
-  title: '我的文章'
+  activeMenuName: 文章首頁
+  title: 我的文章
 </route>

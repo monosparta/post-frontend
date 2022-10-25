@@ -35,6 +35,7 @@ declare module '@vue/runtime-core' {
     PageLoading: typeof import('./components/parts/PageLoading.vue')['default']
     Pagination: typeof import('./components/Pagination.vue')['default']
     PostTab: typeof import('./components/parts/PostTab.vue')['default']
+    PreviousOrNextButton: typeof import('./components/parts/PreviousOrNextButton.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SelectMenus: typeof import('./components/parts/SelectMenus.vue')['default']
