@@ -14,7 +14,6 @@ const write = () => {
 </script>
 
 <template>
-  <!-- <div class=" pb-2 sm:pb-0  mt-4"> -->
   <div class="grid grid-cols-3">
     <h3 class="text-xl font-semibold self-center text-gray-800 col-span-2">
       {{ props.title }}
@@ -30,5 +29,4 @@ const write = () => {
       </button>
     </div>
   </div>
-  <!-- </div> -->
 </template>
