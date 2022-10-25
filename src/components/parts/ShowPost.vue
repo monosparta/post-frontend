@@ -77,14 +77,14 @@ const confirmPost = async () => {
             </button>
           </div>
         </div>
-        <div class="px-4 py-2 sm:px-6">
+        <div class="px-6 py-6 sm:px-6">
           <ul role="list">
             <li>
               <div class="text-base font-normal font-Inter text-gray-400">
                 {{ props.userName }} - {{ props.dateTime }}
               </div>
             </li>
-            <li class="pt-2 pb-4">
+            <li class="pt-2 py-2">
               <div class="space-x-3 text-xl font-light font-Inter ">
                 <div v-if="props.type === 'content'">
                   <p class="break-words whitespace-pre-line">
@@ -95,7 +95,7 @@ const confirmPost = async () => {
                   <p class="line-clamp-2">
                     {{ props.content }}
                   </p>
-                  <div class="grid grid-cols-5 justify-items-end grep-4 mt-2">
+                  <div class="grid grid-cols-5 justify-items-end grep-4 mt-4">
                     <button
                       class="col-end-6 col-span-1 mx-0 my-0  text-base font-normal text-indigo-700 hover:text-indigo-400"
                       @click="$router.push(`/show/${props.id}`)"
