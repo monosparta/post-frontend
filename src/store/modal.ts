@@ -19,7 +19,6 @@ export const useModalStore = defineStore('modal', () => {
     notification.type = ''
     notification.text = ''
     notification.postId = ''
-
   }
 
   return {
