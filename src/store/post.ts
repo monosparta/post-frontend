@@ -103,11 +103,13 @@ export const usePostStore = defineStore('post', () => {
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
-        posts.value.status = err.response?.status!
-        console.log(err.response)
+        if (err.response) {
+          posts.value.status = err.response.status!
+          console.error(err.response)
+        }
       }
       else {
-        console.log(err)
+        console.error(err)
       }
     }
   }
@@ -124,11 +126,13 @@ export const usePostStore = defineStore('post', () => {
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
-        post.status = err.response?.status!
-        console.log(err.response)
+        if (err.response) {
+          post.status = err.response.status!
+          console.error(err.response)
+        }
       }
       else {
-        console.log(err)
+        console.error(err)
       }
     }
   }
@@ -151,11 +155,13 @@ export const usePostStore = defineStore('post', () => {
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
-        userPosts.value.status = err.response?.status!
-        console.log(err.response)
+        if (err.response) {
+          userPosts.value.status = err.response.status!
+          console.error(err.response)
+        }
       }
       else {
-        console.log(err)
+        console.error(err)
       }
     }
   }
@@ -176,11 +182,13 @@ export const usePostStore = defineStore('post', () => {
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
-        returnInfo.status = err.response?.status!
-        returnInfo.data.message = err.response?.data.message
+        if (err.response) {
+          returnInfo.status = err.response.status!
+          returnInfo.data.message = err.response?.data.message
+        }
       }
       else {
-        console.log(err)
+        console.error(err)
       }
     }
   }
@@ -200,11 +208,13 @@ export const usePostStore = defineStore('post', () => {
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
-        returnInfo.status = err.response?.status!
-        returnInfo.data.message = err.response?.data.message
+        if (err.response) {
+          returnInfo.status = err.response.status!
+          returnInfo.data.message = err.response?.data.message
+        }
       }
       else {
-        console.log(err)
+        console.error(err)
       }
     }
   }
@@ -221,11 +231,13 @@ export const usePostStore = defineStore('post', () => {
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
-        returnInfo.status = err.response?.status!
-        returnInfo.data.message = err.response?.data.message
+        if (err.response) {
+          returnInfo.status = err.response.status!
+          returnInfo.data.message = err.response?.data.message
+        }
       }
       else {
-        console.log(err)
+        console.error(err)
       }
     }
   }
