@@ -62,6 +62,8 @@ const emptyMember = {
 }
 
 export const useMemberStore = defineStore('member', () => {
+  const filterRaw: { field: string; title: string; value: string }[] = []
+  const sortRaw: { field: string; order: string }[] = []
   const members = reactive({
     value: {
       meta: {
@@ -79,26 +81,60 @@ export const useMemberStore = defineStore('member', () => {
           username: '',
           status: '',
           email: '',
-          phone: '',
+          mobile: '',
           categories: { id: 0, name: '' },
         },
       ],
+      filters: filterRaw,
+      sorts: sortRaw,
+      search: '',
     },
   })
   const member = reactive({ ...emptyMember })
   const list = computed(() => { return members.value.data })
   const meta = computed(() => { return members.value.meta })
+  const sorts = computed(() => { return members.value.sorts })
   const info = computed(() => { return member.info })
   const profile = computed(() => { return member.profile })
   const organization = computed(() => { return member.organization })
   const emergency = computed(() => { return member.emergency_contact })
+  const tag = computed(() => {
+    if (members.value.search !== '') {
+      return [
+        {
+          field: 'name',
+          value: members.value.search,
+        },
+        ...members.value.filters,
+      ]
+    }
+    return members.value.filters
+  })
   const getMembers = async () => {
     const logged = await user.checkToken()
+    const filters: {
+      field: string
+      value: string
+    }[] = [...members.value.filters]
+    if (members.value.search !== '') {
+      filters.unshift({
+        field: 'name',
+        value: members.value.search,
+      })
+    }
+    const sorts: {
+      field: string
+      order: string
+    }[] = [...members.value.sorts]
     if (!logged)
       return
     try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_APP_API_URL}/api/users?page=${members.value.meta.current_page}&paginate=${members.value.meta.per_page}`,
+      const res = await axios.post(
+        `${import.meta.env.VITE_APP_API_URL}/api/users/index?page=${members.value.meta.current_page}&pageSize=${members.value.meta.per_page}`,
+        {
+          filters,
+          sorts,
+        },
         {
           headers: {
             Authorization: `Bearer ${user.userToken.access_token}`,
@@ -106,14 +142,14 @@ export const useMemberStore = defineStore('member', () => {
         },
       )
       const meta = {
-        total_pages: res.data.meta.last_page,
-        total: res.data.meta.total,
-        per_page: res.data.meta.per_page,
-        current_page: res.data.meta.current_page,
-        from: res.data.meta.from,
-        to: res.data.meta.to,
+        total_pages: (res.data.total / members.value.meta.per_page) + 1,
+        total: res.data.total,
+        per_page: members.value.meta.per_page,
+        current_page: members.value.meta.current_page,
+        from: members.value.meta.per_page * (members.value.meta.current_page - 1) + 1,
+        to: members.value.meta.per_page * members.value.meta.current_page < res.data.total ? members.value.meta.per_page * members.value.meta.current_page : res.data.total,
       }
-      members.value.data = res.data.data
+      members.value.data = res.data.items
       members.value.meta = meta
     }
     catch (error) {
@@ -174,12 +210,12 @@ export const useMemberStore = defineStore('member', () => {
     if (!logged)
       return
     await axios.post(
-        `${import.meta.env.VITE_APP_API_URL}/api/users`, member,
-        {
-          headers: {
-            Authorization: `Bearer ${user.userToken.access_token}`,
-          },
+      `${import.meta.env.VITE_APP_API_URL}/api/users`, member,
+      {
+        headers: {
+          Authorization: `Bearer ${user.userToken.access_token}`,
         },
+      },
     )
     await getMembers()
   }
@@ -195,12 +231,12 @@ export const useMemberStore = defineStore('member', () => {
     if (!logged)
       return
     const result = await axios.put(
-        `${import.meta.env.VITE_APP_API_URL}/api/users/${id}`, data,
-        {
-          headers: {
-            Authorization: `Bearer ${user.userToken.access_token}`,
-          },
+      `${import.meta.env.VITE_APP_API_URL}/api/users/${id}`, data,
+      {
+        headers: {
+          Authorization: `Bearer ${user.userToken.access_token}`,
         },
+      },
     )
     await getMember(id)
     return result
@@ -230,12 +266,12 @@ export const useMemberStore = defineStore('member', () => {
     if (!logged)
       return
     const result = await axios.post(
-        `${import.meta.env.VITE_APP_API_URL}/api/users/${id}/profile`, data,
-        {
-          headers: {
-            Authorization: `Bearer ${user.userToken.access_token}`,
-          },
+      `${import.meta.env.VITE_APP_API_URL}/api/users/${id}/profile`, data,
+      {
+        headers: {
+          Authorization: `Bearer ${user.userToken.access_token}`,
         },
+      },
     )
     await getMember(id)
     return result
@@ -259,12 +295,12 @@ export const useMemberStore = defineStore('member', () => {
     if (!logged)
       return
     const result = await axios.post(
-        `${import.meta.env.VITE_APP_API_URL}/api/users/${id}/organization`, data,
-        {
-          headers: {
-            Authorization: `Bearer ${user.userToken.access_token}`,
-          },
+      `${import.meta.env.VITE_APP_API_URL}/api/users/${id}/organization`, data,
+      {
+        headers: {
+          Authorization: `Bearer ${user.userToken.access_token}`,
         },
+      },
     )
     await getMember(id)
     return result
@@ -279,19 +315,51 @@ export const useMemberStore = defineStore('member', () => {
     if (!logged)
       return
     const result = await axios.post(
-        `${import.meta.env.VITE_APP_API_URL}/api/users/${id}/emergency-contact`, data,
-        {
-          headers: {
-            Authorization: `Bearer ${user.userToken.access_token}`,
-          },
+      `${import.meta.env.VITE_APP_API_URL}/api/users/${id}/emergency-contact`, data,
+      {
+        headers: {
+          Authorization: `Bearer ${user.userToken.access_token}`,
         },
+      },
     )
     await getMember(id)
     return result
   }
+  const addFilters = async (field: string, title: string, value: string) => {
+    members.value.filters.push({ field, title, value })
+    await getMembers()
+  }
+  const addSearch = async (text: string) => {
+    members.value.search = text
+    await getMembers()
+  }
+  const removeTag = async (text: string) => {
+    if (text === 'name')
+      members.value.search = ''
+    else
+      members.value.filters = members.value.filters.filter(data => data.field !== text)
+    await getMembers()
+  }
+  const clearSearch = async () => {
+    members.value.search = ''
+    await getMembers()
+  }
+  const setSort = async (text: string) => {
+    if (text !== '')
+      members.value.sorts = [{ field: text, order: 'asc' }]
+    else members.value.sorts = []
+    await getMembers()
+  }
+  const setOrder = async () => {
+    if (members.value.sorts.length)
+      members.value.sorts[0].order = (members.value.sorts[0].order === 'asc') ? 'desc' : 'asc'
+    await getMembers()
+  }
   return {
     list,
     meta,
+    sorts,
+    tag,
     member,
     info,
     profile,
@@ -307,6 +375,12 @@ export const useMemberStore = defineStore('member', () => {
     updateMemberProfile,
     updateMemberOrganization,
     updateMemberEmergency,
+    addFilters,
+    addSearch,
+    removeTag,
+    clearSearch,
+    setSort,
+    setOrder,
   }
 })
 
