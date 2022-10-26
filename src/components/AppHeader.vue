@@ -18,10 +18,11 @@ const logout = () => {
 </script>
 
 <template>
-  <div class="sticky top-0 z-20 flex-shrink-0 flex h-16 bg-white shadow">
+  <div class="sticky top-0 flex-shrink-0 flex h-16 bg-white shadow">
     <button
       type="button"
-      class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden" @click="toggleSidebarCollapse()"
+      class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+      @click="toggleSidebarCollapse()"
     >
       <span class="sr-only">Open sidebar</span>
       <Bars3BottomLeftIcon class="h-6 w-6" aria-hidden="true" />
@@ -68,8 +69,7 @@ const logout = () => {
           <transition
             enter-active-class="transition ease-out duration-100"
             enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100"
-            leave-active-class="transition ease-in duration-75"
-            leave-from-class="transform opacity-100 scale-100"
+            leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
             leave-to-class="transform opacity-0 scale-95"
           >
             <MenuItems
@@ -77,17 +77,14 @@ const logout = () => {
             >
               <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
                 <a
-                  :href="item.href"
-                  class="block px-4 py-2 text-sm text-gray-700" :class="[active ? 'bg-gray-100' : '']"
+                  :href="item.href" class="block px-4 py-2 text-sm text-gray-700"
+                  :class="[active ? 'bg-gray-100' : '']"
                 >{{
                   item.name
                 }}</a>
               </MenuItem>
               <MenuItem :key="t('user_navigation.sign_out')" v-slot="{ active }">
-                <a
-                  class="block px-4 py-2 text-sm text-gray-700"
-                  :class="[active ? 'bg-gray-100' : '']" @click="logout"
-                >
+                <a class="block px-4 py-2 text-sm text-gray-700" :class="[active ? 'bg-gray-100' : '']" @click="logout">
                   {{
                     t('user_navigation.sign_out')
                   }}

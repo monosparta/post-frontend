@@ -3,6 +3,7 @@ import { createApp } from 'vue'
 // import { setupLayouts } from 'virtual:generated-layouts'
 import App from './App.vue'
 import './styles/main.css'
+import './styles/loader.css'
 import type { UserModule } from './types'
 // import generatedRoutes from '~pages'
 
