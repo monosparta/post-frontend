@@ -57,7 +57,10 @@ const confirmPost = async () => {
     <div class="bg-white shadow sm:rounded-lg sm:overflow-hidden">
       <div class="divide-y divide-gray-200">
         <div class="grid grid-cols-6 gap-4 px-4 py-4 sm:px-6">
-          <h2 id="notes-title" class="col-start-1 col-end-5 text-2xl font-semibold font-Inter text-gray-900">
+          <h2
+            id="notes-title" class="col-start-1 col-end-5 text-2xl font-semibold font-Inter text-gray-900"
+            :class="[props.type === 'frontPage' ? 'truncate' : '']"
+          >
             {{ props.title }}
           </h2>
           <div

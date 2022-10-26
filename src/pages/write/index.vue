@@ -61,19 +61,21 @@ const confirmPost = async () => {
           placeholder="請輸入文章標題" maxlength="100"
           class="h-10 block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter"
         >
-        <div class="relative h-[576px] w-full">
-          <div class="absolute bottom-0 right-0 pr-3 pb-1 text-gray-300 text-lg font-light font-Inter">
-            <span :class="[contentInput.length > 9500 ? 'text-red-300' : 'text-gray-300']">{{ contentInput.length }}</span>/10000
+        <textarea
+          id="context" v-model="contentInput"
+          name="context"
+          class="block w-full h-[576px] rounded-md border border-gray-300 shadow-sm  focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter" placeholder="請輸入文章內容"
+          maxlength="10000"
+        />
+        <div class="relative w-full text-gray-400">
+          <div
+            class="absolute text-base font-light font-Inter top-0 right-0"
+          >
+            <span :class="[contentInput.length > 9500 ? 'text-red-400' : 'text-gray-400']">{{ contentInput.length }}</span>/10000
           </div>
-          <textarea
-            id="context" v-model="contentInput"
-            name="context"
-            class="block w-full h-full rounded-md border border-gray-300 shadow-sm  focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter" placeholder="請輸入文章內容"
-            maxlength="10000"
-          />
-        </div>
-        <div class="text-sm font-Inter font-normal text-gray-400">
-          提醒：標題字數限制100字元，文章字數限制為1萬字元。
+          <div class="lg:mt-0 mt-6 text-sm font-Inter font-normal text-gray-400">
+            提醒：標題字數限制100字元，文章字數限制為1萬字元。
+          </div>
         </div>
         <WriteButton button-show="新增文章" @click="checkPostEmpty()" />
       </main>
