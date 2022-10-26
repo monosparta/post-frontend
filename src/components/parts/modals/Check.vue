@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { PencilAltIcon, TrashIcon } from '@heroicons/vue/outline'
+import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 const props = defineProps({
   type: String,
   text: String,
@@ -35,7 +35,7 @@ const emit = defineEmits(['confirm', 'click'])
                 <div
                   class="mx-auto flex h-12 w-12 items-center justify-center rounded-full" :class="[props.type === 'add' || props.type === 'update' ? 'bg-indigo-100' : 'bg-red-100']"
                 >
-                  <PencilAltIcon
+                  <PencilSquareIcon
                     v-if="props.type === 'add' || props.type === 'update'" class="h-6 w-6 text-indigo-600"
                     aria-hidden="true"
                   />
