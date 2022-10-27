@@ -67,7 +67,7 @@ onMounted(async () => {
           class="w-full hover:text-indigo-300"
           :class="[item.type === 'Previous' ? 'justify-self-start' : 'justify-self-end']"
         >
-          <button
+          <button v-if="item.title!==''"
             class="w-full "
             @click="$router.push(`/show/${item.postId}`)"
           >
