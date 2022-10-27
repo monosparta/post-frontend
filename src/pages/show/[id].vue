@@ -60,7 +60,7 @@ onMounted(async () => {
       type="content"
     />
     <div v-if="post.userPostList.posts.length !== 1">
-      <dl class="grid grid-cols-1 divide-y divide-gray-400  md:grid-cols-2 md:divide-y-0 md:divide-x gap-9">
+      <dl class="grid grid-cols-1 divide-y divide-gray-400  md:grid-cols-2 md:divide-y-0 md:divide-x">
         <div
           v-for="item in pageStatsAll"
           :key="item.type"

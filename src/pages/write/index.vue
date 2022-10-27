@@ -53,19 +53,30 @@ const confirmPost = async () => {
 
 <template>
   <div class="mt-4 mx-16 mb-4">
-    <div class="flex flex-col">
+    <div class="flex flex-col gap-4">
       <BulletinSectionHeaderForPost title="新增文章" :need-button="false" />
-      <main class="auto-cols-min">
+      <main class="auto-cols-min flex flex-col gap-4">
         <input
           id="title" v-model="titleInput" name="title" type="txt" autocomplete="title"
-          placeholder="請輸入文章標題"
-          class="mt-4 h-10 block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter"
+          placeholder="請輸入文章標題" maxlength="100"
+          class="h-10 block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter"
         >
         <textarea
-          id="comment" v-model="contentInput" rows="4"
-          name="comment"
-          class="h-[576px] mt-4 block w-full rounded-md border-gray-300 shadow-sm  focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter" placeholder="請輸入文章內容"
+          id="context" v-model="contentInput"
+          name="context"
+          class="block w-full h-[576px] rounded-md border border-gray-300 shadow-sm  focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter" placeholder="請輸入文章內容"
+          maxlength="10000"
         />
+        <div class="relative w-full text-gray-400">
+          <div
+            class="absolute text-base font-light font-Inter top-0 right-0"
+          >
+            <span :class="[contentInput.length > 9500 ? 'text-red-400' : 'text-gray-400']">{{ contentInput.length }}</span>/10000
+          </div>
+          <div class="lg:mt-0 mt-6 text-sm font-Inter font-normal text-gray-400">
+            提醒：標題字數限制100字元，文章字數限制為1萬字元。
+          </div>
+        </div>
         <WriteButton button-show="新增文章" @click="checkPostEmpty()" />
       </main>
       <Check
