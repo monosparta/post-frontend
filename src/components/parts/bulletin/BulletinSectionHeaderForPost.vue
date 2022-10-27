@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PlusIcon } from '@heroicons/vue/solid'
+import { PlusIcon } from '@heroicons/vue/20/solid'
 import { useRouter } from 'vue-router'
 const props = defineProps({
   needButton: Boolean,

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { CheckIcon, ExclamationIcon } from '@heroicons/vue/outline'
+import { CheckIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 const props = defineProps({
   type: String,
   text: String,
@@ -54,7 +54,7 @@ const click = () => {
               <div
                 class="mx-auto flex h-12 w-12 items-center justify-center rounded-full" :class="[props.type === 'warning' ? 'bg-yellow-100' : 'bg-green-100']"
               >
-                <ExclamationIcon v-if="props.type === 'warning'" class="h-6 w-6 text-yellow-600" aria-hidden="true" />
+                <ExclamationTriangleIcon v-if="props.type === 'warning'" class="h-6 w-6 text-yellow-600" aria-hidden="true" />
                 <CheckIcon
                   v-else class="h-6 w-6 text-green-600"
                   aria-hidden="true"

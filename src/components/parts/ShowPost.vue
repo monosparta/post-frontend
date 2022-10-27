@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowNarrowRightIcon, PencilAltIcon, TrashIcon } from '@heroicons/vue/solid'
+import { ArrowLongRightIcon, PencilSquareIcon, TrashIcon } from '@heroicons/vue/20/solid'
 const props = defineProps({
   type: String,
   id: String,
@@ -72,7 +72,7 @@ const confirmPost = async () => {
               class="flex justify-center  text-gray-400 hover:text-gray-900"
               @click="$router.push(`/write/${props.id}`)"
             >
-              <PencilAltIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">{{ props.id
+              <PencilSquareIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">{{ props.id
               }}</span>
             </button>
           </div>
@@ -104,7 +104,7 @@ const confirmPost = async () => {
                         class="relative border-b border-indigo-700 hover:text-indigo-400 flex justify-center gap-1 pb-1"
                       >
                         閱讀更多
-                        <ArrowNarrowRightIcon class="h-5 w-5 leading-6" aria-hidden="true" />
+                        <ArrowLongRightIcon class="h-5 w-5 leading-6" aria-hidden="true" />
                       </div>
                     </button>
                   </div>
