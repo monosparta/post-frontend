@@ -8,6 +8,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['click'])
 const router = useRouter()
+const route = useRoute()
 const modalOpen = ref(true)
 const reload = useRefreshStore()
 
@@ -20,7 +21,8 @@ const click = () => {
       break
     case 'delete':
       router.push({ path: '/myPosts' })
-      reload.reload()
+      if (route.name === 'myPosts')
+        reload.reload()
       break
     default:
       emit('click')
