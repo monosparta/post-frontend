@@ -61,14 +61,14 @@ const confirmPost = async () => {
       <div class="divide-y divide-gray-200">
         <div class="grid grid-cols-6 gap-4 px-4 py-4 sm:px-6">
           <h2
-            id="notes-title" class="col-start-1 col-end-5 text-xl font-medium font-Inter text-gray-900"
+            id="notes-title" class="col-start-1 col-end-6 text-xl font-medium font-Inter text-gray-900 break-words"
             :class="[props.type === 'frontPage' ? 'truncate' : '']"
           >
             {{ props.title }}
           </h2>
           <div
             v-if=" props.userId === tokenUserId && router.currentRoute.value.path !== '/posts'"
-            class="col-end-7 col-span-2  flex justify-end whitespace-nowrap  text-right text-sm font-medium"
+            class="col-end-7 col-span-1  flex justify-end whitespace-nowrap  text-right text-sm font-medium"
           >
             <button class="flex justify-center text-gray-400 hover:text-gray-900" @click="deletePost()">
               <TrashIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">{{ props.id

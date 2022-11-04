@@ -41,7 +41,7 @@ const emit = defineEmits(['confirm', 'click'])
                   />
                   <TrashIcon v-if="props.type === 'delete'" class="h-6 w-6 text-red-600" aria-hidden="true" />
                 </div>
-                <p class="text-lg font-medium font-Inter text-gray-800">
+                <p class="text-lg font-medium font-Inter text-gray-800 break-all">
                   {{ props.title }}
                 </p>
               </div>

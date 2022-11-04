@@ -5,7 +5,7 @@ const postId = route.params.id as string
 let pageStats
   = reactive({ type: '', postId: '', title: '', author: '', createDate: '' })
 
-let pageStatsAll
+const pageStatsAll
   = reactive([
     { type: 'Previous', postId: '', title: '', author: '', createDate: '' },
     { type: 'Next', postId: '', title: '', author: '', createDate: '' },
@@ -42,11 +42,12 @@ onMounted(async () => {
         <div
           v-for="item in pageStatsAll"
           :key="item.type"
-          class="w-full hover:text-indigo-300"
+          class="w-full "
           :class="[item.type === 'Previous' ? 'justify-self-start' : 'justify-self-end']"
         >
-          <button v-if="item.title!==''"
-            class="w-full "
+          <button
+            v-if="item.title !== ''"
+            class="w-full hover:text-indigo-300"
             @click="$router.push(`/show/${item.postId}`)"
           >
             <PreviousOrNextButton :type="item.type" :post-id="item.postId" :title="item.title" :author="item.author" :create-date="item.createDate" />

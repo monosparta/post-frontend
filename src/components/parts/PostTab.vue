@@ -30,18 +30,19 @@ const onChange = (selected: string) => {
           class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" @change="onChange(selected)"
         >
           <option v-for="tab in tabs" :key="tab.name" :selected="route.name === tab.label">
-            {{
-              tab.name }}
+            {{ tab.name }}
           </option>
         </select>
       </div>
       <div class="hidden sm:block">
         <nav class="-mb-px flex space-x-8">
-          <a
+          <button
             v-for="tab in tabs" :key="tab.name"
             class="whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm" :class="[route.name === tab.label ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300']"
             :aria-current="route.name === tab.label ? 'page' : undefined" @click="clickItem(tab)"
-          >{{ tab.name }}</a>
+          >
+            {{ tab.name }}
+          </button>
         </nav>
       </div>
     </div>

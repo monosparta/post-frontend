@@ -67,7 +67,7 @@ const click = () => {
                 <DialogTitle as="h3" class="text-lg font-medium  font-Inter leading-6 text-gray-900">
                   {{ props.title }}
                 </DialogTitle>
-                <p class="text-sm font-normal font-Inter text-gray-500">
+                <p class="text-sm font-normal font-Inter text-gray-500 break-all">
                   {{ props.message }}
                 </p>
               </div>
