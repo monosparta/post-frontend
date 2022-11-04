@@ -2,7 +2,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import axios, { AxiosError } from 'axios'
 // const user = useUserStore()
 const emptyPost = {
-  status: -1,
+  statusCode: -1,
   data: {
     post_id: '',
     title: '',
@@ -14,57 +14,66 @@ const emptyPost = {
       name: '',
     },
   },
+  previous: {
+    post_id: '',
+    title: '',
+    created_at: '',
+  },
+  next: {
+    post_id: '',
+    title: '',
+    created_at: '',
+  },
 }
 
 const emptyPosts = reactive({
-  status: -1,
-  value: {
-    data: [],
-  },
+  statusCode: -1,
+  data: [],
 })
 
 const emptyUserPosts = reactive({
-  status: -1,
-  value: {
-    data: {
-      user_id: '',
-      name: '',
-      posts: [],
-    },
+  statusCode: -1,
+  data: {
+    user_id: '',
+    name: '',
+    posts: [],
   },
 })
 
 const emptyReturnInfo = reactive({
-  status: -1,
+  success: true,
+  statusCode: -1,
+  errorCode: -1,
+  message: '',
   data: {
-    message: '',
     post_id: '',
+  },
+  error: {
+    title: [],
+    content: [],
   },
 })
 
 export const usePostStore = defineStore('post', () => {
   const posts = reactive({
-    value: {
-      status: -1,
-      data: [
-        {
-          post_id: '',
-          title: '',
-          content: '',
-          created_at: '',
-          updated_at: '',
-          user: {
-            user_id: '',
-            name: '',
-          },
+    statusCode: -1,
+    data: [
+      {
+        post_id: '',
+        title: '',
+        content: '',
+        created_at: '',
+        updated_at: '',
+        user: {
+          user_id: '',
+          name: '',
         },
-      ],
-    },
+      },
+    ],
   })
   const userPosts = reactive({
-    value: {
-      status: -1,
-      data:
+    statusCode: -1,
+    data:
             {
               user_id: '',
               name: '',
@@ -76,16 +85,15 @@ export const usePostStore = defineStore('post', () => {
                 updated_at: '',
               }],
             },
-    },
   })
-  const list = computed(() => { return posts.value.data })
-  const listCheckStatus = computed(() => { return posts.value.status })
-  const userPostList = computed(() => { return userPosts.value.data })
-  const userPostListCheckStatus = computed(() => { return userPosts.value.status })
+  const list = computed(() => { return posts.data })
+  const listCheckStatus = computed(() => { return posts.statusCode })
+  const userPostList = computed(() => { return userPosts.data })
+  const userPostListCheckStatus = computed(() => { return userPosts.statusCode })
   const post = reactive({ ...emptyPost })
   const returnInfo = reactive({ ...emptyReturnInfo })
   const info = computed(() => { return post.data })
-  const infoCheckStatus = computed(() => { return post.status })
+  const infoCheckStatus = computed(() => { return post.statusCode })
   const getPosts = async () => {
     // const logged = await user.checkToken()
     // if (!logged)
@@ -94,18 +102,17 @@ export const usePostStore = defineStore('post', () => {
       const res = await axios.get(
                 `${import.meta.env.VITE_APP_API_URL}/api/posts`,
       )
-      posts.value.data = res.data
-      if (posts.value.data.length === 0)
-        posts.value.status = 0
-
+      posts.data = res.data.data
+      if (posts.data.length === 0)
+        posts.statusCode = 0
       else
-        posts.value.status = res.status
+        posts.statusCode = res.status
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
         if (err.response) {
-          posts.value.status = err.response.status!
-          console.error(err.response)
+          posts.statusCode = err.response.data.statusCode
+          console.error(err.response.data)
         }
       }
       else {
@@ -121,14 +128,23 @@ export const usePostStore = defineStore('post', () => {
       const res = await axios.get(
                 `${import.meta.env.VITE_APP_API_URL}/api/post/${postId}`,
       )
-      post.status = res.status
-      post.data = res.data
+      post.statusCode = res.data.statusCode
+      post.data = res.data.data
+      if (res.data.previous !== null)
+        post.previous = res.data.previous
+      else
+        post.previous = { ...emptyPost.previous }
+
+      if (res.data.next !== null)
+        post.next = res.data.next
+      else
+        post.next = { ...emptyPost.next }
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
         if (err.response) {
-          post.status = err.response.status!
-          console.error(err.response)
+          post.statusCode = err.response.data.statusCode
+          console.error(err.response.data)
         }
       }
       else {
@@ -144,20 +160,19 @@ export const usePostStore = defineStore('post', () => {
       const res = await axios.get(
                 `${import.meta.env.VITE_APP_API_URL}/api/author/${userId}/posts`,
       )
-      userPosts.value.status = res.status
-      userPosts.value.data = res.data
+      userPosts.statusCode = res.data.statusCode
+      userPosts.data = res.data.data
 
-      if (userPosts.value.data.posts.length === 0)
-        userPosts.value.status = 0
-
+      if (userPosts.data.posts.length === 0)
+        userPosts.statusCode = 0
       else
-        userPosts.value.status = res.status
+        userPosts.statusCode = res.data.statusCode
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
         if (err.response) {
-          userPosts.value.status = err.response.status!
-          console.error(err.response)
+          userPosts.statusCode = err.response.data.statusCode
+          console.error(err.response.data)
         }
       }
       else {
@@ -177,14 +192,15 @@ export const usePostStore = defineStore('post', () => {
       const res = await axios.post(
                 `${import.meta.env.VITE_APP_API_URL}/api/post`, data,
       )
-      returnInfo.status = res.status
-      returnInfo.data = res.data
+      returnInfo.statusCode = res.data.statusCode
+      returnInfo.data = res.data.data
+      returnInfo.message = res.data.message
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
         if (err.response) {
-          returnInfo.status = err.response.status!
-          returnInfo.data.message = err.response?.data.message
+          returnInfo.statusCode = err.response.data.statusCode
+          returnInfo.message = err.response.data.message
         }
       }
       else {
@@ -203,14 +219,15 @@ export const usePostStore = defineStore('post', () => {
       const res = await axios.put(
                 `${import.meta.env.VITE_APP_API_URL}/api/post/${postId}`, data,
       )
-      returnInfo.status = res.status
-      returnInfo.data = res.data
+      returnInfo.statusCode = res.status
+      returnInfo.data = res.data.data
+      returnInfo.message = res.data.message
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
         if (err.response) {
-          returnInfo.status = err.response.status!
-          returnInfo.data.message = err.response?.data.message
+          returnInfo.statusCode = err.response.data.statusCode
+          returnInfo.message = err.response.data.message
         }
       }
       else {
@@ -226,14 +243,14 @@ export const usePostStore = defineStore('post', () => {
       const res = await axios.delete(
                 `${import.meta.env.VITE_APP_API_URL}/api/post/${postId}`,
       )
-      returnInfo.status = res.status
-      returnInfo.data.message = res.data.message
+      returnInfo.statusCode = res.data.statusCode
+      returnInfo.message = res.data.message
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
         if (err.response) {
-          returnInfo.status = err.response.status!
-          returnInfo.data.message = err.response?.data.message
+          returnInfo.statusCode = err.response.data.statusCode
+          returnInfo.message = err.response.data.message
         }
       }
       else {
@@ -242,19 +259,19 @@ export const usePostStore = defineStore('post', () => {
     }
   }
   const clearPosts = () => {
-    emptyPost.status = -1
-    emptyPosts.status = -1
-    emptyUserPosts.status = -1
-    post.data = emptyPost.data
-    post.status = emptyPost.status
-    posts.value.data = emptyPosts.value.data
-    posts.value.status = emptyPosts.status
-    userPosts.value.data = emptyUserPosts.value.data
-    userPosts.value.status = emptyUserPosts.status
+    emptyPost.statusCode = -1
+    emptyPosts.statusCode = -1
+    emptyUserPosts.statusCode = -1
+    post.data = { ...emptyPost.data }
+    post.statusCode = -1
+    posts.data = { ...emptyPosts.data }
+    posts.statusCode = -1
+    userPosts.data = { ...emptyUserPosts.data }
+    userPosts.statusCode = -1
   }
   const clearReturnInfo = () => {
-    returnInfo.status = -1
-    returnInfo.data = emptyReturnInfo.data
+    returnInfo.statusCode = -1
+    returnInfo.data = { ...emptyReturnInfo.data }
   }
   return {
     list,

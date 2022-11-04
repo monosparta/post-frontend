@@ -14,10 +14,10 @@ onMounted(async () => {
     <div v-if="posts.listCheckStatus === -1">
       <PageLoading />
     </div>
-    <div v-else-if="posts.listCheckStatus === 0">
+    <div v-if="posts.listCheckStatus === 0">
       <Empty />
     </div>
-    <div v-else-if="posts.listCheckStatus === 200" class="flex flex-col gap-6">
+    <div v-if="posts.listCheckStatus === 200" class="flex flex-col gap-6">
       <div v-for="post in posts.list" :key="post.post_id">
         <ShowPost
           :id="post.post_id" :title="post.title" :content="post.content" :user-id="post.user.user_id"

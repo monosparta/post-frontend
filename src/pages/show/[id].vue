@@ -5,10 +5,10 @@ const postId = route.params.id as string
 let pageStats
   = reactive({ type: '', postId: '', title: '', author: '', createDate: '' })
 
-const pageStatsAll
+let pageStatsAll
   = reactive([
-    { type: '', postId: '', title: '', author: '', createDate: '' },
-    { type: '', postId: '', title: '', author: '', createDate: '' },
+    { type: 'Previous', postId: '', title: '', author: '', createDate: '' },
+    { type: 'Next', postId: '', title: '', author: '', createDate: '' },
   ])
 
 const getPageStats = (data: {
@@ -22,33 +22,11 @@ const getPageStats = (data: {
   pageStatsAll.splice(location, 1, pageStats)
 }
 
-const getList = async () => {
-  const userPosts = post.userPostList
-  const index = userPosts.posts.findIndex(post => post.post_id === postId)
-
-  if (index === 0) {
-    getPageStats({ type: 'Previous', postId: '', title: '', author: '', createDate: '' }, 0)
-
-    if (userPosts.posts.length === 1)
-      getPageStats({ type: 'Next', postId: '', title: '', author: '', createDate: '' }, 1)
-    else
-      getPageStats({ type: 'Next', postId: userPosts.posts[index + 1].post_id, title: userPosts.posts[index + 1].title, author: userPosts.name, createDate: userPosts.posts[index + 1].created_at }, 1)
-  }
-  else if (index > 0) {
-    getPageStats({ type: 'Previous', postId: userPosts.posts[index - 1].post_id, title: userPosts.posts[index - 1].title, author: userPosts.name, createDate: userPosts.posts[index - 1].created_at }, 0)
-
-    if (userPosts.posts.length - 1 === index)
-      getPageStats({ type: 'Next', postId: '', title: '', author: '', createDate: '' }, 1)
-    else
-      getPageStats({ type: 'Next', postId: userPosts.posts[index + 1].post_id, title: userPosts.posts[index + 1].title, author: userPosts.name, createDate: userPosts.posts[index + 1].created_at }, 1)
-  }
-}
-
 onMounted(async () => {
   post.clearPosts()
   await post.getPost(postId)
-  await post.getUserPosts(post.info.user.user_id)
-  await getList()
+  getPageStats({ type: 'Previous', postId: post.post.previous.post_id, title: post.post.previous.title, author: post.post.data.user.name, createDate: post.post.previous.created_at }, 0)
+  getPageStats({ type: 'Next', postId: post.post.next.post_id, title: post.post.next.title, author: post.post.data.user.name, createDate: post.post.next.created_at }, 1)
 })
 </script>
 

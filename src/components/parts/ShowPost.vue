@@ -23,7 +23,8 @@ const deletePost = () => {
   modalType.value = 'check'
   modal.createNotification({
     type: 'delete',
-    text: `確定刪除「${props.title}」？`,
+    title: `確定刪除「${props.title}」？`,
+    message: '',
     postId: '',
   })
 }
@@ -33,11 +34,12 @@ const confirmPost = async () => {
   post.clearReturnInfo()
   await post.deletePost(props.id!)
 
-  if (post.returnInfo.status === 200) {
+  if (post.returnInfo.statusCode === 200) {
     modalType.value = 'information'
     modal.createNotification({
       type: 'delete',
-      text: `已刪除「${props.title}」！`,
+      title: '刪除成功！',
+      message: `已刪除「${props.title}」此篇文章！`,
       postId: '',
     })
   }
@@ -45,7 +47,8 @@ const confirmPost = async () => {
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
-      text: `刪除失敗！失敗狀態為：${post.returnInfo.status}`,
+      title: '刪除失敗！',
+      message: `${post.returnInfo.message}`,
       postId: '',
     })
   }
@@ -58,7 +61,7 @@ const confirmPost = async () => {
       <div class="divide-y divide-gray-200">
         <div class="grid grid-cols-6 gap-4 px-4 py-4 sm:px-6">
           <h2
-            id="notes-title" class="col-start-1 col-end-5 text-2xl font-semibold font-Inter text-gray-900"
+            id="notes-title" class="col-start-1 col-end-5 text-xl font-medium font-Inter text-gray-900"
             :class="[props.type === 'frontPage' ? 'truncate' : '']"
           >
             {{ props.title }}
@@ -67,12 +70,12 @@ const confirmPost = async () => {
             v-if=" props.userId === tokenUserId && router.currentRoute.value.path !== '/posts'"
             class="col-end-7 col-span-2  flex justify-end whitespace-nowrap  text-right text-sm font-medium"
           >
-            <button class="flex justify-center  text-gray-400 hover:text-gray-900" @click="deletePost()">
+            <button class="flex justify-center text-gray-400 hover:text-gray-900" @click="deletePost()">
               <TrashIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">{{ props.id
               }}</span>
             </button>
             <button
-              class="flex justify-center  text-gray-400 hover:text-gray-900"
+              class="flex justify-center text-gray-400 hover:text-gray-900"
               @click="$router.push(`/write/${props.id}`)"
             >
               <PencilSquareIcon class="h-6 w-6 mx-2" aria-hidden="true" /><span class="sr-only">{{ props.id
@@ -88,7 +91,7 @@ const confirmPost = async () => {
               </div>
             </li>
             <li>
-              <div class="space-x-3 text-xl font-light font-Inter">
+              <div class="space-x-3 text-lg font-light font-Inter">
                 <div v-if="props.type === 'content'">
                   <p class="break-words whitespace-pre-line">
                     {{ props.content }}
@@ -119,13 +122,12 @@ const confirmPost = async () => {
       </div>
     </div>
     <Check
-      v-if="modalType === 'check' && modal.notificationStatus === true" :text="modal.notification.text"
+      v-if="modalType === 'check' && modal.notificationStatus === true" :title="modal.notification.title"
       :type="modal.notification.type" @click="modal.closeNotification" @confirm="confirmPost()"
     />
     <LoadingModal v-if="modalType === 'loading'" />
     <Information
-      v-if="modalType === 'information' && modal.notificationStatus === true" :text="modal.notification.text"
-      :post-id="modal.notification.postId" :type="modal.notification.type" @click="modal.closeNotification"
+      v-if="modalType === 'information' && modal.notificationStatus === true" :title="modal.notification.title" :message="modal.notification.message" :post-id="modal.notification.postId" :type="modal.notification.type" @click="modal.closeNotification"
     />
   </section>
 </template>

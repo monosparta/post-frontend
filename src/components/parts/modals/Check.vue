@@ -3,7 +3,7 @@ import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessu
 import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 const props = defineProps({
   type: String,
-  text: String,
+  title: String,
 })
 
 const emit = defineEmits(['confirm', 'click'])
@@ -43,7 +43,7 @@ const emit = defineEmits(['confirm', 'click'])
                 </div>
                 <div class="mt-3 text-center sm:mt-5">
                   <p class="text-lg font-medium font-Inter text-gray-800">
-                    {{ props.text }}
+                    {{ props.title }}
                   </p>
                 </div>
               </div>

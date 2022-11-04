@@ -4,20 +4,23 @@ export const useModalStore = defineStore('modal', () => {
   const notificationStatus = ref(false)
   const notification = reactive({
     type: '',
-    text: '',
+    title: '',
+    message: '',
     postId: '',
 
   })
-  const createNotification = (data: { type: string; text: string; postId: string }) => {
+  const createNotification = (data: { type: string; title: string; message: string; postId: string }) => {
     notificationStatus.value = true
     notification.type = data.type
-    notification.text = data.text
+    notification.title = data.title
+    notification.message = data.message
     notification.postId = data.postId
   }
   const closeNotification = () => {
     notificationStatus.value = false
     notification.type = ''
-    notification.text = ''
+    notification.title = ''
+    notification.message = ''
     notification.postId = ''
   }
 

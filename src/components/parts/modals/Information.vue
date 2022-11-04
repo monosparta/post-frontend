@@ -3,7 +3,8 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
 import { CheckIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 const props = defineProps({
   type: String,
-  text: String,
+  title: String,
+  message: String,
   postId: String,
 })
 const emit = defineEmits(['click'])
@@ -63,9 +64,14 @@ const click = () => {
                 />
               </div>
               <div class="mt-6 text-center sm:mt-6">
-                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
-                  {{ props.text }}
+                <DialogTitle as="h3" class="text-lg font-medium  font-Inter leading-6 text-gray-900">
+                  {{ props.title }}
                 </DialogTitle>
+                <div class="mt-2">
+                  <p class="text-sm text-gray-500">
+                    {{ props.message }}
+                  </p>
+                </div>
               </div>
               <div class="mt-6 sm:mt-6">
                 <button
