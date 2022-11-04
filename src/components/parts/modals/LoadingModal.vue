@@ -22,8 +22,10 @@ const modalOpen = ref(true)
             leave-from="opacity-100 translate-y-0 sm:scale-100"
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <DialogPanel class="relative transform  rounded-lg bg-white px-36 pt-11 pb-11  shadow-xl ">
-              <div class="flex flex-col ">
+            <DialogPanel
+              class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6"
+            >
+              <div class="text-center">
                 <DialogTitle as="h3" class="text-lg font-medium text-gray-900">
                   Loading...
                 </DialogTitle>

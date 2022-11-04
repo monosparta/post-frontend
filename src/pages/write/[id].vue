@@ -13,8 +13,8 @@ const checkPostEmpty = () => {
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
-      title: '標題或內文欄位不可以空白喔！',
-      message: '',
+      title: '警告',
+      message: '標題或內文欄位不可以空白喔！',
       postId: '',
     })
   }
