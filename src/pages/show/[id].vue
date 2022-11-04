@@ -31,7 +31,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="mt-6 mx-16 mb-9 flex flex-col gap-9">
+  <div class="mt-6 mx-4 md:mx-16 mb-9 flex flex-col gap-9">
     <ShowPost
       :id="post.info.post_id" :title="post.info.title" :content="post.info.content"
       :user-id="post.info.user.user_id" :user-name="post.info.user.name" :date-time="post.info.created_at"
