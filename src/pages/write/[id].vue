@@ -8,6 +8,13 @@ const contentInput = ref('')
 const modalType = ref('')
 const postId = route.params.id as string
 
+const cutTitle = (str: string, num: number) => {
+  if (str.replace(/[^\x20-\xFF]/g, 'OO').length > num)
+    return `${str.substring(0, num)}...`
+  else
+    return str
+}
+
 const checkPostEmpty = () => {
   if (titleInput.value === '' || contentInput.value === '') {
     modalType.value = 'information'
@@ -23,7 +30,7 @@ const checkPostEmpty = () => {
     modal.createNotification({
       type: 'add',
       title: '確定修改文章？',
-      message: '',
+      message: `「${cutTitle(titleInput.value, 19)}」`,
       postId: '',
     })
   }
@@ -47,12 +54,13 @@ const confirmPost = async () => {
   const content = contentInput.value
 
   await post.updatePost(postId, { title, content })
+
   if (post.returnInfo.statusCode === 200) {
     modalType.value = 'information'
     modal.createNotification({
       type: 'update',
       title: '修改成功！',
-      message: '',
+      message: `已修改「${cutTitle(title, 13)}」此篇文章！`,
       postId: post.returnInfo.data.post_id,
     })
   }
@@ -106,7 +114,7 @@ const confirmPost = async () => {
         <WriteButton button-show="修改文章" @click="checkPostEmpty()" />
       </main>
       <Check
-        v-if="modalType === 'check' && modal.notificationStatus === true" :title="modal.notification.title"
+        v-if="modalType === 'check' && modal.notificationStatus === true" :title="modal.notification.title" :message="modal.notification.message"
         :type="modal.notification.type" @click="modal.closeNotification" @confirm="confirmPost()"
       />
       <LoadingModal v-if="modalType === 'loading'" />

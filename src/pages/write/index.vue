@@ -1,12 +1,19 @@
 <script setup lang="ts">
 // const user = useUserStore()
 const post = usePostStore()
-
 const modal = useModalStore()
 const titleInput = ref('')
 const contentInput = ref('')
 const modalType = ref('')
 const userId = localStorage.getItem('id')!
+
+const cutTitle = (str: string, num: number) => {
+  if (str.replace(/[^\x20-\xFF]/g, 'OO').length > num)
+    return `${str.substring(0, num)}...`
+  else
+    return str
+}
+
 const checkPostEmpty = () => {
   if (titleInput.value === '' || contentInput.value === '') {
     modalType.value = 'information'
@@ -22,7 +29,7 @@ const checkPostEmpty = () => {
     modal.createNotification({
       type: 'add',
       title: '確定新增文章？',
-      message: '',
+      message: `「${cutTitle(titleInput.value, 19)}」`,
       postId: '',
     })
   }
@@ -39,7 +46,7 @@ const confirmPost = async () => {
     modal.createNotification({
       type: 'add',
       title: '新增成功！',
-      message: '',
+      message: `已新增「${cutTitle(title, 13)}」此篇文章！`,
       postId: post.returnInfo.data.post_id,
     })
   }
@@ -93,7 +100,7 @@ const confirmPost = async () => {
         <WriteButton button-show="新增文章" @click="checkPostEmpty()" />
       </main>
       <Check
-        v-if="modalType === 'check' && modal.notificationStatus === true" :title="modal.notification.title"
+        v-if="modalType === 'check' && modal.notificationStatus === true" :title="modal.notification.title" :message="modal.notification.message"
         :type="modal.notification.type" @click="modal.closeNotification" @confirm="confirmPost()"
       />
       <LoadingModal v-if="modalType === 'loading'" />

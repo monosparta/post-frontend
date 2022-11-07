@@ -8,7 +8,7 @@
         <div class="sm:ml-6 mt-6">
           <div class="grid justify-items-center gap-6">
             <h1 class="text-5xl font-Inter font-semibold text-gray-400 sm:text-5xl mt-6">
-              Oops...還沒有人 PO 文章
+              Oops...還沒有人張貼文章
             </h1>
             <p class="text-2xl font-Inter font-normal text-gray-400 mt-6">
               您可以按下右上角『新增文章』來讓內容豐富起來唷！

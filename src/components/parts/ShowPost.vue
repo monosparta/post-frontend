@@ -17,14 +17,19 @@ const router = useRouter()
 const tokenUserId = localStorage.getItem('id')
 const modalType = ref('')
 
-localStorage.setItem('postTitle', props.title!)
+const cutTitle = (str: string, num: number) => {
+  if (str.replace(/[^\x20-\xFF]/g, 'OO').length > num)
+    return `${str.substring(1, num)}...`
+  else
+    return str
+}
 
 const deletePost = () => {
   modalType.value = 'check'
   modal.createNotification({
     type: 'delete',
-    title: `確定刪除「${props.title}」？`,
-    message: '',
+    title: '確定刪除文章？',
+    message: `「${cutTitle(props.title!, 19)}」`,
     postId: '',
   })
 }
@@ -39,7 +44,7 @@ const confirmPost = async () => {
     modal.createNotification({
       type: 'delete',
       title: '刪除成功！',
-      message: `已刪除「${props.title}」此篇文章！`,
+      message: `已刪除「${cutTitle(props.title!, 13)}」此篇文章！`,
       postId: '',
     })
   }
@@ -122,7 +127,7 @@ const confirmPost = async () => {
       </div>
     </div>
     <Check
-      v-if="modalType === 'check' && modal.notificationStatus === true" :title="modal.notification.title"
+      v-if="modalType === 'check' && modal.notificationStatus === true" :title="modal.notification.title" :message="modal.notification.message"
       :type="modal.notification.type" @click="modal.closeNotification" @confirm="confirmPost()"
     />
     <LoadingModal v-if="modalType === 'loading'" />

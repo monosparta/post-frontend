@@ -52,7 +52,7 @@ const click = () => {
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <DialogPanel
-              class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6 grid gap-6"
+              class="relative transform overflow-hidden sm:rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all w-full sm:max-w-sm sm:p-6 grid gap-6"
             >
               <div
                 class="mx-auto flex h-12 w-12 items-center justify-center rounded-full" :class="[props.type === 'warning' ? 'bg-yellow-100' : 'bg-green-100']"
