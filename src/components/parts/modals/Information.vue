@@ -3,7 +3,8 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
 import { CheckIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 const props = defineProps({
   type: String,
-  text: String,
+  title: String,
+  message: String,
   postId: String,
 })
 const emit = defineEmits(['click'])
@@ -51,7 +52,7 @@ const click = () => {
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <DialogPanel
-              class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6"
+              class="relative transform overflow-hidden sm:rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all w-full sm:max-w-sm sm:p-6 grid gap-6"
             >
               <div
                 class="mx-auto flex h-12 w-12 items-center justify-center rounded-full" :class="[props.type === 'warning' ? 'bg-yellow-100' : 'bg-green-100']"
@@ -62,12 +63,15 @@ const click = () => {
                   aria-hidden="true"
                 />
               </div>
-              <div class="mt-6 text-center sm:mt-6">
-                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
-                  {{ props.text }}
+              <div class="text-center grid gap-2">
+                <DialogTitle as="h3" class="text-lg font-medium font-Inter leading-6 text-gray-900">
+                  {{ props.title }}
                 </DialogTitle>
+                <p class="text-sm font-normal font-Inter text-gray-500 break-all">
+                  {{ props.message }}
+                </p>
               </div>
-              <div class="mt-6 sm:mt-6">
+              <div>
                 <button
                   type="button"
                   class="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:text-sm"

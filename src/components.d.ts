@@ -52,6 +52,7 @@ declare module '@vue/runtime-core' {
     MenuButton: typeof import('@headlessui/vue')['MenuButton']
     MenuItem: typeof import('@headlessui/vue')['MenuItem']
     MenuItems: typeof import('@headlessui/vue')['MenuItems']
+    Modals: typeof import('./components/parts/modals/modals.vue')['default']
     MultipartUpload: typeof import('./components/form/MultipartUpload.vue')['default']
     PageLoading: typeof import('./components/parts/PageLoading.vue')['default']
     Pagination: typeof import('./components/Pagination.vue')['default']

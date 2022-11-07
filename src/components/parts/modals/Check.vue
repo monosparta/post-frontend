@@ -3,7 +3,8 @@ import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessu
 import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline'
 const props = defineProps({
   type: String,
-  text: String,
+  title: String,
+  message: String,
 })
 
 const emit = defineEmits(['confirm', 'click'])
@@ -29,9 +30,9 @@ const emit = defineEmits(['confirm', 'click'])
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <DialogPanel
-              class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
+              class="relative transform overflow-hidden sm:rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all w-full sm:max-w-sm sm:p-6 grid gap-6"
             >
-              <div>
+              <div class="grid gap-5 text-center">
                 <div
                   class="mx-auto flex h-12 w-12 items-center justify-center rounded-full" :class="[props.type === 'add' || props.type === 'update' ? 'bg-indigo-100' : 'bg-red-100']"
                 >
@@ -41,13 +42,16 @@ const emit = defineEmits(['confirm', 'click'])
                   />
                   <TrashIcon v-if="props.type === 'delete'" class="h-6 w-6 text-red-600" aria-hidden="true" />
                 </div>
-                <div class="mt-3 text-center sm:mt-5">
-                  <p class="text-lg font-medium font-Inter text-gray-800">
-                    {{ props.text }}
+                <div class="text-center grid gap-2">
+                  <DialogTitle as="h3" class="text-lg font-medium font-Inter leading-6 text-gray-900">
+                    {{ props.title }}
+                  </DialogTitle>
+                  <p class="text-sm font-normal font-Inter text-gray-500 break-all">
+                    {{ props.message }}
                   </p>
                 </div>
               </div>
-              <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+              <div class="grid sm:grid-flow-row-dense sm:grid-cols-2 gap-3">
                 <button
                   type="button"
                   class="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
@@ -57,7 +61,7 @@ const emit = defineEmits(['confirm', 'click'])
                 </button>
                 <button
                   type="button"
-                  class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
+                  class="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
                   @click="emit('click')"
                 >
                   取消

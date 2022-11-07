@@ -20,7 +20,7 @@ onMounted(async () => {
     <div v-if="posts.userPostListCheckStatus === 0">
       <Empty />
     </div>
-    <div v-else-if="posts.userPostListCheckStatus === 200" class="flex flex-col gap-6">
+    <div v-if="posts.userPostListCheckStatus === 200" class="flex flex-col gap-6">
       <div v-for="post in posts.userPostList.posts" :key="post.post_id">
         <ShowPost
           :id="post.post_id" :title="post.title" :content="post.content" :user-id="posts.userPostList.user_id"

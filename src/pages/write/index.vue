@@ -1,18 +1,26 @@
 <script setup lang="ts">
 // const user = useUserStore()
 const post = usePostStore()
-
 const modal = useModalStore()
 const titleInput = ref('')
 const contentInput = ref('')
 const modalType = ref('')
 const userId = localStorage.getItem('id')!
+
+const cutTitle = (str: string, num: number) => {
+  if (str.replace(/[^\x20-\xFF]/g, 'OO').length > num)
+    return `${str.substring(0, num)}...`
+  else
+    return str
+}
+
 const checkPostEmpty = () => {
   if (titleInput.value === '' || contentInput.value === '') {
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
-      text: '標題或內文欄位不可以空白喔！',
+      title: '警告',
+      message: '標題或內文欄位不可以空白喔！',
       postId: '',
     })
   }
@@ -20,7 +28,8 @@ const checkPostEmpty = () => {
     modalType.value = 'check'
     modal.createNotification({
       type: 'add',
-      text: '確定新增文章？',
+      title: '確定新增文章？',
+      message: `「${cutTitle(titleInput.value, 19)}」`,
       postId: '',
     })
   }
@@ -32,11 +41,12 @@ const confirmPost = async () => {
   const content = contentInput.value
   await post.createPost({ title, content, user_id: userId })
 
-  if (post.returnInfo.status === 201) {
+  if (post.returnInfo.statusCode === 201) {
     modalType.value = 'information'
     modal.createNotification({
       type: 'add',
-      text: '已發表文章！',
+      title: '新增成功！',
+      message: `已新增「${cutTitle(title, 13)}」此篇文章！`,
       postId: post.returnInfo.data.post_id,
     })
   }
@@ -44,7 +54,8 @@ const confirmPost = async () => {
     modalType.value = 'information'
     modal.createNotification({
       type: 'warning',
-      text: `新增失敗！失敗狀態為：${post.returnInfo.status}`,
+      title: '新增失敗！',
+      message: `${post.returnInfo.message}`,
       postId: '',
     })
   }
@@ -56,22 +67,31 @@ const confirmPost = async () => {
     <div class="flex flex-col gap-4">
       <BulletinSectionHeaderForPost title="新增文章" :need-button="false" />
       <main class="auto-cols-min flex flex-col gap-4">
-        <input
-          id="title" v-model="titleInput" name="title" type="txt" autocomplete="title"
-          placeholder="請輸入文章標題" maxlength="100"
-          class="h-10 block w-full rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter"
-        >
+        <div class="relative w-ful">
+          <div
+            class="absolute text-base font-light font-Inter top-0 right-0 pr-2 pt-2 text-gray-400"
+          >
+            <span :class="[titleInput.length < 85 ? 'text-gray-400' : titleInput.length < 100 ? 'text-orange-300' : 'text-red-400']">{{ titleInput.length }}</span>/100
+          </div>
+          <input
+            id="title" v-model="titleInput" name="title" type="txt" autocomplete="title"
+            placeholder="請輸入文章標題" maxlength="100"
+            class="h-10 block w-full rounded-md border border-gray-300 pl-3 pr-[68px] py-2 placeholder-gray-400 shadow-sm focus:outline-none  text-lg font-light font-Inter"
+            :class="[titleInput.length < 85 ? 'focus:border-indigo-500  focus:ring-indigo-500' : titleInput.length < 100 ? 'focus:border-orange-400 focus:ring-yellow-500' : 'focus:border-red-500 focus:ring-red-500']"
+          >
+        </div>
         <textarea
           id="context" v-model="contentInput"
           name="context"
-          class="block w-full h-[576px] rounded-md border border-gray-300 shadow-sm  focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 text-lg font-light font-Inter" placeholder="請輸入文章內容"
+          class="block w-full h-[576px] rounded-md border border-gray-300 shadow-sm focus:outline-none text-lg font-light font-Inter" placeholder="請輸入文章內容"
+          :class="[contentInput.length < 9500 ? 'focus:border-indigo-400  focus:ring-indigo-400' : contentInput.length < 10000 ? 'focus:border-orange-400 focus:ring-yellow-500' : 'focus:border-red-500 focus:ring-red-500']"
           maxlength="10000"
         />
         <div class="relative w-full text-gray-400">
           <div
             class="absolute text-base font-light font-Inter top-0 right-0"
           >
-            <span :class="[contentInput.length > 9500 ? 'text-red-400' : 'text-gray-400']">{{ contentInput.length }}</span>/10000
+            <span :class="[contentInput.length < 9500 ? 'text-gray-400' : contentInput.length < 10000 ? 'text-orange-300' : 'text-red-400']">{{ contentInput.length }}</span>/10000
           </div>
           <div class="lg:mt-0 mt-6 text-sm font-Inter font-normal text-gray-400">
             提醒：標題字數限制100字元，文章字數限制為1萬字元。
@@ -80,13 +100,12 @@ const confirmPost = async () => {
         <WriteButton button-show="新增文章" @click="checkPostEmpty()" />
       </main>
       <Check
-        v-if="modalType === 'check' && modal.notificationStatus === true" :text="modal.notification.text"
+        v-if="modalType === 'check' && modal.notificationStatus === true" :title="modal.notification.title" :message="modal.notification.message"
         :type="modal.notification.type" @click="modal.closeNotification" @confirm="confirmPost()"
       />
       <LoadingModal v-if="modalType === 'loading'" />
       <Information
-        v-if="modalType === 'information' && modal.notificationStatus === true" :text="modal.notification.text"
-        :post-id="modal.notification.postId" :type="modal.notification.type" @click="modal.closeNotification"
+        v-if="modalType === 'information' && modal.notificationStatus === true" :title="modal.notification.title" :message="modal.notification.message" :post-id="modal.notification.postId" :type="modal.notification.type" @click="modal.closeNotification"
       />
     </div>
   </div>
