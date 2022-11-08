@@ -52,7 +52,6 @@ const confirmPost = async () => {
   modalType.value = 'loading'
   const title = titleInput.value
   const content = contentInput.value
-
   await post.updatePost(postId, { title, content })
 
   if (post.returnInfo.statusCode === 200) {

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const posts = usePostStore()
-
 onMounted(async () => {
   posts.clearPosts()
   await posts.getPosts()
@@ -18,13 +17,20 @@ onMounted(async () => {
       <Empty />
     </div>
     <div v-if="posts.listCheckStatus === 200" class="flex flex-col gap-6">
-      <div v-for="post in posts.list" :key="post.post_id">
+      <div v-for="post in posts.listPages[posts.meta.currentPage - 1]" :key="post.post_id">
         <ShowPost
           :id="post.post_id" :title="post.title" :content="post.content" :user-id="post.user.user_id"
           :user-name="post.user.name" :date-time="post.created_at" type="frontPage"
         />
       </div>
     </div>
+    <PaginationForPost
+      v-if="posts.meta.totalPages > 0"
+      :total-pages="posts.meta.totalPages" :total="posts.meta.total" :per-page="posts.meta.perPage"
+      :current-page="posts.meta.currentPage" @click-page="(data: number) => { return posts.meta.currentPage = data }"
+      @click-left="() => { return posts.meta.currentPage -= 1 }"
+      @click-right="() => { return posts.meta.currentPage += 1 }"
+    />
   </div>
 </template>
 

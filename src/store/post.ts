@@ -1,5 +1,6 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import axios, { AxiosError } from 'axios'
+import _ from 'lodash'
 // const user = useUserStore()
 const emptyPost = {
   statusCode: -1,
@@ -86,9 +87,17 @@ export const usePostStore = defineStore('post', () => {
               }],
             },
   })
+  const meta = reactive({
+    totalPages: 1,
+    total: 1,
+    perPage: 5,
+    currentPage: 1,
+  })
   const list = computed(() => { return posts.data })
+  const listPages = computed(() => { return _.chunk(posts.data, 5) })
   const listCheckStatus = computed(() => { return posts.statusCode })
   const userPostList = computed(() => { return userPosts.data })
+  const userPostListPages = computed(() => { return _.chunk(userPosts.data.posts, 5) })
   const userPostListCheckStatus = computed(() => { return userPosts.statusCode })
   const post = reactive({ ...emptyPost })
   const returnInfo = reactive({ ...emptyReturnInfo })
@@ -107,6 +116,8 @@ export const usePostStore = defineStore('post', () => {
         posts.statusCode = 0
       else
         posts.statusCode = res.status
+      meta.totalPages = listPages.value.length
+      meta.total = res.data.data.length
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
@@ -167,6 +178,8 @@ export const usePostStore = defineStore('post', () => {
         userPosts.statusCode = 0
       else
         userPosts.statusCode = res.data.statusCode
+      meta.totalPages = userPostListPages.value.length
+      meta.total = res.data.data.length
     }
     catch (err: any | AxiosError) {
       if (err instanceof AxiosError) {
@@ -268,6 +281,9 @@ export const usePostStore = defineStore('post', () => {
     posts.statusCode = -1
     userPosts.data = { ...emptyUserPosts.data }
     userPosts.statusCode = -1
+    meta.currentPage = 1
+    meta.totalPages = 1
+    meta.total = 1
   }
   const clearReturnInfo = () => {
     returnInfo.statusCode = -1
@@ -275,9 +291,12 @@ export const usePostStore = defineStore('post', () => {
   }
   return {
     list,
+    listPages,
     listCheckStatus,
     userPostList,
+    userPostListPages,
     userPostListCheckStatus,
+    meta,
     post,
     info,
     returnInfo,
