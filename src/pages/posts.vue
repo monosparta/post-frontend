@@ -4,6 +4,9 @@ onMounted(async () => {
   posts.clearPosts()
   await posts.getPosts()
 })
+const scrollTop = () => {
+  window.scrollTo(0, 0)
+}
 </script>
 
 <template>
@@ -27,9 +30,9 @@ onMounted(async () => {
     <PaginationForPost
       v-if="posts.meta.totalPages > 0"
       :total-pages="posts.meta.totalPages" :total="posts.meta.total" :per-page="posts.meta.perPage"
-      :current-page="posts.meta.currentPage" @click-page="(data: number) => { return posts.meta.currentPage = data }"
-      @click-left="() => { return posts.meta.currentPage -= 1 }"
-      @click-right="() => { return posts.meta.currentPage += 1 }"
+      :current-page="posts.meta.currentPage" @click-page="(data: number) => { scrollTop(); return posts.meta.currentPage = data }"
+      @click-left="() => { scrollTop();return posts.meta.currentPage -= 1 }"
+      @click-right="() => { scrollTop();return posts.meta.currentPage += 1 }"
     />
   </div>
 </template>
