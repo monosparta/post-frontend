@@ -56,6 +56,7 @@ declare module '@vue/runtime-core' {
     MultipartUpload: typeof import('./components/form/MultipartUpload.vue')['default']
     PageLoading: typeof import('./components/parts/PageLoading.vue')['default']
     Pagination: typeof import('./components/Pagination.vue')['default']
+    PaginationForPost: typeof import('./components/PaginationForPost.vue')['default']
     PermissionTable: typeof import('./components/form/PermissionTable.vue')['default']
     PermissionTree: typeof import('./components/form/PermissionTree.vue')['default']
     PostTab: typeof import('./components/parts/PostTab.vue')['default']
